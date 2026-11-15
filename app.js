@@ -161,13 +161,18 @@ function setupNavigation(){
     clearTimeout(leaveTimer);
     pinned=true;
     setOpen(true);
-    if(e.detail===0)panel.querySelector('.nav-btn.active')?.focus();
+    if(e.detail===0)panel.querySelector(mobile.matches?'.section-btn.active':'.nav-btn.active')?.focus();
   });
   document.addEventListener('click',e=>{
-    if(!mobile.matches&&!toggle.contains(e.target)&&!panel.contains(e.target))close();
+    if(toggle.getAttribute('aria-expanded')!=='true')return;
+    if(mobile.matches&&e.target.closest('.section-btn')){
+      close(e.detail===0);
+      return;
+    }
+    if(!toggle.contains(e.target)&&!panel.contains(e.target))close();
   });
   document.addEventListener('keydown',e=>{
-    if(e.key==='Escape'&&!mobile.matches&&toggle.getAttribute('aria-expanded')==='true'){
+    if(e.key==='Escape'&&toggle.getAttribute('aria-expanded')==='true'){
       close(panel.contains(document.activeElement));
     }
   });

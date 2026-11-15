@@ -1,0 +1,211 @@
+(() => {
+  'use strict';
+  const config = window.CINELIQ_MEDIA_CONFIG;
+  const configured = /^https:\/\/[a-z0-9]+\.supabase\.co\/?$/.test(config.projectUrl)
+    && /^sb_publishable_[a-zA-Z0-9_-]+$/.test(config.publishableKey);
+  const types = {
+    'image/jpeg': 'jpg',
+    'image/png': 'png',
+    'image/webp': 'webp',
+    'video/mp4': 'mp4',
+    'video/webm': 'webm',
+  };
+  const megabyte = 1024 * 1024;
+  const limits = {image: 8 * megabyte, video: 40 * megabyte};
+  const bucket = 'cineliq-media';
+  const pageSize = 100;
+  const signedLifetime = 3600;
+  let client;
+  let uploader;
+
+  function unwrap(result) {
+    if (result.error) throw result.error;
+    return result.data;
+  }
+
+  async function connect() {
+    const {createClient} = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.102.0/+esm');
+    client = createClient(config.projectUrl, config.publishableKey, {
+      auth: {detectSessionInUrl: false, autoRefreshToken: true, persistSession: true},
+    });
+  }
+
+  async function canWrite() {
+    const {session} = unwrap(await client.auth.getSession());
+    return Boolean(session && unwrap(await client.rpc('cineliq_can_write')));
+  }
+
+  async function login(email, password) {
+    unwrap(await client.auth.signInWithPassword({email, password}));
+    try {
+      if (!await canWrite()) throw Error('미디어를 관리할 권한이 없는 계정입니다.');
+    } catch (error) {
+      try { await logout(); } catch (logoutError) { console.warn('CINELIQ sign-out:', logoutError); }
+      throw error;
+    }
+  }
+
+  async function logout() {
+    unwrap(await client.auth.signOut({scope: 'local'}));
+  }
+
+  function onAuthChange(callback) {
+    client.auth.onAuthStateChange(() => setTimeout(callback, 0));
+  }
+
+  async function catalog(admin, previous = new Map()) {
+    const rows = [];
+    for (let offset = 0; ; offset += pageSize) {
+      const page = unwrap(await client.from('cineliq_media')
+        .select('id,technique_id,kind,object_path,thumbnail_path,position,is_primary')
+        .order('id').range(offset, offset + pageSize - 1));
+      rows.push(...page);
+      if (page.length < pageSize) break;
+    }
+    const names = admin ? new Map(unwrap(await client.rpc('cineliq_file_names'))
+      .map(row => [row.id, row.original_name])) : new Map();
+    const paths = [...new Set(rows.flatMap(row => [row.object_path, row.thumbnail_path].filter(Boolean)))];
+    const urls = new Map();
+    for (const entries of previous.values()) {
+      for (const entry of entries) {
+        if (entry.expiresAt <= Date.now() + 5 * 60 * 1000) continue;
+        urls.set(entry.object_path, {url: entry.url, expiresAt: entry.expiresAt});
+        if (entry.thumbnail_path && entry.thumbnail) {
+          urls.set(entry.thumbnail_path, {url: entry.thumbnail, expiresAt: entry.expiresAt});
+        }
+      }
+    }
+    const missing = paths.filter(path => !urls.get(path)?.url);
+    for (let start = 0; start < missing.length; start += pageSize) {
+      const expiresAt = Date.now() + signedLifetime * 1000;
+      const signed = unwrap(await client.storage.from(bucket).createSignedUrls(
+        missing.slice(start, start + pageSize), signedLifetime,
+      ));
+      for (const entry of signed) {
+        if (entry.signedUrl) urls.set(entry.path, {url: entry.signedUrl, expiresAt});
+      }
+    }
+    const byTechnique = new Map();
+    rows.sort((a, b) => a.position - b.position || a.id.localeCompare(b.id));
+    for (const row of rows) {
+      const original = urls.get(row.object_path);
+      const thumbnail = urls.get(row.thumbnail_path);
+      const entry = {...row, name: names.get(row.id), url: original?.url, thumbnail: thumbnail?.url,
+        expiresAt: Math.min(original?.expiresAt ?? 0, thumbnail?.expiresAt ?? Infinity)};
+      if (!byTechnique.has(row.technique_id)) byTechnique.set(row.technique_id, []);
+      byTechnique.get(row.technique_id).push(entry);
+    }
+    return byTechnique;
+  }
+
+  async function validate(file, kind) {
+    if (!Object.hasOwn(types, file.type) || !file.type.startsWith(kind + '/')) {
+      throw Error(kind === 'image' ? 'JPG, PNG, WebP 이미지를 선택해 주세요.' : 'MP4 또는 WebM 영상을 선택해 주세요.');
+    }
+    if (!file.size || file.size > limits[kind]) {
+      throw Error(`파일은 0바이트보다 크고 ${limits[kind] / megabyte}MB 이하여야 합니다.`);
+    }
+    const bytes = new Uint8Array(await file.slice(0, 16).arrayBuffer());
+    const hex = [...bytes].map(byte => byte.toString(16).padStart(2, '0')).join('');
+    const ascii = String.fromCharCode(...bytes);
+    const valid = {
+      'image/jpeg': hex.startsWith('ffd8ff'),
+      'image/png': hex.startsWith('89504e470d0a1a0a'),
+      'image/webp': ascii.startsWith('RIFF') && ascii.slice(8, 12) === 'WEBP',
+      'video/mp4': ascii.slice(4, 8) === 'ftyp' && !/^(avif|avis|heic|heix|mif1|msf1)$/.test(ascii.slice(8, 12)),
+      'video/webm': hex.startsWith('1a45dfa3'),
+    };
+    if (!valid[file.type]) throw Error('파일 내용이 선택한 형식과 일치하지 않습니다.');
+  }
+
+  async function makeThumbnail(file) {
+    const image = await createImageBitmap(file);
+    try {
+      const scale = Math.min(1, 640 / Math.max(image.width, image.height));
+      if (scale === 1 && file.size < 200 * 1024) return null;
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(image.width * scale));
+      canvas.height = Math.max(1, Math.round(image.height * scale));
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#181818';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      return await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.84));
+    } finally {
+      image.close();
+    }
+  }
+
+  async function put(path, file, progress) {
+    const {session} = unwrap(await client.auth.getSession());
+    if (!session) throw Error('관리자로 다시 로그인해 주세요.');
+    uploader ??= import('https://cdn.jsdelivr.net/npm/tus-js-client@4.3.1/+esm');
+    const {Upload} = await uploader;
+    const ref = new URL(config.projectUrl).hostname.split('.')[0];
+    await new Promise((resolve, reject) => {
+      const upload = new Upload(file, {
+        endpoint: `https://${ref}.storage.supabase.co/storage/v1/upload/resumable`,
+        headers: {authorization: `Bearer ${session.access_token}`, apikey: config.publishableKey},
+        metadata: {bucketName: bucket, objectName: path, contentType: file.type, cacheControl: '3600'},
+        retryDelays: [0, 1000, 3000, 5000],
+        chunkSize: 6 * megabyte,
+        uploadDataDuringCreation: true,
+        storeFingerprintForResuming: false,
+        onProgress: (sent, size) => progress(Math.round(100 * sent / size)),
+        onError: reject,
+        onSuccess: resolve,
+      });
+      upload.start();
+    });
+  }
+
+  async function cleanup(paths) {
+    if (!paths.length) return true;
+    try {
+      unwrap(await client.storage.from(bucket).remove(paths));
+      return true;
+    } catch (error) {
+      console.warn('CINELIQ Storage cleanup:', error);
+      return false;
+    }
+  }
+
+  async function mutate(technique, action, id, details = {}) {
+    const paths = unwrap(await client.rpc('cineliq_change_media', {
+      technique, action, media_id: id ?? null, ...details,
+    }));
+    return cleanup(paths);
+  }
+
+  async function upload(item, file, id, progress, digest = null) {
+    await validate(file, item.mediaType);
+    const thumbnail = item.mediaType === 'image' ? await makeThumbnail(file) : null;
+    const prefix = `${item.id}/${crypto.randomUUID()}`;
+    const path = `${prefix}.${types[file.type]}`;
+    const thumb = thumbnail ? `${prefix}.thumb.jpg` : null;
+    try {
+      await put(path, file, value => progress(Math.round(value * 0.95)));
+      if (thumb) await put(thumb, thumbnail, value => progress(95 + Math.floor(value * 0.04)));
+      const clean = await mutate(item.id, id ? 'replace' : 'add', id, {
+        path, thumb, filename: (file.name || 'media').slice(0, 255),
+        bytes: file.size, mime: file.type, digest,
+      });
+      progress(100);
+      return clean;
+    } catch (error) {
+      // Storage RLS protects the paths if a write committed before a network error.
+      await cleanup([path, thumb].filter(Boolean));
+      throw error;
+    }
+  }
+
+  async function digest(file) {
+    const bytes = new Uint8Array(await crypto.subtle.digest('SHA-256', await file.arrayBuffer()));
+    return [...bytes].map(byte => byte.toString(16).padStart(2, '0')).join('');
+  }
+
+  window.CINELIQ_CLOUD = {
+    configured, showAdmin: config.showAdmin, connect, canWrite, login, logout, onAuthChange,
+    catalog, upload, mutate, validate, digest, limits, types,
+  };
+})();

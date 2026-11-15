@@ -4,7 +4,7 @@ CINELIQ는 카메라 구도, 컷, 무빙을 학습하는 반응형 웹사이트�
 
 - 카테고리, 세부 분야, 장면 유형과 미디어 상태로 검색·필터링
 - 기법 상세 화면에서 이미지·영상 예시와 AI 프롬프트 확인 및 복사
-- 관리 모드에서 기법별 미디어 등록, 교체, 삭제
+- 인증된 관리자 계정으로 공개 미디어 등록, 교체, 정렬, 대표 지정 및 삭제
 
 - [GitHub 저장소](https://github.com/guswn861415911-collab/cineliq)
 - [GitHub Pages 사이트](https://guswn861415911-collab.github.io/cineliq/)
@@ -16,11 +16,13 @@ CINELIQ는 카메라 구도, 컷, 무빙을 학습하는 반응형 웹사이트�
 | `index.html` | 페이지 구조와 진입점 |
 | `styles.css` | 무채색 디자인 토큰과 반응형 레이아웃 |
 | `app.js` | 검색, 필터, 상세 화면, 복사, 미디어 관리 |
+| `media-config.js`, `media-cloud.js`, `media-admin.js` | 온라인 연결 설정, Storage·Auth 연동, 관리자 UI |
+| `supabase/001_media.sql` | 테이블, Storage 버킷, RLS 정책과 관리자 RPC |
 | `data.js` | 기법 314개의 명칭, 설명, 분류와 태그 |
 | `.nojekyll` | 정적 파일을 그대로 GitHub Pages에 게시 |
 | `.gitignore` | 로컬 환경 파일, 임시 파일과 테스트 산출물 제외 |
 
-HTML, CSS, JavaScript로 구성되어 별도 패키지 설치나 빌드가 필요 없습니다. 웹폰트는 Google Fonts에서 로드하며, 연결할 수 없을 때는 시스템 글꼴을 사용합니다.
+HTML, CSS, JavaScript로 구성되어 별도 패키지 설치나 빌드가 필요 없습니다. 온라인 미디어를 설정하면 브라우저가 CDN에서 Supabase JS와 tus-js-client를 불러옵니다. 웹폰트는 Google Fonts에서 로드하며, 연결할 수 없을 때는 시스템 글꼴을 사용합니다.
 
 ## 로컬 실행
 
@@ -39,15 +41,56 @@ GitHub 저장소의 **Settings → Pages**에서 **Deploy from a branch**의 소
 3. 수정한 파일만 스테이징해 커밋하고 `git push origin main`을 실행합니다.
 4. 저장소의 **Actions**에서 Pages 배포 결과를 확인하고 배포 주소를 열어 확인합니다.
 
-## 이미지·영상 저장
+## Supabase 설정
 
-관리 모드를 켜고 카드를 선택한 뒤 파일을 등록합니다. 구도와 컷은 PNG, JPEG, WebP, GIF 이미지를, 무빙은 MP4, WebM, MOV 영상을 받습니다. 최대 150MB이며 실제 한도는 브라우저 저장 용량에 따라 달라집니다.
+1. [Supabase Dashboard](https://supabase.com/dashboard)에서 기존 CINELIQ 프로젝트를 선택하거나 새 프로젝트를 만듭니다. 요금제, 지역, 데이터 보관 정책을 확인합니다.
+2. 대상 프로젝트의 SQL Editor에서 [`supabase/001_media.sql`](supabase/001_media.sql)을 검토한 뒤 한 번 실행합니다. 운영 DB라면 적용 전에 백업과 실행 승인을 확인합니다. SQL은 기존 테이블이나 Storage 객체를 삭제하지 않으며, 같은 이름의 테이블이나 버킷이 있으면 트랜잭션이 중단됩니다.
+3. Authentication에서 Email/Password 로그인을 활성화합니다. 공개 회원가입이 필요 없으면 비활성화하고, **Users**에서 관리자 계정을 만든 뒤 이메일을 확인합니다.
+4. 관리자 계정의 Auth 사용자 UUID를 가져와 SQL Editor에서 아래 구문을 실행합니다.
 
-업로드 파일은 현재 브라우저의 **IndexedDB**에 사이트 주소의 출처(프로토콜, 호스트, 포트)별로 저장됩니다. 같은 출처에서 새로고침해도 남지만, localhost에 등록했던 파일은 GitHub Pages 주소로 옮겨지지 않습니다. 기기나 브라우저 프로필 사이에도 공유되지 않으며, 사이트 데이터를 지우면 파일이 사라질 수 있습니다.
+   ```sql
+   insert into public.cineliq_admins (user_id)
+   values ('ADMIN_AUTH_USER_UUID'::uuid);
+   ```
 
-GitHub Pages는 정적 호스팅입니다. 업로드한 파일은 GitHub 저장소나 GitHub Pages 서버에 자동 저장되지 않습니다. 여러 사용자가 미디어를 공유하려면 별도 백엔드, 인증, 파일 저장소가 필요합니다.
+5. 프로젝트의 **Connect** 또는 **Settings → API Keys**에서 Project URL과 `sb_publishable_…` 키를 복사해 `media-config.js`에 입력합니다. 이 두 값은 공개용입니다. 서비스 역할 키, 데이터베이스 비밀번호, 로그인 비밀번호, 인증 토큰은 저장소에 저장하지 않습니다.
+6. 로컬 HTTP 서버에서 연결과 권한을 검증한 뒤 변경 파일을 `main`에 푸시합니다. GitHub Pages 주소와 발행 방식은 그대로 사용합니다. CDN에서 사용하는 라이브러리 버전은 `media-cloud.js`에서 관리합니다.
 
-공개 화면에서 업로드 UI를 숨기려면 `app.js`의 `CONFIG.ENABLE_ADMIN`을 `false`로 설정합니다. 이 옵션은 화면을 숨기는 용도이며 관리자 인증 기능은 제공하지 않습니다.
+연결값이 비어 있으면 온라인 미디어와 관리자 로그인은 준비되지 않은 상태입니다. 기존 IndexedDB 파일은 해당 주소에서 계속 읽을 수 있습니다. 연결 후 공개 화면은 Supabase에 등록된 미디어를 조회합니다.
+
+### 데이터베이스와 Storage
+
+- `cineliq_media`는 미디어 UUID, 기존 `CAM-…` 기법 ID, 유형, 원본 및 썸네일 경로, 표시 순서, 대표 여부, 원본 파일명, 크기, MIME, 생성·수정 시각을 저장합니다. 이전 파일의 콘텐츠 해시는 같은 기법에 같은 원본을 다시 등록하지 않도록 사용합니다. 기법의 설명과 프롬프트는 `data.js`에 그대로 있습니다.
+- `cineliq_admins`는 Auth 사용자 UUID로 권한을 지정하고, `cineliq_settings`는 서버 쓰기 허용 여부를 관리합니다.
+- 비공개 `cineliq-media` 버킷에서 `CAM-001/<UUID>.<ext>` 형태로 원본을 저장합니다. 이미지 썸네일이 필요한 경우 같은 UUID에 `.thumb.jpg`를 붙여 저장합니다. 원본은 변경하지 않습니다.
+- 일반 방문자는 카탈로그에 게시된 파일의 단기 서명 URL을 받아 읽을 수 있습니다. 저장소 RLS는 미게시 파일 조회를 차단합니다. 원본 파일명은 관리자 RPC에만 노출됩니다. Auth와 관리자 목록으로 인가된 사용자만 파일 업로드와 메타데이터 변경을 할 수 있습니다. 데이터베이스 RPC는 같은 기법의 변경을 직렬화하고 참조 중인 파일이 Storage에서 삭제되지 않도록 정책을 적용합니다.
+- 업로드 도중 연결이 끊기면 같은 페이지에서 TUS 청크를 재시도합니다. 새로고침하면 업로드를 다시 시작합니다. 교체는 새 경로에 올린 뒤 DB의 연결을 바꾸고 이전 원본을 삭제합니다. 네트워크 단절로 참조되지 않는 파일이 남으면 해당 경로가 `object_path`, `thumbnail_path` 양쪽에서 참조되지 않는지 확인하고 Storage Dashboard에서 삭제합니다. 진행 중인 업로드 경로는 정리하지 않습니다.
+
+### 관리자 작업
+
+**관리자 로그인**에서 Auth 계정으로 로그인한 뒤 기법 상세에서 파일을 선택하거나 드롭합니다. 미리보기를 확인하고 등록을 누르면 진행률이 표시됩니다. 등록 후 교체, 순서 변경, 대표 지정과 삭제를 할 수 있습니다. 카드는 대표 미디어를 표시하고 상세 화면은 대표 미디어 다음에 나머지를 표시합니다. 이미지 원본 비율을 유지하며 영상의 재생·일시정지·전체 화면은 브라우저 기본 컨트롤을 사용합니다.
+
+이미지는 JPG/PNG/WebP 최대 8MiB, 영상은 MP4/WebM 최대 40MiB입니다. 브라우저 호환성이 높은 MP4(H.264 영상, AAC 오디오)를 권장합니다. 브라우저는 업로드 전에 크기와 파일 시그니처를 검사하고, Storage는 허용 MIME과 버킷 용량을 제한합니다. Supabase에 별도의 악성코드 검사나 영상 변환 서비스를 설정하지 않는 한 이를 제공하지 않습니다.
+
+새로고침하면 다른 기기에서도 최신 공개 목록을 받습니다. 사이트 HTML이나 JavaScript를 수정한 경우에만 GitHub에 다시 푸시합니다.
+
+### 기존 IndexedDB에서 이전
+
+기존 파일이 있는 **같은 브라우저 프로필과 같은 출처**에서 관리자 로그인 후 **미디어 관리 → 이 브라우저의 기존 미디어**를 엽니다. 이전할 항목을 선택하고 공개 등록을 확인합니다. 결과는 파일마다 표시되며 실패한 항목은 다시 선택해 재시도할 수 있습니다. 동일 기법에서 다시 시도하면 콘텐츠 해시로 이전 중복을 방지하며, 로컬 원본은 그대로 유지됩니다.
+
+GitHub Pages, localhost의 각 포트, `file://`로 연 페이지의 저장소는 브라우저가 서로 다르게 취급합니다. 원본이 localhost에 있다면 같은 URL과 포트에서 새 코드를 실행합니다. `file://`에서만 보이던 파일은 원래 주소에서 관리자 화면의 **원본 다운로드** 또는 연결값이 비어 있을 때 기법 상세의 **로컬 원본 다운로드**로 보관한 다음 GitHub Pages의 해당 기법 ID에 다시 올릴 수 있습니다. 새 형식에 포함되지 않는 GIF, MOV 또는 제한을 초과하는 파일은 원본을 다운로드한 뒤 지원 형식과 크기로 변환하여 등록합니다.
+
+### 업로드 중지 및 사용량
+
+`media-config.js`의 `showAdmin: false`로 로그인과 편집 UI를 숨길 수 있습니다. Supabase에서도 쓰기를 막으려면 SQL Editor에서 아래 명령을 실행합니다. 기존 공개 미디어 조회와 재생은 계속 작동합니다.
+
+```sql
+update public.cineliq_settings set writes_enabled = false where singleton;
+```
+
+이 설정을 다시 `true`로 바꾸면 권한이 있는 관리자가 쓰기를 재개할 수 있습니다. 개별 관리자 권한은 `cineliq_admins`에서 해당 UUID를 제거하여 철회합니다.
+
+Supabase 무료 요금제의 파일 저장 공간은 현재 1GB입니다. 프로젝트 Dashboard의 **Usage**에서 Storage와 Egress를 확인하고, 운영 전에 최신 한도를 확인합니다. [Supabase 요금제](https://supabase.com/pricing) · [재개 가능한 업로드](https://supabase.com/docs/guides/storage/uploads/resumable-uploads)
 
 ## 데이터
 

@@ -5,13 +5,15 @@
 <meta name="description" content="카메라 구도, 컷, 무빙 314개 기법을 배우고 AI 프롬프트를 복사하는 영상 제작 학습 아틀라스">
 <title>CINELIQ / 카메라 기법 아틀라스</title>
 <link rel="stylesheet" href="styles.css">
-<script src="data.js" defer></script><script src="app.js" defer></script>
+<script src="data.js" defer></script>
+<script src="media-config.js" defer></script><script src="media-cloud.js" defer></script>
+<script src="media-admin.js" defer></script><script src="app.js" defer></script>
 </head>
 <body>
 <div class="app-shell">
 <header class="site-header"><div class="header-start">
 <button id="navToggle" class="btn ghost nav-toggle" type="button" aria-label="카메라 기법 탐색 메뉴" aria-expanded="false" aria-controls="techniqueNav"><span aria-hidden="true"></span></button>
-<a class="brand" href="#home" aria-label="CINELIQ 홈"><span class="brand-icon">◩</span><span>CINELIQ</span><span class="brand-caption">CAMERA ATLAS</span></a></div><div class="header-actions"><span class="header-caption">THE VISUAL LANGUAGE OF FILM</span><button id="adminToggle" class="btn ghost small" type="button" aria-pressed="false"><span aria-hidden="true">⚙</span> <span id="adminText">관리 모드</span></button></div></header>
+<a class="brand" href="#home" aria-label="CINELIQ 홈"><span class="brand-icon">◩</span><span>CINELIQ</span><span class="brand-caption">CAMERA ATLAS</span></a></div><div class="header-actions"><span class="header-caption">THE VISUAL LANGUAGE OF FILM</span><button id="adminToggle" class="btn ghost small" type="button" aria-haspopup="dialog" hidden><span aria-hidden="true">⚙</span> <span id="adminText">관리자 로그인</span></button></div></header>
 <div class="layout"><aside id="techniqueNav" class="sidebar" aria-label="학습 탐색"><div class="sidebar-inner"><p class="overline">EXPLORE THE ATLAS</p><h2>카메라 기법 탐색</h2><div class="nav-stack" id="majorNav"></div><div class="sidebar-rule"></div><p class="side-label">세부 분야</p><div id="sectionNav" class="section-nav"></div><div class="sidebar-footer"><span>CREATED FOR VISUAL STORYTELLERS</span><strong>Learn the frame.<br>Shape the story.</strong></div></div></aside>
 <main id="home" class="main-content"><section class="hero"><div class="hero-copy"><p class="eyebrow"><span class="eyebrow-line"></span> THE COMPLETE CAMERA GUIDE</p><h1>장면을 이해하고,<br><em>연출을 설계하다.</em></h1><p class="hero-description">구도부터 컷, 무빙까지. 카메라 언어를 배우고<br class="desktop-break"> 바로 복사해 활용하는 AI 영상 제작 아틀라스.</p><div class="hero-meta"><span><b id="totalCount">314</b> TECHNIQUES</span><span class="meta-divider"></span><span><b>13</b> COLLECTIONS</span><span class="meta-divider"></span><span><b id="readyCount">0</b> MEDIA READY</span></div></div><div class="hero-art" aria-hidden="true"><div class="viewfinder"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span><div class="focus-cross">+</div><span class="viewfinder-label">REC ● &nbsp; 00:00:00:00</span><span class="viewfinder-foot">FRAME STUDY / 001</span></div><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div></div></section>
 <section class="catalog" aria-labelledby="catalogTitle"><div class="section-head"><div><p class="eyebrow dark">THE LIBRARY</p><h2 id="catalogTitle">기법 라이브러리 <span id="visibleCount" class="count-label">314</span></h2></div><div class="section-head-note">원하는 기법을 찾고, 나만의 장면에 적용해 보세요.</div></div>
@@ -24,5 +26,19 @@
 <footer class="site-footer"><span>CINELIQ · CAMERA ATLAS</span><span>CRAFT YOUR NEXT FRAME · 2026</span></footer></main></div>
 </div>
 <div id="detailModal" class="modal-layer" hidden><div class="modal-scrim" data-close="true"></div><section class="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detailTitle"><button id="closeDetail" class="modal-close" type="button" aria-label="닫기">×</button><div id="detailBody"></div></section></div>
+<dialog id="adminDialog" class="admin-dialog" aria-labelledby="adminTitle">
+  <div class="admin-dialog-head"><h2 id="adminTitle">관리자 미디어 관리</h2><button id="closeAdmin" class="btn outline small" type="button">닫기</button></div>
+  <form id="adminLogin">
+    <label>이메일<input name="email" type="email" autocomplete="username" required></label>
+    <label>비밀번호<input name="password" type="password" autocomplete="current-password" required></label>
+    <button class="btn dark" type="submit">로그인</button>
+    <p id="loginStatus" role="status"></p>
+  </form>
+  <div id="adminSession" hidden>
+    <p>기법 상세에서 공개 미디어를 등록하고 관리할 수 있습니다.</p>
+    <section id="legacyImport"></section>
+    <button id="adminLogout" class="btn outline" type="button">로그아웃</button>
+  </div>
+</dialog>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body></html>

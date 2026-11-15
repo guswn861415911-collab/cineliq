@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@700&display=swap');
 
 :root{
   color-scheme:light;
@@ -36,7 +36,7 @@ a{text-decoration:none;color:inherit}
 [hidden]{display:none!important}
 .site-header{height:var(--header-height);background:var(--white);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 39px;position:sticky;top:0;z-index:20}
 .brand{display:flex;align-items:center;gap:9px}
-.brand-wordmark{color:var(--dark);font:700 25px/1 Arial,Helvetica,sans-serif;letter-spacing:-.35px}
+.brand-wordmark{color:var(--dark);font:700 25px/1 'Montserrat',Arial,Helvetica,sans-serif;letter-spacing:-.35px}
 .header-start{display:flex;align-items:center;gap:14px}
 .brand-caption{margin-left:12px;padding-left:17px;border-left:1px solid var(--line);font-size:10px;letter-spacing:2px;font-weight:700;color:var(--muted)}
 .header-actions{display:flex;align-items:center;gap:26px}

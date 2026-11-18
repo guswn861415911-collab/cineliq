@@ -27,6 +27,8 @@
     function update() {
       label.textContent = state.admin ? '미디어 관리' : '관리자 로그인';
       toggle.classList.toggle('active-admin', state.admin);
+      document.querySelectorAll('.admin-media-filter, .admin-only-count').forEach(el => { el.hidden = !state.admin; });
+      if (!state.admin && (state.media === 'ready' || state.media === 'missing')) state.media = 'all';
       loginForm.hidden = state.admin;
       sessionPanel.hidden = !state.admin;
       if (state.admin && dialog.open) showImport();

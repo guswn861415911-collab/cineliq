@@ -197,5 +197,31 @@ function setupNavigation(){
 function events(){setupNavigation();const filterToggle=$('#filterToggle');
 filterToggle.addEventListener('click',()=>filterToggle.setAttribute('aria-expanded',String(filterToggle.getAttribute('aria-expanded')!=='true')));
 document.addEventListener('click',e=>{const copy=e.target.closest('[data-copy]');if(copy){e.stopPropagation();const i=ITEMS.find(x=>x.id===copy.dataset.copy);if(i)copyText(i.en);return}const focused=document.activeElement;const major=e.target.closest('[data-major]');if(major){state.major=major.dataset.major;state.section=0;state.limit=CONFIG.PAGE_SIZE;renderAll();if(major===focused)$(".nav-btn.active")?.focus();return}const sec=e.target.closest('[data-section]');if(sec){state.section=Number(sec.dataset.section);state.limit=CONFIG.PAGE_SIZE;renderAll();if(sec===focused)$(".section-btn.active")?.focus();return}const tag=e.target.closest('[data-tag]');if(tag){const t=tag.dataset.tag;if(t==='all')state.tags.clear();else if(state.tags.has(t))state.tags.delete(t);else state.tags.add(t);state.limit=CONFIG.PAGE_SIZE;renderTags();renderCards();return}const media=e.target.closest('[data-media]');if(media){state.media=media.dataset.media;state.limit=CONFIG.PAGE_SIZE;renderTags();renderCards();return}const card=e.target.closest('[data-open]');if(card){openDetail(card.dataset.open);return}if(e.target.closest('[data-close]'))closeDetail()});$('#searchInput').addEventListener('input',e=>{state.search=e.target.value;state.limit=CONFIG.PAGE_SIZE;renderCards()});$('#sortSelect').addEventListener('change',e=>{state.sort=e.target.value;renderCards()});$('#clearFilters').addEventListener('click',resetFilters);$('#emptyReset').addEventListener('click',resetFilters);$('#loadMore').addEventListener('click',()=>{state.limit+=CONFIG.PAGE_SIZE;renderCards()});$('#closeDetail').addEventListener('click',closeDetail);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#detailModal').hidden)closeDetail();if(e.key==='/'&&document.activeElement?.tagName!=='INPUT'&&document.activeElement?.tagName!=='TEXTAREA'&&$('#detailModal').hidden){e.preventDefault();$('#searchInput').focus()}if((e.key==='Enter'||e.key===' ')&&e.target.matches('.tech-card')){e.preventDefault();openDetail(e.target.dataset.open)}})}
+function setupHeroVideo() {
+  const video = document.querySelector('.hero-background-video');
+  const mobile = matchMedia('(max-width:760px)');
+  const reducedMotion = matchMedia('(prefers-reduced-motion:reduce)');
+
+  function updateVideo() {
+    const device = mobile.matches ? 'mobile' : 'pc';
+    const source = `assets/cineliq-hero-${device}.mp4`;
+    video.poster = `assets/cineliq-hero-${device}-poster.jpg`;
+    if (reducedMotion.matches) {
+      if (video.hasAttribute('src')) {
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+      }
+      return;
+    }
+    if (video.getAttribute('src') !== source) video.src = source;
+  }
+
+  mobile.addEventListener('change', updateVideo);
+  reducedMotion.addEventListener('change', updateVideo);
+  updateVideo();
+}
+
+setupHeroVideo();
 renderAll();events();void initMedia();
 })();

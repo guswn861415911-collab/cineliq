@@ -1,9 +1,6 @@
-# CINELIQ hero video update
+# CINELIQ hero video
 
-- Uploaded final video: CINELIQ_HERO_VIDEO_Final_V01_2k.mp4 (2560×1440 HEVC, ~16 seconds)
-- Website video: assets/cineliq-hero.mp4 (1280×720 H.264, muted/no audio, faststart)
-- Poster: assets/cineliq-hero-poster.jpg
-- Added a muted, looping, inline background video and dark gradient to hero.
-- Preserved hero text, viewfinder overlay, 414 entries, Supabase settings and administrator features.
-- Reduced-motion preference uses a still poster instead of autoplay motion.
-- To publish: back up existing repository, replace site files, commit and push to GitHub Pages.
+- Desktop uses `assets/cineliq-hero-pc.mp4` at 1920 × 750 and spans the page width.
+- Mobile uses `assets/cineliq-hero-mobile.mp4` at its original 2560 × 1440 (16:9).
+- Both web files preserve the supplied framing and use H.264 with no audio track for muted autoplay.
+- Reduced-motion preference displays the device-specific poster without loading the video.

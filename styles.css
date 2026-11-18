@@ -650,7 +650,7 @@ body:has(#detailModal:not([hidden])) .site-header{z-index:55}
 #memberPage{display:none;max-width:920px;margin:auto;padding:56px clamp(20px,5vw,60px) 90px;color:#f5f5f5}
 [data-mobile-view="my"] > #memberPage{display:block}
 [data-mobile-view="my"] > :is(.hero,.catalog,.site-footer){display:none!important}
-#memberPage h1{font-size:clamp(30px,5vw,48px);margin:0 0 24px}
+#memberPageTitle{font-family:'Montserrat',Arial,Helvetica,sans-serif;font-weight:700;font-size:clamp(30px,5vw,48px);margin:0 0 24px}
 #memberPage h2{font-size:19px;margin:0 0 10px}
 #memberPage p{color:#bfc1c6;overflow-wrap:anywhere}
 .member-profile{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid #393b40;padding-bottom:20px;margin-bottom:28px}

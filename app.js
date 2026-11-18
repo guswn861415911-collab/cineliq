@@ -231,8 +231,9 @@ function setupHeroVideo() {
 
   function updateVideo() {
     const device = mobile.matches ? 'mobile' : 'pc';
-    const source = `assets/cineliq-hero-${device}.mp4`;
-    video.poster = `assets/cineliq-hero-${device}-poster.jpg`;
+    const revision = mobile.matches ? '?v=portrait' : '';
+    const source = `assets/cineliq-hero-${device}.mp4${revision}`;
+    video.poster = `assets/cineliq-hero-${device}-poster.jpg${revision}`;
     if (reducedMotion.matches) {
       if (video.hasAttribute('src')) {
         video.pause();

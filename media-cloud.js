@@ -69,7 +69,8 @@
       throw Object.assign(Error('Google provider is disabled'), {code:'google_unavailable'});
     }
     return unwrap(await client.auth.signInWithOAuth({
-      provider:'google',options:{redirectTo:callbackUrl()},
+      provider:'google',
+      options:{redirectTo:callbackUrl(),queryParams:{prompt:'select_account'}},
     }));
   }
 

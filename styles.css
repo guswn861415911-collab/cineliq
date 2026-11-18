@@ -144,6 +144,7 @@ kbd{border:1px solid var(--line);border-radius:4px;padding:3px 6px;color:var(--m
 .card-title{font-size:16px;letter-spacing:-.6px;margin:0;font-weight:800;line-height:1.5}
 .copy-icon-btn{border:1px solid var(--line);background:var(--white);border-radius:var(--control-radius);min-width:29px;height:29px;color:var(--muted);font-size:14px}
 .copy-icon-btn:hover{background:var(--hover)}
+.copy-icon{flex:none;vertical-align:middle}
 .card-en{font-size:11px;color:var(--muted);margin:2px 0 11px;font-weight:600}
 .card-description{font-size:12px;line-height:1.7;color:var(--secondary);margin:0;min-height:38px}
 .card-foot{border-top:1px solid var(--line);margin-top:17px;padding-top:13px;display:flex;align-items:center;justify-content:space-between}

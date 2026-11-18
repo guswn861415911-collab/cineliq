@@ -684,7 +684,7 @@ body:has(#detailModal:not([hidden])) .site-header{z-index:55}
 #memberGoogle{
   --social-bg:#131314;--social-border:#8e918f;--social-text:#e3e3e3;
   --social-hover:#25272b;--social-active:#303236;
-  margin-top:18px;font-family:'Google Sans',system-ui,sans-serif;
+  margin-top:8px;font-family:'Google Sans',system-ui,sans-serif;
 }
 #memberGoogle img{background:#fff;border-radius:50%}
 #memberKakao{
@@ -704,7 +704,8 @@ body:has(#detailModal:not([hidden])) .site-header{z-index:55}
 .member-dialog .member-email-divider{
   display:none;align-items:center;gap:10px;margin:0;color:#d7d8dc;font-size:12px;text-align:center;
 }
-#memberKakao:not([hidden]) + #memberForm .member-email-divider{display:flex}
+#memberKakao:not([hidden]) + #memberForm{margin-top:22px}
+#memberKakao:not([hidden]) + #memberForm .member-email-divider{display:flex;margin-bottom:6px}
 .member-email-divider::before,.member-email-divider::after{content:"";flex:1;border-top:1px solid #42444a}
 .member-auth-links{display:flex;flex-wrap:wrap;gap:14px}
 .member-auth-links button{min-height:44px;padding:0;border:0;background:transparent;color:#d7d8dc;font-size:12px}

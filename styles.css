@@ -669,13 +669,18 @@ body:has(#detailModal:not([hidden])) .site-header{z-index:55}
 .member-dialog{color:#f5f5f5;background:#191b1f;border-color:#42444a}
 .member-dialog p{color:#d7d8dc}
 .member-social{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  width:100%;min-height:44px;padding:8px 12px;border:1px solid var(--social-border);
+  display:flex;align-items:center;justify-content:center;
+  box-sizing:border-box;width:100%;height:44px;padding:8px 12px;border:1px solid var(--social-border);
   border-radius:12px;background:var(--social-bg);color:var(--social-text);
   font:500 14px/20px system-ui,sans-serif;
   transition:box-shadow .15s ease;
 }
-.member-social img{display:block;flex:none;width:20px;height:20px;object-fit:contain;padding:1px}
+.member-social-content{display:inline-flex;align-items:center;gap:10px}
+.member-social-logo{
+  display:block;flex:0 0 20px;object-fit:contain;padding:1px;
+  width:20px;min-width:20px;max-width:20px;
+  height:20px;min-height:20px;max-height:20px;
+}
 #memberGoogle{
   --social-bg:#131314;--social-border:#8e918f;--social-text:#e3e3e3;--social-overlay:255 255 255;
   margin-top:18px;font-family:'Google Sans',system-ui,sans-serif;
@@ -683,12 +688,17 @@ body:has(#detailModal:not([hidden])) .site-header{z-index:55}
 #memberGoogle img{background:#fff;border-radius:50%}
 #memberKakao{
   --social-bg:#fee500;--social-border:#fee500;--social-text:rgba(0,0,0,.85);--social-overlay:0 0 0;
-  margin-top:8px;
+  margin-top:10px;
 }
 .member-social:hover{background:var(--social-bg)}
 .member-social:not(:disabled):hover{box-shadow:inset 0 0 0 100px rgb(var(--social-overlay) / .08)}
 .member-social:not(:disabled):active{box-shadow:inset 0 0 0 100px rgb(var(--social-overlay) / .14)}
 .member-social:focus-visible{outline:2px solid #f5f5f5;outline-offset:2px}
+.member-dialog .member-email-divider{
+  display:none;align-items:center;gap:10px;margin:0;color:#d7d8dc;font-size:12px;text-align:center;
+}
+#memberKakao:not([hidden]) + #memberForm .member-email-divider{display:flex}
+.member-email-divider::before,.member-email-divider::after{content:"";flex:1;border-top:1px solid #42444a}
 .member-auth-links{display:flex;flex-wrap:wrap;gap:14px}
 .member-auth-links button{min-height:44px;padding:0;border:0;background:transparent;color:#d7d8dc;font-size:12px}
 .site-footer{align-items:center;flex-wrap:wrap;gap:10px 18px}

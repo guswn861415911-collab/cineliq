@@ -19,7 +19,7 @@
 <meta name="twitter:description" content="구도부터 조명, 색감, 카메라 무빙까지. AI 이미지·영상 제작을 위한 시각 연출 가이드.">
 <meta name="twitter:image" content="https://cineliq.art/assets/og-cover.png">
 <meta name="twitter:image:alt" content="CINELIQ 카메라 기법 아틀라스">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=member-social-2">
 <script src="data.js" defer></script>
 <script src="media-config.js" defer></script><script src="media-cloud.js" defer></script>
 <script src="media-admin.js" defer></script><script src="member.js" defer></script><script src="app.js" defer></script>
@@ -58,9 +58,14 @@
 <div id="detailModal" class="modal-layer" hidden><div class="modal-scrim" data-close="true"></div><section class="detail-panel" role="dialog" aria-labelledby="detailTitle"><button id="closeDetail" class="modal-close" type="button" aria-label="닫기">×</button><div id="detailBody"></div></section></div>
 <dialog id="memberDialog" class="admin-dialog member-dialog" aria-labelledby="memberAuthTitle">
   <div class="admin-dialog-head"><h2 id="memberAuthTitle">로그인</h2><button id="closeMemberAuth" class="member-action" type="button">닫기</button></div>
-  <button id="memberGoogle" class="member-action member-social" type="button" disabled><img src="assets/google-signin-g.png" width="20" height="20" alt=""><span>Google 계정으로 계속하기</span></button>
-  <button id="memberKakao" class="member-action member-social" type="button" disabled><img src="assets/kakao-signin-symbol.svg" width="20" height="20" alt=""><span>카카오 로그인</span></button>
+  <button id="memberGoogle" class="member-action member-social" type="button" disabled>
+    <span class="member-social-content"><img class="member-social-logo" src="assets/google-signin-g.png" width="20" height="20" alt=""><span>Google 계정으로 계속하기</span></span>
+  </button>
+  <button id="memberKakao" class="member-action member-social" type="button" disabled>
+    <span class="member-social-content"><img class="member-social-logo" src="assets/kakao-signin-symbol.svg" width="20" height="20" alt=""><span>카카오 로그인</span></span>
+  </button>
   <form id="memberForm">
+    <p class="member-email-divider">또는 이메일로 로그인</p>
     <label>이메일<input name="email" type="email" autocomplete="username" required></label>
     <label>비밀번호<input name="password" type="password" autocomplete="current-password" required></label>
     <button id="memberSubmit" class="member-action" type="submit" disabled>로그인</button>

@@ -83,7 +83,10 @@
     google: loginWithGoogle,
     kakao: async () => unwrap(await client.auth.signInWithOAuth({
       provider:'kakao',
-      options:{redirectTo:callbackUrl()},
+      options:{
+        redirectTo:callbackUrl(),
+        queryParams:{scope:'profile_image,profile_nickname'},
+      },
     })),
     reset: async email => unwrap(await client.auth.resetPasswordForEmail(email, {redirectTo: callbackUrl()})),
     updatePassword: async password => unwrap(await client.auth.updateUser({password})),

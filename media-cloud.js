@@ -59,18 +59,23 @@
   }
 
   const callbackUrl = () => new URL('.', location.href).href;
+  const kakaoQueryParams = {scope:'profile_image,profile_nickname'};
+  const googleQueryParams = {prompt:'select_account'};
 
-  async function loginWithGoogle() {
+  async function enabledProviders() {
     const settingsUrl = new URL('/auth/v1/settings', config.projectUrl);
     const response = await fetch(settingsUrl, {headers:{apikey:config.publishableKey}});
     if (!response.ok) throw Error('Auth settings are unavailable');
-    const settings = await response.json();
-    if (!settings.external?.google) {
+    return (await response.json()).external ?? {};
+  }
+
+  async function loginWithGoogle() {
+    if (!(await enabledProviders()).google) {
       throw Object.assign(Error('Google provider is disabled'), {code:'google_unavailable'});
     }
     return unwrap(await client.auth.signInWithOAuth({
       provider:'google',
-      options:{redirectTo:callbackUrl(),queryParams:{prompt:'select_account'}},
+      options:{redirectTo:callbackUrl(),queryParams:googleQueryParams},
     }));
   }
 
@@ -85,11 +90,22 @@
       provider:'kakao',
       options:{
         redirectTo:callbackUrl(),
-        queryParams:{scope:'profile_image,profile_nickname'},
+        queryParams:kakaoQueryParams,
       },
     })),
     reset: async email => unwrap(await client.auth.resetPasswordForEmail(email, {redirectTo: callbackUrl()})),
     updatePassword: async password => unwrap(await client.auth.updateUser({password})),
+    enabledProviders,
+    identities: async () => unwrap(await client.auth.getUserIdentities()).identities,
+    linkIdentity: async provider => unwrap(await client.auth.linkIdentity({
+      provider,
+      options:{
+        redirectTo:callbackUrl(),
+        queryParams:provider === 'kakao' ? kakaoQueryParams : googleQueryParams,
+        skipBrowserRedirect:true,
+      },
+    })).url,
+    unlinkIdentity: async identity => unwrap(await client.auth.unlinkIdentity(identity)),
     favorites: async userId => unwrap(await client.from('cineliq_favorites')
       .select('technique_id,created_at').eq('user_id',userId).order('created_at',{ascending:false})),
     save: async (userId, techniqueId) => unwrap(await client.from('cineliq_favorites')

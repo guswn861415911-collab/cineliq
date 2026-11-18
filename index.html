@@ -19,10 +19,10 @@
 <meta name="twitter:description" content="구도부터 조명, 색감, 카메라 무빙까지. AI 이미지·영상 제작을 위한 시각 연출 가이드.">
 <meta name="twitter:image" content="https://cineliq.art/assets/og-cover.png">
 <meta name="twitter:image:alt" content="CINELIQ 카메라 기법 아틀라스">
-<link rel="stylesheet" href="styles.css?v=member-social-4">
+<link rel="stylesheet" href="styles.css?v=member-identities-1">
 <script src="data.js" defer></script>
-<script src="media-config.js" defer></script><script src="media-cloud.js" defer></script>
-<script src="media-admin.js" defer></script><script src="member.js" defer></script><script src="app.js" defer></script>
+<script src="media-config.js" defer></script><script src="media-cloud.js?v=member-identities-1" defer></script>
+<script src="media-admin.js" defer></script><script src="member.js?v=member-identities-1" defer></script><script src="app.js" defer></script>
 </head>
 <body>
 <div class="app-shell">
@@ -46,6 +46,14 @@
   <div id="memberGuest"><p>로그인하고 저장한 기법을 확인하세요.</p><button id="memberGuestLogin" class="member-action" type="button">로그인</button></div>
   <div id="memberSignedIn" hidden>
     <div class="member-profile"><div><h2>회원 정보</h2><p id="memberEmail"></p></div><button id="memberLogout" class="member-action" type="button">로그아웃</button></div>
+    <section id="memberIdentities" aria-labelledby="memberIdentitiesTitle">
+      <h2 id="memberIdentitiesTitle">연결된 계정</h2>
+      <ul>
+        <li data-identity-provider="google"><strong>Google</strong><span></span><button class="member-action" type="button" disabled>연결하기</button></li>
+        <li data-identity-provider="kakao"><strong>카카오</strong><span></span><button class="member-action" type="button" disabled>연결하기</button></li>
+      </ul>
+      <p id="memberIdentityStatus" role="status"></p>
+    </section>
     <h2>즐겨찾기</h2>
     <div class="member-filters"><input id="favoriteSearch" type="search" placeholder="저장한 기법 검색" aria-label="저장한 기법 검색"><select id="favoriteSort" aria-label="즐겨찾기 정렬"><option value="recent">최근 저장순</option><option value="name">이름순</option></select></div>
     <p id="favoriteStatus" role="status"></p>

@@ -656,6 +656,16 @@ body:has(#detailModal:not([hidden])) .site-header{z-index:55}
 #memberPage p{color:#bfc1c6;overflow-wrap:anywhere}
 .member-profile{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid #393b40;padding-bottom:20px;margin-bottom:28px}
 .member-profile p{margin:0}
+#memberIdentities{margin-bottom:28px}
+#memberIdentities ul{list-style:none;padding:0;margin:0}
+#memberIdentities li{
+  display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;
+  gap:clamp(8px,3vw,16px);padding:6px 0;border-bottom:1px solid #393b40;font-size:13px;
+}
+#memberIdentities li span{color:#bfc1c6}
+#memberIdentities .member-action{white-space:nowrap}
+#memberIdentityStatus{margin:10px 0 0;font-size:13px}
+#memberIdentityStatus:empty{display:none}
 .member-action{min-height:44px;padding:8px 14px;border:1px solid #484a50;border-radius:6px;background:#222429;color:#f5f5f5;font-size:13px}
 .member-action:hover{background:#33363b}
 .member-action:disabled{opacity:.5}

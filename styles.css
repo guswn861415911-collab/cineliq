@@ -635,10 +635,17 @@ body:has(#detailModal:not([hidden])) .site-header{z-index:55}
 #detailModal{top:var(--header-height)}
 .detail-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .card-actions .favorite-toggle{margin-right:auto}
-.favorite-toggle{display:inline-grid;place-items:center;min-width:44px;min-height:44px;border:0;border-radius:6px;background:transparent;color:inherit;font-size:22px;line-height:1}
-.favorite-toggle:hover,.favorite-toggle:focus-visible{background:#8882}
-.favorite-toggle[aria-pressed="true"]{color:inherit}
-.favorite-toggle:disabled{opacity:.5}
+.favorite-toggle{
+  --bookmark-saved:#D5AE70;
+  display:inline-grid;place-items:center;min-width:44px;min-height:44px;
+  border:0;border-radius:6px;background:transparent;color:#bdbdbd;
+}
+.bookmark-icon{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round}
+.favorite-toggle:not([aria-pressed="true"]):is(:hover,:focus-visible){color:#f5f5f5}
+.favorite-toggle:focus-visible{outline-color:currentColor}
+.favorite-toggle[aria-pressed="true"]{color:var(--bookmark-saved)}
+.favorite-toggle[aria-pressed="true"] .bookmark-icon{fill:currentColor}
+.favorite-toggle[aria-disabled="true"]{cursor:wait}
 
 #memberPage{display:none;max-width:920px;margin:auto;padding:56px clamp(20px,5vw,60px) 90px;color:#f5f5f5}
 [data-mobile-view="my"] > #memberPage{display:block}

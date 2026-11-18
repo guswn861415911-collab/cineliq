@@ -55,16 +55,19 @@
     }
 
     function favoriteButton(id) {
-      const saved = favorites.has(id);
-      return `<button type="button" class="favorite-toggle" data-favorite="${escape(id)}" aria-label="${saved?'즐겨찾기 해제':'즐겨찾기 저장'}" aria-pressed="${saved}"><span aria-hidden="true">${saved?'★':'☆'}</span></button>`;
+      const saved = isBookmarked(id);
+      const unavailable = loadingFavorites || pending.has(id);
+      return `<button type="button" class="favorite-toggle" data-favorite="${escape(id)}" aria-label="즐겨찾기" aria-pressed="${saved}" aria-disabled="${unavailable}"><svg class="bookmark-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M6 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17l-6-4-6 4z"/></svg></button>`;
+    }
+
+    function isBookmarked(id) {
+      return favorites.has(id) !== pending.has(id);
     }
 
     function paintButton(button) {
-      const saved = favorites.has(button.dataset.favorite);
-      button.setAttribute('aria-pressed', String(saved));
-      button.setAttribute('aria-label', saved ? '즐겨찾기 해제' : '즐겨찾기 저장');
-      button.firstElementChild.textContent = saved ? '★' : '☆';
-      button.disabled = loadingFavorites || pending.has(button.dataset.favorite);
+      const id = button.dataset.favorite;
+      button.setAttribute('aria-pressed', String(isBookmarked(id)));
+      button.setAttribute('aria-disabled', String(loadingFavorites || pending.has(id)));
     }
 
     function renderFavorites() {
@@ -113,31 +116,39 @@
       }
     }
 
-    async function toggleFavorite(id) {
+    async function toggleFavorite(button) {
       if (!session) {
         openAuth('login','로그인하면 이 기법을 즐겨찾기에 저장할 수 있습니다.');
         return;
       }
+      const id = button.dataset.favorite;
       if (loadingFavorites || !items.has(id) || pending.has(id)) return;
       const userId = session.user.id;
       const version = lookupVersion;
       const saved = favorites.has(id);
       pending.add(id);
-      document.querySelectorAll(`[data-favorite="${id}"]`).forEach(paintButton);
+      const selector = `[data-favorite="${CSS.escape(id)}"]`;
+      document.querySelectorAll(selector).forEach(paintButton);
+      if (!saved && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        button.querySelector('.bookmark-icon').animate(
+          [{transform:'scale(1)'},{transform:'scale(1.14)',offset:.45},{transform:'scale(1)'}],
+          {duration:210,easing:'ease-in-out'});
+      }
       try {
         await cloud.members[saved?'remove':'save'](userId,id);
         if (version !== lookupVersion) return;
+        pending.delete(id);
         if (saved) favorites.delete(id);
         else favorites.set(id,new Date().toISOString());
+        renderFavorites();
         notify(saved?'즐겨찾기를 해제했습니다.':'즐겨찾기에 저장했습니다.');
       } catch (error) {
-        if (version === lookupVersion) notify('즐겨찾기를 변경하지 못했습니다.');
-        console.warn('CINELIQ favorite update:', error);
-      } finally {
         if (version === lookupVersion) {
           pending.delete(id);
-          renderFavorites();
+          document.querySelectorAll(selector).forEach(paintButton);
+          notify('즐겨찾기를 변경하지 못했습니다.');
         }
+        console.warn('CINELIQ favorite update:', error);
       }
     }
 
@@ -168,7 +179,7 @@
       const button = event.target.closest('[data-favorite]');
       if (!button) return;
       event.stopPropagation();
-      void toggleFavorite(button.dataset.favorite);
+      void toggleFavorite(button);
     },true);
     logout.addEventListener('click',async()=>{
       logout.disabled = true;

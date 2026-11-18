@@ -26,7 +26,7 @@
   async function connect() {
     const {createClient} = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.102.0/+esm');
     client = createClient(config.projectUrl, config.publishableKey, {
-      auth: {detectSessionInUrl: false, autoRefreshToken: true, persistSession: true},
+      auth: {flowType: 'pkce', detectSessionInUrl: true, autoRefreshToken: true, persistSession: true},
     });
   }
 
@@ -36,6 +36,11 @@
   }
 
   async function login(email, password) {
+    const {session} = unwrap(await client.auth.getSession());
+    if (session) {
+      if (await canWrite()) return;
+      throw Error('관리자 계정으로 전환하려면 마이페이지에서 먼저 로그아웃해 주세요.');
+    }
     unwrap(await client.auth.signInWithPassword({email, password}));
     try {
       if (!await canWrite()) throw Error('미디어를 관리할 권한이 없는 계정입니다.');
@@ -50,8 +55,40 @@
   }
 
   function onAuthChange(callback) {
-    client.auth.onAuthStateChange(() => setTimeout(callback, 0));
+    return client.auth.onAuthStateChange((event, session) => setTimeout(() => callback(event, session), 0));
   }
+
+  const callbackUrl = () => new URL('.', location.href).href;
+
+  async function loginWithGoogle() {
+    const settingsUrl = new URL('/auth/v1/settings', config.projectUrl);
+    const response = await fetch(settingsUrl, {headers:{apikey:config.publishableKey}});
+    if (!response.ok) throw Error('Auth settings are unavailable');
+    const settings = await response.json();
+    if (!settings.external?.google) {
+      throw Object.assign(Error('Google provider is disabled'), {code:'google_unavailable'});
+    }
+    return unwrap(await client.auth.signInWithOAuth({
+      provider:'google',options:{redirectTo:callbackUrl()},
+    }));
+  }
+
+  const members = {
+    session: async () => unwrap(await client.auth.getSession()).session,
+    login: async (email, password) => unwrap(await client.auth.signInWithPassword({email, password})),
+    signup: async (email, password) => unwrap(await client.auth.signUp({
+      email, password, options: {emailRedirectTo: callbackUrl()},
+    })),
+    google: loginWithGoogle,
+    reset: async email => unwrap(await client.auth.resetPasswordForEmail(email, {redirectTo: callbackUrl()})),
+    updatePassword: async password => unwrap(await client.auth.updateUser({password})),
+    favorites: async userId => unwrap(await client.from('cineliq_favorites')
+      .select('technique_id,created_at').eq('user_id',userId).order('created_at',{ascending:false})),
+    save: async (userId, techniqueId) => unwrap(await client.from('cineliq_favorites')
+      .upsert({user_id:userId,technique_id:techniqueId},{onConflict:'user_id,technique_id',ignoreDuplicates:true})),
+    remove: async (userId, techniqueId) => unwrap(await client.from('cineliq_favorites')
+      .delete().eq('user_id',userId).eq('technique_id',techniqueId)),
+  };
 
   async function catalog(admin, previous = new Map()) {
     const rows = [];
@@ -205,7 +242,7 @@
   }
 
   window.CINELIQ_CLOUD = {
-    configured, showAdmin: config.showAdmin, connect, canWrite, login, logout, onAuthChange,
+    configured, showAdmin: config.showAdmin, connect, canWrite, login, logout, onAuthChange, members,
     catalog, upload, mutate, validate, digest, limits, types,
   };
 })();

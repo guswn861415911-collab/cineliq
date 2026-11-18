@@ -12,6 +12,7 @@ let toastTimer;function toast(message){const el=$('#toast');el.textContent=messa
 let cleanupDetail=()=>{};
 let catalogRequest=0;
 const admin=window.CINELIQ_ADMIN({state,items:itemById,escape:esc,notify:toast,refresh:refreshCloud,updateDetail});
+const member=window.CINELIQ_MEMBER({items:itemById,navigate:view=>navigateView(view),notify:toast,escape:esc});
 
 function readLegacy(){
   return new Promise((resolve,reject)=>{
@@ -76,6 +77,7 @@ async function initMedia(){
   }
   try{
     await cloud.connect();
+    void member.start().catch(error=>console.warn('CINELIQ member session:',error));
     await refreshCloud();
     await admin.start();
     updateDetail();
@@ -130,7 +132,7 @@ function cardSummary(i){
   const lastSpace=slice.lastIndexOf(' ');
   return (lastSpace>max*0.65?slice.slice(0,lastSpace):slice).replace(/[\s,，;；]+$/,'')+'…';
 }
-function card(i){return `<article class="tech-card" data-open="${i.id}"${state.open===i.id?' data-selected':''} tabindex="0" role="button" aria-label="${esc(i.ko)} 상세 보기">${mediaHTML(i)}<div class="card-content"><div class="card-section">${esc(i.section)} · ${majorName(i.major)}</div><div class="card-title-row"><h3 class="card-title">${esc(i.ko)}</h3><button class="copy-icon-btn" type="button" data-copy="${i.id}" aria-label="${esc(i.en)} 영문 명칭 복사" title="영문 명칭 복사">⧉</button></div><div class="card-en">${esc(i.en)}</div><p class="card-description">${esc(cardSummary(i))}</p><div class="card-actions"><span class="open-link">기법 살펴보기 <span aria-hidden="true">↗</span></span></div></div></article>`}
+function card(i){return `<article class="tech-card" data-open="${i.id}"${state.open===i.id?' data-selected':''} tabindex="0" role="button" aria-label="${esc(i.ko)} 상세 보기">${mediaHTML(i)}<div class="card-content"><div class="card-section">${esc(i.section)} · ${majorName(i.major)}</div><div class="card-title-row"><h3 class="card-title">${esc(i.ko)}</h3><button class="copy-icon-btn" type="button" data-copy="${i.id}" aria-label="${esc(i.en)} 영문 명칭 복사" title="영문 명칭 복사">⧉</button></div><div class="card-en">${esc(i.en)}</div><p class="card-description">${esc(cardSummary(i))}</p><div class="card-actions">${member.favoriteButton(i.id)}<span class="open-link">기법 살펴보기 <span aria-hidden="true">↗</span></span></div></div></article>`}
 let revealObserver=null;
 let scrollObserver=null;
 function observeReveals(){
@@ -189,7 +191,7 @@ function makePrompt(i){
   return `가로 16:9, ${isMotion?'고화질 시네마틱 영상':'초고화질 이미지'}.\n\n기법: ${i.ko} / ${i.en}\n${i.description}\n\n${style}\n\n[피사체와 장소]: 기법이 명확히 드러나는 구체적인 인물·사물·환경을 지정합니다.\n[카메라와 연출]: 피사체의 크기, 카메라 위치, 거리, 렌즈 특성과 조명을 구체적으로 지정합니다.\n${isMotion?'[움직임]: 시작 프레임, 동작 변화, 종료 프레임과 재생 시간을 지정합니다.':'[이미지]: 핵심 효과가 한눈에 구분되도록 프레임을 구성합니다.'}\n텍스트, 자막, 워터마크, 로고 없음.`;
 }
 function updateDetail(){if(state.open)openDetail(state.open,false)}
-function openDetail(id,focus=true){const i=itemById.get(id);if(!i)return;cleanupDetail();state.open=id;document.querySelector('.tech-card[data-selected]')?.removeAttribute('data-selected');$('.tech-card[data-open="'+id+'"]')?.setAttribute('data-selected','');const prompt=makePrompt(i);$('#detailBody').innerHTML=`<div class="detail-inner"><div class="detail-overline">${esc(majorName(i.major).toUpperCase())} / ${esc(i.section)} / ${i.id}</div><div class="detail-heading"><h2 id="detailTitle">${esc(i.ko)}</h2><button class="btn outline small" data-copy="${i.id}" type="button">⧉ 영문명 복사</button></div><p class="detail-en">${esc(i.en)}</p>${mediaHTML(i,true)}<div class="detail-info"><p class="info-label">ABOUT THIS TECHNIQUE</p><p class="detail-description">${esc(i.description)}</p><div class="detail-tags">${i.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div><div class="prompt-box"><div class="prompt-head"><strong>✦ AI 영상 프롬프트 예시</strong><button class="btn outline small" type="button" id="copyPrompt">⧉ 프롬프트 복사</button></div><p class="prompt-text">${esc(prompt)}</p><div class="prompt-hint">* 학습용 기본 템플릿입니다. 장면과 사용 모델에 맞게 수정하세요.</div></div>${state.admin?admin.markup(i,state.mediaMap.get(i.id)||[]):legacyDownload(i)}</div>`;
+function openDetail(id,focus=true){const i=itemById.get(id);if(!i)return;cleanupDetail();state.open=id;document.querySelector('.tech-card[data-selected]')?.removeAttribute('data-selected');$('.tech-card[data-open="'+id+'"]')?.setAttribute('data-selected','');const prompt=makePrompt(i);$('#detailBody').innerHTML=`<div class="detail-inner"><div class="detail-overline">${esc(majorName(i.major).toUpperCase())} / ${esc(i.section)} / ${i.id}</div><div class="detail-heading"><h2 id="detailTitle">${esc(i.ko)}</h2><div class="detail-actions">${member.favoriteButton(i.id)}<button class="btn outline small" data-copy="${i.id}" type="button">⧉ 영문명 복사</button></div></div><p class="detail-en">${esc(i.en)}</p>${mediaHTML(i,true)}<div class="detail-info"><p class="info-label">ABOUT THIS TECHNIQUE</p><p class="detail-description">${esc(i.description)}</p><div class="detail-tags">${i.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div><div class="prompt-box"><div class="prompt-head"><strong>✦ AI 영상 프롬프트 예시</strong><button class="btn outline small" type="button" id="copyPrompt">⧉ 프롬프트 복사</button></div><p class="prompt-text">${esc(prompt)}</p><div class="prompt-hint">* 학습용 기본 템플릿입니다. 장면과 사용 모델에 맞게 수정하세요.</div></div>${state.admin?admin.markup(i,state.mediaMap.get(i.id)||[]):legacyDownload(i)}</div>`;
   $('#detailModal').hidden=false;
   document.body.style.overflow='hidden';
   if(focus)$('#closeDetail').focus();
@@ -209,6 +211,22 @@ function setupNavigation(openLibrary){
   const setOpen=open=>{toggle.setAttribute('aria-expanded',String(open));document.body.classList.toggle('menu-open',open);backdrop.setAttribute('aria-hidden',String(!open))};
   const close=(focus=false)=>{setOpen(false);if(focus)toggle.focus()};
   $('#mobileMenuClose')?.addEventListener('click',()=>close(true));
+  const mobile=matchMedia('(max-width:760px)');
+  let swipeStart=null;
+  panel.addEventListener('touchstart',event=>{
+    swipeStart=mobile.matches&&event.touches.length===1
+      ? {x:event.touches[0].clientX,y:event.touches[0].clientY}
+      : null;
+  },{passive:true});
+  panel.addEventListener('touchcancel',()=>{swipeStart=null;},{passive:true});
+  panel.addEventListener('touchend',event=>{
+    const start=swipeStart;
+    swipeStart=null;
+    const end=event.changedTouches[0];
+    if(!start||!end||event.touches.length)return;
+    const distance=start.x-end.clientX;
+    if(distance>=72&&distance>Math.abs(end.clientY-start.y)*1.6)close(true);
+  },{passive:true});
   toggle.addEventListener('click',()=>setOpen(toggle.getAttribute('aria-expanded')!=='true'));
   backdrop.addEventListener('click',()=>close());
   panel.addEventListener('click',e=>{
@@ -227,24 +245,31 @@ function setupMobileViews(updateHeroVideo){
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
   let animation;
   let transitionId=0;
-  const currentRoute=()=>location.hash==='#library'?'library':'hero';
+  const currentRoute=()=>location.hash==='#my'?'my':location.hash==='#library'?'library':'hero';
+  const panelFor=view=>view==='my'?$('#memberPage'):view==='library'?library:hero;
 
   async function renderView({animate=false,focus=false}={}){
     const id=++transitionId;
     animation?.cancel();
-    if(!mobile.matches){
+    const next=currentRoute();
+    if(!mobile.matches&&next!=='my'){
+      const leavingMember=main.dataset.mobileView==='my';
       delete main.dataset.mobileView;
       history.scrollRestoration='auto';
       updateHeroVideo();
+      if(leavingMember){
+        if(next==='library')$('#catalogTitle').scrollIntoView({behavior:'instant'});
+        else window.scrollTo({top:0,behavior:'instant'});
+        if(focus)$(next==='library'?'#catalogTitle':'.brand').focus({preventScroll:true});
+      }
       return;
     }
     history.scrollRestoration='manual';
-    const next=currentRoute();
     const current=main.dataset.mobileView;
     if(current===next)return;
     const fade=animate&&current&&!reducedMotion.matches;
     if(fade){
-      animation=(current==='hero'?hero:library).animate([{opacity:1},{opacity:0}],{duration:130,fill:'forwards'});
+      animation=panelFor(current).animate([{opacity:1},{opacity:0}],{duration:130,fill:'forwards'});
       await animation.finished.catch(()=>{});
       if(id!==transitionId)return;
       animation.cancel();
@@ -252,15 +277,16 @@ function setupMobileViews(updateHeroVideo){
     main.dataset.mobileView=next;
     window.scrollTo({top:0,behavior:'instant'});
     updateHeroVideo();
-    if(focus)(next==='hero'?$('.hero-explore'):$('#catalogTitle')).focus({preventScroll:true});
+    if(focus)(next==='my'?$('#memberPageTitle'):next==='hero'?$('.hero-explore'):$('#catalogTitle')).focus({preventScroll:true});
     if(fade){
-      animation=(next==='hero'?hero:library).animate([{opacity:0},{opacity:1}],{duration:180,easing:'ease-out'});
+      animation=panelFor(next).animate([{opacity:0},{opacity:1}],{duration:180,easing:'ease-out'});
     }
   }
 
   function navigate(view){
-    if(!mobile.matches||currentRoute()===view)return;
-    history.pushState(null,'',view==='library'?'#library':'#home');
+    if((!mobile.matches&&view==='library'&&currentRoute()!=='my')||currentRoute()===view)return;
+    if(state.open)closeDetail();
+    history.pushState(null,'',view==='my'?'#my':view==='library'?'#library':'#home');
     void renderView({animate:true,focus:true});
   }
 
@@ -270,7 +296,7 @@ function setupMobileViews(updateHeroVideo){
     navigate('library');
   });
   $('.brand').addEventListener('click',e=>{
-    if(!mobile.matches)return;
+    if(!mobile.matches&&currentRoute()!=='my')return;
     e.preventDefault();
     navigate('hero');
   });
@@ -278,7 +304,7 @@ function setupMobileViews(updateHeroVideo){
   mobile.addEventListener('change',()=>void renderView());
   reducedMotion.addEventListener('change',()=>void renderView());
   void renderView();
-  return ()=>navigate('library');
+  return navigate;
 }
 function events(openLibrary){setupNavigation(openLibrary);setupInfiniteScroll();const filterToggle=$('#filterToggle');
 filterToggle.addEventListener('click',()=>filterToggle.setAttribute('aria-expanded',String(filterToggle.getAttribute('aria-expanded')!=='true')));
@@ -301,7 +327,8 @@ function setupHeroVideo() {
       }
       return;
     }
-    if (mobile.matches && $('.main-content').dataset.mobileView === 'library') {
+    const view = $('.main-content').dataset.mobileView;
+    if (view === 'my' || (mobile.matches && view === 'library')) {
       video.pause();
       return;
     }
@@ -314,6 +341,6 @@ function setupHeroVideo() {
   return updateVideo;
 }
 
-const openLibrary=setupMobileViews(setupHeroVideo());
-renderAll();events(openLibrary);void initMedia();
+const navigateView=setupMobileViews(setupHeroVideo());
+renderAll();events(()=>navigateView('library'));void initMedia();
 })();

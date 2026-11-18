@@ -134,12 +134,21 @@ function card(i){return `<article class="tech-card" data-open="${i.id}"${state.o
 let revealObserver=null;
 let scrollObserver=null;
 function observeReveals(){
+  const cards=[...document.querySelectorAll('.tech-card:not(.is-visible)')];
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){
+    cards.forEach(el=>el.classList.add('is-visible'));return;
+  }
   if(!revealObserver){
     revealObserver=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target)}});
-    },{threshold:.06,rootMargin:'0px 0px 60px 0px'});
+      const visible=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top||a.boundingClientRect.left-b.boundingClientRect.left);
+      visible.forEach(entry=>{
+        const el=entry.target;
+        el.style.setProperty('--reveal-delay',`${Math.min(Number(el.dataset.revealOrder||0)%3,2)*85}ms`);
+        el.classList.add('is-visible');revealObserver.unobserve(el);
+      });
+    },{threshold:.08,rootMargin:'0px 0px 35px 0px'});
   }
-  document.querySelectorAll('.tech-card:not(.is-visible)').forEach(el=>revealObserver.observe(el));
+  cards.forEach((el,index)=>{el.dataset.revealOrder=index;revealObserver.observe(el)});
 }
 function renderCards(){
   const arr=filtered(),shown=arr.slice(0,state.limit);
@@ -150,7 +159,7 @@ function renderCards(){
   const old=[...grid.children].map(el=>el.dataset.open);
   const appendOnly=old.length>0&&old.length<=ids.length&&old.every((id,j)=>id===ids[j]);
   if(appendOnly){grid.insertAdjacentHTML('beforeend',shown.slice(old.length).map(card).join(''))}
-  else{grid.innerHTML=shown.map(card).join('')}
+  else{revealObserver?.disconnect();grid.innerHTML=shown.map(card).join('')}
   $('#emptyState').hidden=arr.length!==0;
   $('#loadMore').hidden=true;
   $('#scrollSentinel').hidden=arr.length<=state.limit;
@@ -206,7 +215,13 @@ function setupNavigation(){
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&toggle.getAttribute('aria-expanded')==='true')close(true)});
 }
 
-function events(){setupNavigation();setupInfiniteScroll();const filterToggle=$('#filterToggle');
+function setupHeroExplore(){
+  document.querySelector('.hero-explore')?.addEventListener('click',e=>{
+    e.preventDefault();
+    document.querySelector('#catalogTitle')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+  });
+}
+function events(){setupNavigation();setupHeroExplore();setupInfiniteScroll();const filterToggle=$('#filterToggle');
 filterToggle.addEventListener('click',()=>filterToggle.setAttribute('aria-expanded',String(filterToggle.getAttribute('aria-expanded')!=='true')));
 document.addEventListener('click',e=>{const copy=e.target.closest('[data-copy]');if(copy){e.stopPropagation();const i=ITEMS.find(x=>x.id===copy.dataset.copy);if(i)copyText(i.en);return}const focused=document.activeElement;const major=e.target.closest('[data-major]');if(major){state.major=major.dataset.major;state.section=0;state.limit=CONFIG.PAGE_SIZE;renderAll();if(major===focused)$(".nav-btn.active")?.focus();return}const sec=e.target.closest('[data-section]');if(sec){state.section=Number(sec.dataset.section);state.limit=CONFIG.PAGE_SIZE;renderAll();if(sec===focused)$(".section-btn.active")?.focus();return}const tag=e.target.closest('[data-tag]');if(tag){const t=tag.dataset.tag;if(t==='all')state.tags.clear();else if(state.tags.has(t))state.tags.delete(t);else state.tags.add(t);state.limit=CONFIG.PAGE_SIZE;renderTags();renderCards();return}const media=e.target.closest('[data-media]');if(media){state.media=media.dataset.media;state.limit=CONFIG.PAGE_SIZE;renderTags();renderCards();return}const card=e.target.closest('[data-open]');if(card){openDetail(card.dataset.open);return}if(e.target.closest('[data-close]'))closeDetail()});$('#searchInput').addEventListener('input',e=>{state.search=e.target.value;state.limit=CONFIG.PAGE_SIZE;renderCards()});$('#sortSelect').addEventListener('change',e=>{state.sort=e.target.value;renderCards()});$('#clearFilters').addEventListener('click',resetFilters);$('#emptyReset').addEventListener('click',resetFilters);$('#loadMore').addEventListener('click',()=>{state.limit+=CONFIG.PAGE_SIZE;renderCards()});$('#closeDetail').addEventListener('click',closeDetail);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#detailModal').hidden)closeDetail();if(e.key==='/'&&document.activeElement?.tagName!=='INPUT'&&document.activeElement?.tagName!=='TEXTAREA'&&$('#detailModal').hidden){e.preventDefault();$('#searchInput').focus()}if((e.key==='Enter'||e.key===' ')&&e.target.matches('.tech-card')){e.preventDefault();openDetail(e.target.dataset.open)}})}
 function setupHeroVideo() {

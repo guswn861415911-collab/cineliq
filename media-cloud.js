@@ -81,6 +81,10 @@
       email, password, options: {emailRedirectTo: callbackUrl()},
     })),
     google: loginWithGoogle,
+    kakao: async () => unwrap(await client.auth.signInWithOAuth({
+      provider:'kakao',
+      options:{redirectTo:callbackUrl()},
+    })),
     reset: async email => unwrap(await client.auth.resetPasswordForEmail(email, {redirectTo: callbackUrl()})),
     updatePassword: async password => unwrap(await client.auth.updateUser({password})),
     favorites: async userId => unwrap(await client.from('cineliq_favorites')

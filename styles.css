@@ -669,7 +669,8 @@ body:has(#detailModal:not([hidden])) .site-header{z-index:55}
 .member-dialog{color:#f5f5f5;background:#191b1f;border-color:#42444a}
 .member-dialog p{color:#d7d8dc}
 #memberGoogle{width:100%;margin-top:18px}
-#memberKakao{width:100%;margin-top:8px}
+#memberKakao{display:block;width:min(100%,224px);margin:8px auto 0;padding:0;border:0;border-radius:8px;background:none}
+#memberKakao img{display:block;width:100%;height:auto}
 .member-auth-links{display:flex;flex-wrap:wrap;gap:14px}
 .member-auth-links button{min-height:44px;padding:0;border:0;background:transparent;color:#d7d8dc;font-size:12px}
 .site-footer{align-items:center;flex-wrap:wrap;gap:10px 18px}

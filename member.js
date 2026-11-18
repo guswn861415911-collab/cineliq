@@ -20,6 +20,7 @@
     const sort = document.querySelector('#favoriteSort');
     const logout = document.querySelector('#memberLogout');
     const google = document.querySelector('#memberGoogle');
+    const kakao = document.querySelector('#memberKakao');
     const authCallback = new URL(location.href);
     let session = null;
     let mode = 'login';
@@ -42,7 +43,7 @@
       document.querySelector('#memberAuthTitle').textContent = modes[next][0];
       document.querySelector('#memberSubmit').textContent = modes[next][1];
       document.querySelector('.member-auth-links').hidden = next === 'recovery';
-      google.hidden = next !== 'login';
+      google.hidden = kakao.hidden = next !== 'login';
       for (const button of dialog.querySelectorAll('[data-auth-mode]')) button.hidden = button.dataset.authMode === next;
       status.textContent = '';
     }
@@ -88,7 +89,7 @@
       const changed = session?.user.id !== user?.id;
       session = next;
       header.querySelector('.member-toggle-label').textContent = user ? '마이페이지' : '로그인';
-      root.querySelector('#memberEmail').textContent = user?.email ?? '';
+      root.querySelector('#memberEmail').textContent = user ? user.email || '등록된 이메일 없음' : '';
       root.querySelector('#memberSignedIn').hidden = !user;
       root.querySelector('#memberGuest').hidden = Boolean(user);
       if (!changed) return;
@@ -194,15 +195,20 @@
         logout.disabled = false;
       }
     });
-    google.addEventListener('click',async()=>{
-      google.disabled = true;
-      try { await cloud.members.google(); }
+    async function startSocialLogin(provider) {
+      google.disabled = kakao.disabled = true;
+      status.textContent = '';
+      try { await cloud.members[provider](); }
       catch (error) {
         if (error.code==='google_unavailable') {
           status.textContent = 'Google 로그인 연결 설정이 필요합니다. 이메일로 로그인할 수 있습니다.';
+        } else if (provider==='kakao') {
+          status.textContent = '카카오 로그인을 시작하지 못했어요. 잠시 후 다시 시도하거나 다른 로그인 방법을 이용해 주세요.';
         } else showAuthError(error);
-      } finally { google.disabled = !ready; }
-    });
+      } finally { google.disabled = kakao.disabled = !ready; }
+    }
+    google.addEventListener('click',()=>startSocialLogin('google'));
+    kakao.addEventListener('click',()=>startSocialLogin('kakao'));
     let ready = false;
     form.addEventListener('submit',async event=>{
       event.preventDefault();
@@ -240,8 +246,10 @@
     async function start() {
       ready = true;
       document.querySelector('#memberSubmit').disabled = false;
-      google.disabled = false;
-      const authError = authCallback.searchParams.has('error') || authCallback.hash.startsWith('#error=');
+      google.disabled = kakao.disabled = false;
+      const fragment = new URLSearchParams(authCallback.hash.slice(1));
+      const authError = authCallback.searchParams.get('error') || fragment.get('error');
+      const errorDescription = authCallback.searchParams.get('error_description') || fragment.get('error_description') || '';
       cloud.onAuthChange((event,next)=>{
         void sync(next);
         if (event==='PASSWORD_RECOVERY' && next) openAuth('recovery');
@@ -254,7 +262,10 @@
         ['error','error_code','error_description'].forEach(key=>callback.searchParams.delete(key));
         if (callback.hash.startsWith('#error=')) callback.hash='';
         history.replaceState(history.state,'',callback.href);
-        openAuth('login','인증 링크가 만료되었거나 연결을 완료하지 못했습니다.');
+        const cancelled = authError === 'access_denied' || /access[ _]+denied|cancel(?:led|ed)?|denied access/i.test(errorDescription);
+        openAuth('login',cancelled
+          ? '로그인이 취소됐어요. 원하시면 다시 시도해 주세요.'
+          : '인증 링크가 만료되었거나 로그인을 완료하지 못했어요. 다시 시도하거나 다른 로그인 방법을 이용해 주세요.');
       }
     }
 

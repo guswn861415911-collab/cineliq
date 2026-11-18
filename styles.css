@@ -673,7 +673,7 @@ body:has(#detailModal:not([hidden])) .site-header{z-index:55}
   box-sizing:border-box;width:100%;height:44px;padding:8px 12px;border:1px solid var(--social-border);
   border-radius:12px;background:var(--social-bg);color:var(--social-text);
   font:500 14px/20px system-ui,sans-serif;
-  transition:box-shadow .15s ease;
+  transition:background-color .15s ease,box-shadow .15s ease;
 }
 .member-social-content{display:inline-flex;align-items:center;gap:10px}
 .member-social-logo{
@@ -682,17 +682,24 @@ body:has(#detailModal:not([hidden])) .site-header{z-index:55}
   height:20px;min-height:20px;max-height:20px;
 }
 #memberGoogle{
-  --social-bg:#131314;--social-border:#8e918f;--social-text:#e3e3e3;--social-overlay:255 255 255;
+  --social-bg:#131314;--social-border:#8e918f;--social-text:#e3e3e3;
+  --social-hover:#25272b;--social-active:#303236;
   margin-top:18px;font-family:'Google Sans',system-ui,sans-serif;
 }
 #memberGoogle img{background:#fff;border-radius:50%}
 #memberKakao{
-  --social-bg:#fee500;--social-border:#fee500;--social-text:rgba(0,0,0,.85);--social-overlay:0 0 0;
+  --social-bg:#fee500;--social-border:#fee500;--social-text:rgba(0,0,0,.85);
+  --social-hover-ring:0 0 0 2px rgb(254 229 0 / .28);
+  --social-active-ring:0 0 0 2px rgb(254 229 0 / .45);
   margin-top:10px;
 }
 .member-social:hover{background:var(--social-bg)}
-.member-social:not(:disabled):hover{box-shadow:inset 0 0 0 100px rgb(var(--social-overlay) / .08)}
-.member-social:not(:disabled):active{box-shadow:inset 0 0 0 100px rgb(var(--social-overlay) / .14)}
+.member-social:not(:disabled):hover{
+  background-color:var(--social-hover,var(--social-bg));box-shadow:var(--social-hover-ring,none);
+}
+.member-social:not(:disabled):active{
+  background-color:var(--social-active,var(--social-bg));box-shadow:var(--social-active-ring,none);
+}
 .member-social:focus-visible{outline:2px solid #f5f5f5;outline-offset:2px}
 .member-dialog .member-email-divider{
   display:none;align-items:center;gap:10px;margin:0;color:#d7d8dc;font-size:12px;text-align:center;

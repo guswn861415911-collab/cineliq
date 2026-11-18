@@ -91,7 +91,13 @@ async function initMedia(){
 
 function refreshCounts(){$('#totalCount').textContent=ITEMS.length;$('#readyCount').textContent=state.mediaMap.size;const collections=$('#collectionCount');if(collections)collections.textContent=new Set(ITEMS.map(x=>x.sectionNo)).size}
 function renderNav(){const counts=Object.fromEntries(MAJORS.map(x=>[x.id,x.id==='all'?ITEMS.length:ITEMS.filter(i=>i.major===x.id).length]));$('#majorNav').innerHTML=MAJORS.map(x=>`<button class="nav-btn ${state.major===x.id?'active':''}" data-major="${x.id}" aria-pressed="${state.major===x.id}"><span class="nav-icon">${x.icon}</span>${x.name}<span class="nav-count">${counts[x.id]}</span></button>`).join('');const sections=[...new Map(ITEMS.filter(i=>state.major==='all'||i.major===state.major).map(i=>[i.sectionNo,{id:i.sectionNo,name:i.section}])).values()];$('#sectionNav').innerHTML=`<button class="section-btn ${state.section===0?'active':''}" data-section="0"><span class="sec-no">—</span>모든 세부 분야</button>`+sections.map(s=>`<button class="section-btn ${state.section===s.id?'active':''}" data-section="${s.id}"><span class="sec-no">${String(s.id).padStart(2,'0')}</span>${esc(s.name)}</button>`).join('')}
-function renderTags(){$('#tagFilters').innerHTML=`<button class="chip ${state.tags.size===0?'active':''}" data-tag="all">전체</button>`+TAGS.map(t=>`<button class="chip ${state.tags.has(t)?'active':''}" data-tag="${esc(t)}">${esc(t)}</button>`).join('');document.querySelectorAll('[data-media]').forEach(b=>b.classList.toggle('active',b.dataset.media===state.media));document.querySelectorAll('.admin-media-filter').forEach(b=>b.hidden=!state.admin)}
+function renderMobileFilters(){
+ const tagRoot=$('#mobileTagFilters'),mediaRoot=$('#mobileMediaFilters');
+ if(!tagRoot||!mediaRoot)return;
+ tagRoot.innerHTML=`<button class="mobile-filter-chip ${state.tags.size===0?'active':''}" data-tag="all">전체</button>`+TAGS.map(t=>`<button class="mobile-filter-chip ${state.tags.has(t)?'active':''}" data-tag="${esc(t)}">${esc(t)}</button>`).join('');
+ mediaRoot.innerHTML=[['all','전체'],['image','이미지 기법'],['video','영상 기법']].map(([v,n])=>`<button class="mobile-filter-chip ${state.media===v?'active':''}" data-media="${v}">${n}</button>`).join('');
+}
+function renderTags(){$('#tagFilters').innerHTML=`<button class="chip ${state.tags.size===0?'active':''}" data-tag="all">전체</button>`+TAGS.map(t=>`<button class="chip ${state.tags.has(t)?'active':''}" data-tag="${esc(t)}">${esc(t)}</button>`).join('');document.querySelectorAll('[data-media]').forEach(b=>b.classList.toggle('active',b.dataset.media===state.media));document.querySelectorAll('.admin-media-filter').forEach(b=>b.hidden=!state.admin);renderMobileFilters()}
 function filtered(){const q=state.search.toLocaleLowerCase().trim();let a=ITEMS.filter(i=>{if(state.major!=='all'&&i.major!==state.major)return false;if(state.section&&i.sectionNo!==state.section)return false;if(state.tags.size&&![...state.tags].some(t=>i.tags.includes(t)))return false;const has=state.mediaMap.has(i.id);if(state.media==='ready'&&!has||state.media==='missing'&&has||state.media==='image'&&i.mediaType!=='image'||state.media==='video'&&i.mediaType!=='video')return false;return !q||[i.ko,i.en,i.description,i.section,...i.tags].join(' ').toLocaleLowerCase().includes(q)});const sort=state.sort;if(sort==='az')a.sort((a,b)=>a.en.localeCompare(b.en,'en'));else if(sort==='za')a.sort((a,b)=>b.en.localeCompare(a.en,'en'));else if(sort==='ko')a.sort((a,b)=>a.ko.localeCompare(b.ko,'ko'));else if(sort==='media')a.sort((a,b)=>Number(state.mediaMap.has(b.id))-Number(state.mediaMap.has(a.id))||a.number-b.number);return a}
 function mediaElement(item,row,detail){
   const source=detail?row.url:row.thumbnail||row.url;
@@ -108,9 +114,9 @@ function mediaHTML(i,detail=false){
       const ordered=[primary,...rows.filter(row=>row!==primary)];
       return `<div class="media-gallery">${ordered.map(row=>`<div class="detail-media">${mediaElement(i,row,true)}</div>`).join('')}</div>`;
     }
-    return `<div class="card-media">${mediaElement(i,primary,false)}<span class="media-indicator">● MEDIA READY</span></div>`;
+    return `<div class="card-media">${mediaElement(i,primary,false)}</div>`;
   }
-  if(detail)return `<div class="detail-media empty"><div class="placeholder-inner"><span class="placeholder-icon">${i.mediaType==='video'?'▷':'▧'}</span><strong>아직 ${i.mediaType==='video'?'영상':'이미지'}이 등록되지 않았어요</strong><p>기법 설명과 프롬프트를 먼저 학습해 보세요.<br>등록된 자료는 이곳에 표시됩니다.</p></div></div>`;return `<div class="card-media empty"><span class="media-indicator">${i.mediaType==='video'?'▷ VIDEO':'▧ IMAGE'} · 준비 중</span><span class="card-no">${String(i.number).padStart(3,'0')}</span></div>`}
+  if(detail)return `<div class="detail-media empty"><div class="placeholder-inner"><span class="placeholder-icon">${i.mediaType==='video'?'▷':'▧'}</span><strong>아직 ${i.mediaType==='video'?'영상':'이미지'}이 등록되지 않았어요</strong><p>기법 설명과 프롬프트를 먼저 학습해 보세요.<br>등록된 자료는 이곳에 표시됩니다.</p></div></div>`;return `<div class="card-media empty"><span class="media-indicator">${i.mediaType==='video'?'MOTION STUDY':'FRAME STUDY'}</span><span class="media-placeholder-label">VISUAL REFERENCE</span></div>`}
 
 function cardSummary(i){
   const full=String(i.description||'').trim().replace(/\s+/g,' ');
@@ -124,8 +130,49 @@ function cardSummary(i){
   const lastSpace=slice.lastIndexOf(' ');
   return (lastSpace>max*0.65?slice.slice(0,lastSpace):slice).replace(/[\s,，;；]+$/,'')+'…';
 }
-function card(i){return `<article class="tech-card" data-open="${i.id}"${state.open===i.id?' data-selected':''} tabindex="0" role="button" aria-label="${esc(i.ko)} 상세 보기">${mediaHTML(i)}<div class="card-content"><div class="card-section">${esc(i.section)} · ${majorName(i.major)}</div><div class="card-title-row"><h3 class="card-title">${esc(i.ko)}</h3><button class="copy-icon-btn" type="button" data-copy="${i.id}" aria-label="${esc(i.en)} 영문 명칭 복사" title="영문 명칭 복사">⧉</button></div><div class="card-en">${esc(i.en)}</div><p class="card-description">${esc(cardSummary(i))}</p><div class="card-actions"><span class="open-link">자세히 보기 ↗</span></div></div></article>`}
-function renderCards(){const arr=filtered(),shown=arr.slice(0,state.limit);$('#visibleCount').textContent=arr.length;$('#resultSummary').textContent=state.admin?`${arr.length}개 기법 중 ${shown.length}개 표시 · 등록된 미디어 ${state.mediaMap.size}개`:`${arr.length}개 기법 중 ${shown.length}개 표시`;$('#cardGrid').innerHTML=shown.map(card).join('');$('#emptyState').hidden=arr.length!==0;$('#loadMore').hidden=arr.length<=state.limit;refreshCounts()}
+function card(i){return `<article class="tech-card" data-open="${i.id}"${state.open===i.id?' data-selected':''} tabindex="0" role="button" aria-label="${esc(i.ko)} 상세 보기">${mediaHTML(i)}<div class="card-content"><div class="card-section">${esc(i.section)} · ${majorName(i.major)}</div><div class="card-title-row"><h3 class="card-title">${esc(i.ko)}</h3><button class="copy-icon-btn" type="button" data-copy="${i.id}" aria-label="${esc(i.en)} 영문 명칭 복사" title="영문 명칭 복사">⧉</button></div><div class="card-en">${esc(i.en)}</div><p class="card-description">${esc(cardSummary(i))}</p><div class="card-actions"><span class="open-link">기법 살펴보기 <span aria-hidden="true">↗</span></span></div></div></article>`}
+let revealObserver=null;
+let scrollObserver=null;
+function observeReveals(){
+  if(!revealObserver){
+    revealObserver=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target)}});
+    },{threshold:.06,rootMargin:'0px 0px 60px 0px'});
+  }
+  document.querySelectorAll('.tech-card:not(.is-visible)').forEach(el=>revealObserver.observe(el));
+}
+function renderCards(){
+  const arr=filtered(),shown=arr.slice(0,state.limit);
+  $('#visibleCount').textContent=arr.length;
+  $('#resultSummary').textContent=state.admin?`${arr.length}개 기법 중 ${shown.length}개 표시 · 등록된 미디어 ${state.mediaMap.size}개`:`${arr.length}개 기법 중 ${shown.length}개 표시`;
+  const grid=$('#cardGrid');
+  const ids=shown.map(i=>i.id);
+  const old=[...grid.children].map(el=>el.dataset.open);
+  const appendOnly=old.length>0&&old.length<=ids.length&&old.every((id,j)=>id===ids[j]);
+  if(appendOnly){grid.insertAdjacentHTML('beforeend',shown.slice(old.length).map(card).join(''))}
+  else{grid.innerHTML=shown.map(card).join('')}
+  $('#emptyState').hidden=arr.length!==0;
+  $('#loadMore').hidden=true;
+  $('#scrollSentinel').hidden=arr.length<=state.limit;
+  observeReveals();refreshCounts();
+}
+function setupInfiniteScroll(){
+  const sentinel=$('#scrollSentinel');
+  if(!('IntersectionObserver' in window)){
+    $('#loadMore').hidden=false;
+    return;
+  }
+  scrollObserver=new IntersectionObserver(entries=>{
+    if(!entries[0].isIntersecting||sentinel.hidden)return;
+    if(document.querySelector('#detailModal:not([hidden])'))return;
+    const total=filtered().length;
+    if(state.limit>=total)return;
+    state.limit=Math.min(state.limit+CONFIG.PAGE_SIZE,total);
+    renderCards();
+  },{rootMargin:'0px 0px 650px 0px',threshold:0});
+  scrollObserver.observe(sentinel);
+}
+
 function copyText(s){if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(s).then(()=>toast('클립보드에 복사했어요')).catch(()=>fallbackCopy(s))}else fallbackCopy(s)}function fallbackCopy(s){const ta=document.createElement('textarea');ta.value=s;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('클립보드에 복사했어요')}catch{toast('복사할 수 없어요. 텍스트를 선택해 주세요.')}ta.remove()}
 function makePrompt(i){
   const isMotion=i.mediaType==='video';
@@ -149,52 +196,17 @@ function closeDetail(){cleanupDetail();$('#detailModal').hidden=true;const selec
 function resetFilters(){state.major='all';state.section=0;state.tags.clear();state.media='all';state.search='';state.sort='number';state.limit=CONFIG.PAGE_SIZE;$('#searchInput').value='';$('#sortSelect').value='number';renderAll()}
 function renderAll(){renderNav();renderTags();renderCards()}
 function setupNavigation(){
-  const toggle=$('#navToggle'), panel=$('#techniqueNav');
-  const mobile=matchMedia('(max-width:760px)');
-  let pinned=false, leaveTimer;
-  const setOpen=open=>toggle.setAttribute('aria-expanded',String(open));
-  function close(restoreFocus=false){
-    clearTimeout(leaveTimer);
-    pinned=false;
-    setOpen(false);
-    if(restoreFocus)toggle.focus();
-  }
-  for(const target of [toggle,panel]){
-    target.addEventListener('pointerenter',e=>{
-      if(mobile.matches||e.pointerType!=='mouse')return;
-      clearTimeout(leaveTimer);
-      setOpen(true);
-    });
-    target.addEventListener('pointerleave',e=>{
-      if(mobile.matches||e.pointerType!=='mouse'||pinned)return;
-      leaveTimer=setTimeout(()=>{
-        if(!panel.querySelector(':focus-visible'))close();
-      },220);
-    });
-  }
-  toggle.addEventListener('click',e=>{
-    if(pinned){close();return}
-    clearTimeout(leaveTimer);
-    pinned=true;
-    setOpen(true);
-    if(e.detail===0)panel.querySelector(mobile.matches?'.section-btn.active':'.nav-btn.active')?.focus();
-  });
-  document.addEventListener('click',e=>{
-    if(toggle.getAttribute('aria-expanded')!=='true')return;
-    if(mobile.matches&&e.target.closest('.section-btn')){
-      close(e.detail===0);
-      return;
-    }
-    if(!toggle.contains(e.target)&&!panel.contains(e.target))close();
-  });
-  document.addEventListener('keydown',e=>{
-    if(e.key==='Escape'&&toggle.getAttribute('aria-expanded')==='true'){
-      close(panel.contains(document.activeElement));
-    }
-  });
-  mobile.addEventListener('change',()=>close());
+  const toggle=$('#navToggle'),panel=$('#techniqueNav'),backdrop=$('#navBackdrop');
+  const setOpen=open=>{toggle.setAttribute('aria-expanded',String(open));document.body.classList.toggle('menu-open',open);backdrop.setAttribute('aria-hidden',String(!open))};
+  const close=(focus=false)=>{setOpen(false);if(focus)toggle.focus()};
+  $('#mobileMenuClose')?.addEventListener('click',()=>close(true));
+  toggle.addEventListener('click',()=>setOpen(toggle.getAttribute('aria-expanded')!=='true'));
+  backdrop.addEventListener('click',()=>close());
+  panel.addEventListener('click',e=>{if(e.target.closest('[data-major],[data-section],[data-tag],[data-media]')){close();if(window.innerWidth<=760){requestAnimationFrame(()=>$('#catalogTitle')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}))}}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&toggle.getAttribute('aria-expanded')==='true')close(true)});
 }
-function events(){setupNavigation();const filterToggle=$('#filterToggle');
+
+function events(){setupNavigation();setupInfiniteScroll();const filterToggle=$('#filterToggle');
 filterToggle.addEventListener('click',()=>filterToggle.setAttribute('aria-expanded',String(filterToggle.getAttribute('aria-expanded')!=='true')));
 document.addEventListener('click',e=>{const copy=e.target.closest('[data-copy]');if(copy){e.stopPropagation();const i=ITEMS.find(x=>x.id===copy.dataset.copy);if(i)copyText(i.en);return}const focused=document.activeElement;const major=e.target.closest('[data-major]');if(major){state.major=major.dataset.major;state.section=0;state.limit=CONFIG.PAGE_SIZE;renderAll();if(major===focused)$(".nav-btn.active")?.focus();return}const sec=e.target.closest('[data-section]');if(sec){state.section=Number(sec.dataset.section);state.limit=CONFIG.PAGE_SIZE;renderAll();if(sec===focused)$(".section-btn.active")?.focus();return}const tag=e.target.closest('[data-tag]');if(tag){const t=tag.dataset.tag;if(t==='all')state.tags.clear();else if(state.tags.has(t))state.tags.delete(t);else state.tags.add(t);state.limit=CONFIG.PAGE_SIZE;renderTags();renderCards();return}const media=e.target.closest('[data-media]');if(media){state.media=media.dataset.media;state.limit=CONFIG.PAGE_SIZE;renderTags();renderCards();return}const card=e.target.closest('[data-open]');if(card){openDetail(card.dataset.open);return}if(e.target.closest('[data-close]'))closeDetail()});$('#searchInput').addEventListener('input',e=>{state.search=e.target.value;state.limit=CONFIG.PAGE_SIZE;renderCards()});$('#sortSelect').addEventListener('change',e=>{state.sort=e.target.value;renderCards()});$('#clearFilters').addEventListener('click',resetFilters);$('#emptyReset').addEventListener('click',resetFilters);$('#loadMore').addEventListener('click',()=>{state.limit+=CONFIG.PAGE_SIZE;renderCards()});$('#closeDetail').addEventListener('click',closeDetail);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#detailModal').hidden)closeDetail();if(e.key==='/'&&document.activeElement?.tagName!=='INPUT'&&document.activeElement?.tagName!=='TEXTAREA'&&$('#detailModal').hidden){e.preventDefault();$('#searchInput').focus()}if((e.key==='Enter'||e.key===' ')&&e.target.matches('.tech-card')){e.preventDefault();openDetail(e.target.dataset.open)}})}
 function setupHeroVideo() {

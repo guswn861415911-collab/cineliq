@@ -43,8 +43,9 @@ async function refreshCloud(){
   try{
     const catalog=await cloud.catalog(state.admin,state.mediaMap);
     if(request!==catalogRequest)return false;
+    const previousMedia=state.mediaMap;
     state.mediaMap=new Map([...catalog].filter(([id])=>itemById.has(id)));
-    renderCards();
+    renderCards(previousMedia);
     return true;
   }catch(error){
     if(request===catalogRequest){
@@ -56,6 +57,7 @@ async function refreshCloud(){
 }
 
 async function initMedia(){
+  const previousMedia=new Map(state.mediaMap);
   try{
     const records=await readLegacy();
     for(const record of records){
@@ -71,7 +73,7 @@ async function initMedia(){
     console.warn('CINELIQ legacy IndexedDB:',error);
   }
   if(!cloud.configured){
-    renderCards();
+    renderCards(previousMedia);
     updateDetail();
     return;
   }
@@ -108,8 +110,8 @@ function mediaElement(item,row,detail){
   }
   return `<img src="${esc(source)}" alt="${esc(item.ko)} 시각 예시" loading="lazy">`;
 }
-function mediaHTML(i,detail=false){
-  const rows=(state.mediaMap.get(i.id)||[]).filter(row=>row.url);
+function mediaHTML(i,detail=false,catalog=state.mediaMap){
+  const rows=(catalog.get(i.id)||[]).filter(row=>row.url);
   const primary=rows.find(row=>row.is_primary)||rows[0];
   if(primary){
     if(detail){
@@ -153,7 +155,7 @@ function observeReveals(){
   }
   cards.forEach((el,index)=>{el.dataset.revealOrder=index;revealObserver.observe(el)});
 }
-function renderCards(){
+function renderCards(previousMedia){
   const arr=filtered(),shown=arr.slice(0,state.limit);
   $('#visibleCount').textContent=arr.length;
   $('#resultSummary').textContent=state.admin?`${arr.length}개 기법 중 ${shown.length}개 표시 · 등록된 미디어 ${state.mediaMap.size}개`:`${arr.length}개 기법 중 ${shown.length}개 표시`;
@@ -161,7 +163,17 @@ function renderCards(){
   const ids=shown.map(i=>i.id);
   const old=[...grid.children].map(el=>el.dataset.open);
   const appendOnly=old.length>0&&old.length<=ids.length&&old.every((id,j)=>id===ids[j]);
-  if(appendOnly){grid.insertAdjacentHTML('beforeend',shown.slice(old.length).map(card).join(''))}
+  if(appendOnly){
+    if(previousMedia){
+      shown.slice(0,old.length).forEach((item,index)=>{
+        const nextMedia=mediaHTML(item);
+        if(nextMedia!==mediaHTML(item,false,previousMedia)){
+          grid.children[index].querySelector('.card-media').outerHTML=nextMedia;
+        }
+      });
+    }
+    grid.insertAdjacentHTML('beforeend',shown.slice(old.length).map(card).join(''));
+  }
   else{revealObserver?.disconnect();grid.innerHTML=shown.map(card).join('')}
   $('#emptyState').hidden=arr.length!==0;
   $('#loadMore').hidden=true;

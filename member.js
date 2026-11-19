@@ -315,7 +315,8 @@
     identityPanel.addEventListener('click',event=>{
       const button = event.target.closest('button');
       if (!button || button.disabled) return;
-      void changeIdentity(button.closest('[data-identity-provider]').dataset.identityProvider);
+      const row = button.closest('[data-identity-provider]');
+      if (row) void changeIdentity(row.dataset.identityProvider);
     });
     window.addEventListener('pageshow',event=>{
       if (!event.persisted || !identityBusy) return;

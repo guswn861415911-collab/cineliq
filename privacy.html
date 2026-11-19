@@ -8,6 +8,8 @@
   <title>개인정보처리방침 | CINELIQ</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="legal.css">
+<link rel="stylesheet" href="service-info.css?v=1">
+<script src="service-info.js?v=1" defer></script>
 </head>
 <body class="legal-page">
   <header class="site-header">
@@ -78,7 +80,7 @@
         </section>
         <section class="legal-section" id="article-6" tabindex="-1">
           <h2><span class="legal-number">제6조</span> 개인정보 삭제 및 회원 탈퇴</h2>
-          <p>마이페이지에서 저장한 기법을 개별 삭제할 수 있습니다. 현재 사이트에는 직접 계정을 삭제하는 기능이 없습니다. 운영자가 접수 창구를 확정하면 제13조에 계정 삭제 요청 방법을 안내합니다. Supabase Auth의 회원 레코드가 데이터베이스에서 삭제되면 연결된 즐겨찾기도 삭제되도록 구성되어 있습니다.</p>
+          <p>마이페이지에서 저장한 기법을 개별 삭제할 수 있습니다. 현재 사이트에는 직접 계정을 삭제하는 기능이 없습니다. 계정 삭제 요청은 제13조의 문의 이메일로 보내실 수 있습니다. Supabase Auth의 회원 레코드가 데이터베이스에서 삭제되면 연결된 즐겨찾기도 삭제되도록 구성되어 있습니다.</p>
           <p>CINELIQ에서 로그아웃하거나 Google 계정의 연결 앱 설정에서 접근 권한을 철회해도 기존 CINELIQ 계정이나 즐겨찾기가 자동으로 삭제되지는 않습니다.</p>
           <p class="legal-review">운영자 확인 필요 — 계정 삭제 시 본인 확인, 요청 처리 기간, 다른 기기의 세션 종료, 로그·백업에 남은 정보의 파기 절차.</p>
         </section>
@@ -112,11 +114,12 @@
         <section class="legal-section" id="article-12" tabindex="-1">
           <h2><span class="legal-number">제12조</span> 이용자의 권리와 행사 방법</h2>
           <p>마이페이지에서 계정 이메일과 즐겨찾기를 확인하고, 저장한 기법을 삭제하거나 로그아웃할 수 있습니다. 이메일 계정의 비밀번호 재설정은 로그인 화면에서 요청할 수 있습니다.</p>
-          <p>관련 법령에 따른 열람·정정·삭제·처리정지 요청은 운영자가 확정한 개인정보 문의 창구를 통해 접수할 수 있도록 안내할 예정입니다.</p>
+          <p>관련 법령에 따른 열람·정정·삭제·처리정지 요청은 <a href="contact.html">문의하기</a>에 안내된 이메일로 보내실 수 있습니다.</p>
         </section>
         <section class="legal-section" id="article-13" tabindex="-1">
           <h2><span class="legal-number">제13조</span> 개인정보 보호 관련 문의</h2>
-          <p class="legal-review">운영자 확인 필요 — 운영자 또는 사업자 명칭, 개인정보 보호 담당자나 담당 부서, 공개가 승인된 문의 이메일 또는 연락처와 요청 접수 방법. 현재 공개할 수 있는 문의처는 확인되지 않았습니다.</p>
+          <p>서비스 및 개인정보 관련 문의: <a href="mailto:guswn8614@naver.com">guswn8614@naver.com</a> · <a href="contact.html">문의 방법 안내</a></p>
+          <p class="legal-review">운영자 확인 필요 — 운영자 또는 사업자 명칭, 개인정보 보호 담당자나 담당 부서, 본인 확인 및 요청 처리 절차.</p>
         </section>
         <section class="legal-section" id="article-14" tabindex="-1">
           <h2><span class="legal-number">제14조</span> 방침의 변경</h2>
@@ -130,12 +133,6 @@
       </article>
     </div>
   </main>
-  <footer class="site-footer legal-footer">
-    <span>CINELIQ · CAMERA ATLAS</span>
-    <nav class="policy-links" aria-label="사이트 정책">
-      <a href="privacy.html" aria-current="page">개인정보처리방침</a>
-      <a href="terms.html">서비스 이용약관</a>
-    </nav>
-  </footer>
+  <footer class="service-footer" data-service-footer aria-label="CINELIQ 서비스 정보"></footer>
 </body>
 </html>

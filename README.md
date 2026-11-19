@@ -92,6 +92,14 @@ update public.cineliq_settings set writes_enabled = false where singleton;
 
 Supabase 무료 요금제의 파일 저장 공간은 현재 1GB입니다. 프로젝트 Dashboard의 **Usage**에서 Storage와 Egress를 확인하고, 운영 전에 최신 한도를 확인합니다. [Supabase 요금제](https://supabase.com/pricing) · [재개 가능한 업로드](https://supabase.com/docs/guides/storage/uploads/resumable-uploads)
 
-## 데이터
+## 서비스 안내 메뉴와 공통 푸터
+
+`service-info.js`가 서비스 링크와 저작권 문구를 한 곳에서 관리하며, `service-info.css`는 메뉴 안내 영역과 반응형 푸터에만 적용됩니다. 앱의 PC·모바일 햄버거 메뉴에서 로그인 없이 이용약관(`terms.html`), 개인정보처리방침(`privacy.html`), 문의하기(`contact.html`)로 이동할 수 있습니다.
+
+공통 푸터는 마이페이지와 모든 하위 화면, 이용약관, 개인정보처리방침, 문의하기에 표시됩니다. 기법 탐색 화면은 기존 무한 스크롤을 유지하기 위해 푸터를 생략합니다. 모바일 첫 히어로 화면도 기존 영상·CTA 구성을 유지하며 안내 링크는 메뉴에서 제공합니다. 푸터는 고정되지 않습니다.
+
+공개 문의처는 운영자가 지정한 `guswn8614@naver.com`입니다. `contact.html`의 메일 링크로 연결하며 개인정보처리방침에도 같은 창구를 안내합니다. 다른 개인 계정 정보를 임의로 공개하지 않습니다. 기존 약관·개인정보처리방침의 운영자 확인 항목과 시행일은 실제 운영 정책에 따라 별도로 확정해야 합니다.
+
+## 기법 데이터
 
 기법은 기존 자료집에서 추출했습니다. 일부 용어에 유사 표현이 있고 활용 태그는 자동 분류한 초안입니다. 프롬프트는 기법별 기본 템플릿이며 장면과 사용 모델에 맞게 조정할 수 있습니다.

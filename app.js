@@ -232,7 +232,7 @@ function detailKeys(event){
     return;
   }
   if(event.shiftKey)return;
-  const interactive=event.target.closest?.('input,textarea,select,button,a,[contenteditable],[role="slider"],[role="textbox"],video,audio');
+  const interactive=event.target.closest?.('input,textarea,select,button,a,[contenteditable],[role="slider"],[role="textbox"],summary,video,audio');
   if(interactive&&!interactive.matches('#closeDetail,#detailPrevious,#detailNext'))return;
   if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();stepDetail(event.key==='ArrowLeft'?-1:1);}
 }
@@ -244,7 +244,7 @@ function openDetail(id,focus=true,order=null){const i=itemById.get(id);if(!i)ret
   if(order){detailOrder=[...new Set(order)].filter(key=>itemById.has(key));detailReturn=document.activeElement;}
   if(!detailOrder.includes(id))detailOrder=[id];
   $('#detailBody').querySelectorAll('video').forEach(video=>video.pause());
-  cleanupDetail();detailAnimation?.cancel();state.open=id;document.querySelector('.tech-card[data-selected]')?.removeAttribute('data-selected');$('.tech-card[data-open="'+id+'"]')?.setAttribute('data-selected','');const prompt=makePrompt(i);$('#detailBody').innerHTML=`<div class="detail-inner"><div class="detail-overline">${esc(majorName(i.major).toUpperCase())} / ${esc(i.section)} / ${i.id}</div><div class="detail-heading"><h2 id="detailTitle">${esc(i.ko)}</h2><div class="detail-actions">${member.favoriteButton(i.id)}<button class="btn outline small" data-copy="${i.id}" type="button">${copyIcon} 영문명 복사</button></div></div><p class="detail-en">${esc(i.en)}</p>${mediaHTML(i,true)}<div class="detail-info"><p class="info-label">ABOUT THIS TECHNIQUE</p><p class="detail-description">${esc(i.description)}</p><div class="detail-tags">${i.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div><div class="prompt-box"><div class="prompt-head"><strong>✦ AI 영상 프롬프트 예시</strong><button class="btn outline small" type="button" id="copyPrompt">${copyIcon} 프롬프트 복사</button></div><p class="prompt-text">${esc(prompt)}</p><div class="prompt-hint">* 학습용 기본 템플릿입니다. 장면과 사용 모델에 맞게 수정하세요.</div></div>${state.admin?admin.markup(i,state.mediaMap.get(i.id)||[]):legacyDownload(i)}</div>`;
+  cleanupDetail();detailAnimation?.cancel();state.open=id;document.querySelector('.tech-card[data-selected]')?.removeAttribute('data-selected');$('.tech-card[data-open="'+id+'"]')?.setAttribute('data-selected','');const prompt=makePrompt(i);const lesson=window.CINELIQ_LESSON?.({item:i,items:itemById,escape:esc,media:item=>mediaHTML(item),copyIcon})||'';$('#detailBody').innerHTML=`<div class="detail-inner"><div class="detail-overline">${esc(majorName(i.major).toUpperCase())} / ${esc(i.section)} / ${i.id}</div><div class="detail-heading"><h2 id="detailTitle" tabindex="-1">${esc(i.ko)}</h2><div class="detail-actions">${member.favoriteButton(i.id)}<button class="btn outline small" data-copy="${i.id}" type="button">${copyIcon} 영문명 복사</button></div></div><p class="detail-en">${esc(i.en)}</p><p class="detail-summary">${esc(i.summary||cardSummary(i))}</p>${mediaHTML(i,true)}<div class="detail-info">${lesson||`<p class="info-label">ABOUT THIS TECHNIQUE</p><p class="detail-description">${esc(i.description)}</p>`}<div class="detail-tags">${i.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div><div class="prompt-box"><div class="prompt-head"><strong>프롬프트 템플릿 (수정용)</strong><button class="btn outline small" type="button" id="copyPrompt">${copyIcon} 템플릿 복사</button></div><p class="prompt-text">${esc(prompt)}</p><div class="prompt-hint">인물·장소·연출을 바꿔 쓰는 수정용 템플릿입니다. 위의 완성형 예시와 구분해 활용하세요.</div></div>${state.admin?admin.markup(i,state.mediaMap.get(i.id)||[]):legacyDownload(i)}</div>`;
   $('#detailModal').hidden=false;
   panel.scrollTop=changed?0:scroll;
   paintDetailNavigation();
@@ -253,6 +253,17 @@ function openDetail(id,focus=true,order=null){const i=itemById.get(id);if(!i)ret
   document.body.style.overflow='hidden';
   if(focus)$('#closeDetail').focus();
   $('#copyPrompt').addEventListener('click',()=>copyText(prompt));
+  $('#detailBody').onclick=event=>{
+    const copy=event.target.closest('[data-lesson-copy]');
+    if(copy){const data=window.CINELIQ_LEARNING?.[id];const value=copy.dataset.lessonCopy==='video'?data?.videoPromptExample:data?.imagePromptExample;if(value)copyText(value);return;}
+    const related=event.target.closest('[data-related-technique]');
+    if(related&&itemById.has(related.dataset.relatedTechnique)){
+      const next=related.dataset.relatedTechnique,origin=detailReturn;
+      const order=detailOrder.includes(next)?null:[id,...(window.CINELIQ_LEARNING?.[id]?.relatedTechniqueIds||[])];
+      openDetail(next,false,order);detailReturn=origin;$('#detailTitle').focus({preventScroll:true});
+    }
+  };
+
   cleanupDetail=admin.bind(i,$('#mediaManager'));
 }
 function legacyDownload(item){

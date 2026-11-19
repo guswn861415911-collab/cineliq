@@ -124,6 +124,7 @@ function mediaHTML(i,detail=false,catalog=state.mediaMap){
   if(detail)return `<div class="detail-media empty"><div class="placeholder-inner"><span class="placeholder-icon">${i.mediaType==='video'?'▷':'▧'}</span><strong>아직 ${i.mediaType==='video'?'영상':'이미지'}이 등록되지 않았어요</strong><p>기법 설명과 프롬프트를 먼저 학습해 보세요.<br>등록된 자료는 이곳에 표시됩니다.</p></div></div>`;return `<div class="card-media empty"><span class="media-indicator">${i.mediaType==='video'?'MOTION STUDY':'FRAME STUDY'}</span><span class="media-placeholder-label">VISUAL REFERENCE</span></div>`}
 
 function cardSummary(i){
+  if(i.summary)return i.summary;
   const full=String(i.description||'').trim().replace(/\s+/g,' ');
   if(!full)return '';
   // 카드에서는 핵심 정의 한 문장만 보여주고, 상세 패널은 원문 전체를 유지합니다.
@@ -204,9 +205,51 @@ function makePrompt(i){
   const style=i.major==='styles'?'해당 아트 스타일의 재질, 캐릭터 비율, 윤곽과 렌더링 특성을 정확하게 표현합니다.':i.major==='effects'?'해당 광학·색감 효과를 실제 사진처럼 명확히 보여주고 다른 효과와 혼동되지 않도록 표현합니다.':i.major==='lighting'?'광원의 방향과 그림자 형태를 정확하게 표현하고 자연스러운 빛의 물리적 특성을 유지합니다.':i.major==='post'?'편집 또는 후반 효과의 시간에 따른 변화가 분명하게 드러나도록 연출합니다.':'실제 촬영이 가능한 자연스러운 프레이밍과 카메라 위치를 유지합니다.';
   return `가로 16:9, ${isMotion?'고화질 시네마틱 영상':'초고화질 이미지'}.\n\n기법: ${i.ko} / ${i.en}\n${i.description}\n\n${style}\n\n[피사체와 장소]: 기법이 명확히 드러나는 구체적인 인물·사물·환경을 지정합니다.\n[카메라와 연출]: 피사체의 크기, 카메라 위치, 거리, 렌즈 특성과 조명을 구체적으로 지정합니다.\n${isMotion?'[움직임]: 시작 프레임, 동작 변화, 종료 프레임과 재생 시간을 지정합니다.':'[이미지]: 핵심 효과가 한눈에 구분되도록 프레임을 구성합니다.'}\n텍스트, 자막, 워터마크, 로고 없음.`;
 }
+let detailOrder=[],detailReturn=null,detailAnimation;
+function detailListFor(element){
+  if(element.closest('#cardGrid'))return filtered().map(item=>item.id);
+  const list=element.closest('#favoriteList,#memberCollectionList');
+  return list?[...new Set([...list.querySelectorAll('[data-open]')].map(node=>node.dataset.open))]:[element.dataset.open];
+}
+function paintDetailNavigation(){
+  const index=detailOrder.indexOf(state.open);
+  $('#detailPrevious').disabled=index<=0;
+  $('#detailNext').disabled=index<0||index>=detailOrder.length-1;
+  $('#detailPosition').textContent=String(index+1).padStart(2,'0')+' / '+detailOrder.length;
+  $('#detailPosition').setAttribute('aria-label',(index+1)+'번째, 전체 '+detailOrder.length+'개: '+itemById.get(state.open)?.ko);
+}
+function stepDetail(direction){
+  const index=detailOrder.indexOf(state.open),next=index+direction;
+  if(index>=0&&next>=0&&next<detailOrder.length)openDetail(detailOrder[next],false);
+}
+function detailKeys(event){
+  if($('#detailModal').hidden||document.querySelector('dialog[open]')||event.defaultPrevented||event.altKey||event.ctrlKey||event.metaKey)return;
+  if(event.key==='Escape'){event.preventDefault();closeDetail();return;}
+  if(event.key==='Tab'){
+    const controls=[...$('#detailModal').querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),textarea:not(:disabled),select:not(:disabled),video[controls],[tabindex="0"]')].filter(node=>node.getClientRects().length&&!node.closest('[hidden]'));
+    const first=controls[0],last=controls.at(-1),active=document.activeElement;
+    if(!controls.includes(active)||event.shiftKey&&active===first||!event.shiftKey&&active===last){event.preventDefault();(event.shiftKey?last:first)?.focus();}
+    return;
+  }
+  if(event.shiftKey)return;
+  const interactive=event.target.closest?.('input,textarea,select,button,a,[contenteditable],[role="slider"],[role="textbox"],video,audio');
+  if(interactive&&!interactive.matches('#closeDetail,#detailPrevious,#detailNext'))return;
+  if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();stepDetail(event.key==='ArrowLeft'?-1:1);}
+}
+$('#detailPrevious').addEventListener('click',()=>stepDetail(-1));
+$('#detailNext').addEventListener('click',()=>stepDetail(1));
 function updateDetail(){if(state.open)openDetail(state.open,false)}
-function openDetail(id,focus=true){const i=itemById.get(id);if(!i)return;cleanupDetail();state.open=id;document.querySelector('.tech-card[data-selected]')?.removeAttribute('data-selected');$('.tech-card[data-open="'+id+'"]')?.setAttribute('data-selected','');const prompt=makePrompt(i);$('#detailBody').innerHTML=`<div class="detail-inner"><div class="detail-overline">${esc(majorName(i.major).toUpperCase())} / ${esc(i.section)} / ${i.id}</div><div class="detail-heading"><h2 id="detailTitle">${esc(i.ko)}</h2><div class="detail-actions">${member.favoriteButton(i.id)}<button class="btn outline small" data-copy="${i.id}" type="button">${copyIcon} 영문명 복사</button></div></div><p class="detail-en">${esc(i.en)}</p>${mediaHTML(i,true)}<div class="detail-info"><p class="info-label">ABOUT THIS TECHNIQUE</p><p class="detail-description">${esc(i.description)}</p><div class="detail-tags">${i.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div><div class="prompt-box"><div class="prompt-head"><strong>✦ AI 영상 프롬프트 예시</strong><button class="btn outline small" type="button" id="copyPrompt">${copyIcon} 프롬프트 복사</button></div><p class="prompt-text">${esc(prompt)}</p><div class="prompt-hint">* 학습용 기본 템플릿입니다. 장면과 사용 모델에 맞게 수정하세요.</div></div>${state.admin?admin.markup(i,state.mediaMap.get(i.id)||[]):legacyDownload(i)}</div>`;
+function openDetail(id,focus=true,order=null){const i=itemById.get(id);if(!i)return;
+  const panel=$('.detail-panel'),scroll=panel.scrollTop,changed=state.open!==id;
+  if(order){detailOrder=[...new Set(order)].filter(key=>itemById.has(key));detailReturn=document.activeElement;}
+  if(!detailOrder.includes(id))detailOrder=[id];
+  $('#detailBody').querySelectorAll('video').forEach(video=>video.pause());
+  cleanupDetail();detailAnimation?.cancel();state.open=id;document.querySelector('.tech-card[data-selected]')?.removeAttribute('data-selected');$('.tech-card[data-open="'+id+'"]')?.setAttribute('data-selected','');const prompt=makePrompt(i);$('#detailBody').innerHTML=`<div class="detail-inner"><div class="detail-overline">${esc(majorName(i.major).toUpperCase())} / ${esc(i.section)} / ${i.id}</div><div class="detail-heading"><h2 id="detailTitle">${esc(i.ko)}</h2><div class="detail-actions">${member.favoriteButton(i.id)}<button class="btn outline small" data-copy="${i.id}" type="button">${copyIcon} 영문명 복사</button></div></div><p class="detail-en">${esc(i.en)}</p>${mediaHTML(i,true)}<div class="detail-info"><p class="info-label">ABOUT THIS TECHNIQUE</p><p class="detail-description">${esc(i.description)}</p><div class="detail-tags">${i.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div><div class="prompt-box"><div class="prompt-head"><strong>✦ AI 영상 프롬프트 예시</strong><button class="btn outline small" type="button" id="copyPrompt">${copyIcon} 프롬프트 복사</button></div><p class="prompt-text">${esc(prompt)}</p><div class="prompt-hint">* 학습용 기본 템플릿입니다. 장면과 사용 모델에 맞게 수정하세요.</div></div>${state.admin?admin.markup(i,state.mediaMap.get(i.id)||[]):legacyDownload(i)}</div>`;
   $('#detailModal').hidden=false;
+  panel.scrollTop=changed?0:scroll;
+  paintDetailNavigation();
+  document.addEventListener('keydown',detailKeys);
+  if(changed&&!matchMedia('(prefers-reduced-motion: reduce)').matches)detailAnimation=$('#detailBody').animate([{opacity:.65},{opacity:1}],{duration:140,easing:'ease-out'});
   document.body.style.overflow='hidden';
   if(focus)$('#closeDetail').focus();
   $('#copyPrompt').addEventListener('click',()=>copyText(prompt));
@@ -217,7 +260,15 @@ function legacyDownload(item){
   if(cloud.configured||!record)return '';
   return `<p class="storage-status"><a class="btn outline small" href="${esc(record.url)}" download="cineliq-${esc(item.id)}-${esc(record.name)}">로컬 원본 다운로드</a></p>`;
 }
-function closeDetail(){cleanupDetail();$('#detailModal').hidden=true;const selected=$('.tech-card[data-selected]');selected?.removeAttribute('data-selected');state.open=null;document.body.style.overflow='';selected?.focus()}
+function closeDetail(){
+  cleanupDetail();detailAnimation?.cancel();
+  $('#detailBody').querySelectorAll('video').forEach(video=>video.pause());
+  $('#detailModal').hidden=true;document.removeEventListener('keydown',detailKeys);
+  document.querySelector('.tech-card[data-selected]')?.removeAttribute('data-selected');
+  state.open=null;document.body.style.overflow='';
+  const target=detailReturn?.isConnected?detailReturn:document.querySelector('.tech-card[data-open="'+detailOrder[0]+'"]')||$('#catalogTitle');
+  target?.focus({preventScroll:true});detailOrder=[];detailReturn=null;
+}
 function resetFilters(){state.major='all';state.section=0;state.tags.clear();state.media='all';state.search='';state.sort='number';state.limit=CONFIG.PAGE_SIZE;$('#searchInput').value='';$('#sortSelect').value='number';renderAll()}
 function renderAll(){renderNav();renderTags();renderCards()}
 function setupNavigation(openLibrary){
@@ -359,7 +410,7 @@ function setupMobileViews(updateHeroVideo){
 }
 function events(openLibrary){setupNavigation(openLibrary);setupInfiniteScroll();const filterToggle=$('#filterToggle');
 filterToggle.addEventListener('click',()=>filterToggle.setAttribute('aria-expanded',String(filterToggle.getAttribute('aria-expanded')!=='true')));
-document.addEventListener('click',e=>{const copy=e.target.closest('[data-copy]');if(copy){e.stopPropagation();const i=ITEMS.find(x=>x.id===copy.dataset.copy);if(i)copyText(i.en);return}const focused=document.activeElement;const major=e.target.closest('[data-major]');if(major){state.major=major.dataset.major;state.section=0;state.limit=CONFIG.PAGE_SIZE;renderAll();if(major===focused)$(".nav-btn.active")?.focus();return}const sec=e.target.closest('[data-section]');if(sec){state.section=Number(sec.dataset.section);state.limit=CONFIG.PAGE_SIZE;renderAll();if(sec===focused)$(".section-btn.active")?.focus();return}const tag=e.target.closest('[data-tag]');if(tag){const t=tag.dataset.tag;if(t==='all')state.tags.clear();else if(state.tags.has(t))state.tags.delete(t);else state.tags.add(t);state.limit=CONFIG.PAGE_SIZE;renderTags();renderCards();return}const media=e.target.closest('[data-media]');if(media){state.media=media.dataset.media;state.limit=CONFIG.PAGE_SIZE;renderTags();renderCards();return}const card=e.target.closest('[data-open]');if(card){openDetail(card.dataset.open);return}if(e.target.closest('[data-close]'))closeDetail()});$('#searchInput').addEventListener('input',e=>{state.search=e.target.value;state.limit=CONFIG.PAGE_SIZE;renderCards()});$('#sortSelect').addEventListener('change',e=>{state.sort=e.target.value;renderCards()});$('#clearFilters').addEventListener('click',resetFilters);$('#emptyReset').addEventListener('click',resetFilters);$('#loadMore').addEventListener('click',()=>{state.limit+=CONFIG.PAGE_SIZE;renderCards()});$('#closeDetail').addEventListener('click',closeDetail);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#detailModal').hidden)closeDetail();if(e.key==='/'&&document.activeElement?.tagName!=='INPUT'&&document.activeElement?.tagName!=='TEXTAREA'&&$('#detailModal').hidden){e.preventDefault();$('#searchInput').focus()}if((e.key==='Enter'||e.key===' ')&&e.target.matches('.tech-card')){e.preventDefault();openDetail(e.target.dataset.open)}})}
+document.addEventListener('click',e=>{const copy=e.target.closest('[data-copy]');if(copy){e.stopPropagation();const i=ITEMS.find(x=>x.id===copy.dataset.copy);if(i)copyText(i.en);return}const focused=document.activeElement;const major=e.target.closest('[data-major]');if(major){state.major=major.dataset.major;state.section=0;state.limit=CONFIG.PAGE_SIZE;renderAll();if(major===focused)$(".nav-btn.active")?.focus();return}const sec=e.target.closest('[data-section]');if(sec){state.section=Number(sec.dataset.section);state.limit=CONFIG.PAGE_SIZE;renderAll();if(sec===focused)$(".section-btn.active")?.focus();return}const tag=e.target.closest('[data-tag]');if(tag){const t=tag.dataset.tag;if(t==='all')state.tags.clear();else if(state.tags.has(t))state.tags.delete(t);else state.tags.add(t);state.limit=CONFIG.PAGE_SIZE;renderTags();renderCards();return}const media=e.target.closest('[data-media]');if(media){state.media=media.dataset.media;state.limit=CONFIG.PAGE_SIZE;renderTags();renderCards();return}const card=e.target.closest('[data-open]');if(card){detailReturn=card;openDetail(card.dataset.open,true,detailListFor(card));detailReturn=card;return}if(e.target.closest('[data-close]'))closeDetail()});$('#searchInput').addEventListener('input',e=>{state.search=e.target.value;state.limit=CONFIG.PAGE_SIZE;renderCards()});$('#sortSelect').addEventListener('change',e=>{state.sort=e.target.value;renderCards()});$('#clearFilters').addEventListener('click',resetFilters);$('#emptyReset').addEventListener('click',resetFilters);$('#loadMore').addEventListener('click',()=>{state.limit+=CONFIG.PAGE_SIZE;renderCards()});$('#closeDetail').addEventListener('click',closeDetail);document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement?.tagName!=='INPUT'&&document.activeElement?.tagName!=='TEXTAREA'&&$('#detailModal').hidden){e.preventDefault();$('#searchInput').focus()}if((e.key==='Enter'||e.key===' ')&&e.target.matches('.tech-card')){e.preventDefault();openDetail(e.target.dataset.open,true,detailListFor(e.target));detailReturn=e.target}})}
 function setupHeroVideo() {
   const video = document.querySelector('.hero-background-video');
   const mobile = matchMedia('(max-width:760px)');

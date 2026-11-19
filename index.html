@@ -21,9 +21,10 @@
 <meta name="twitter:image:alt" content="CINELIQ 카메라 기법 아틀라스">
 <link rel="stylesheet" href="styles.css?v=personal-library-1">
 <link rel="stylesheet" href="member-library.css?v=1">
-<script src="data.js" defer></script>
+<link rel="stylesheet" href="detail-navigation.css?v=1">
+<script src="data.js?v=beginner-copy-1" defer></script>
 <script src="media-config.js" defer></script><script src="media-cloud.js?v=account-deletion-1" defer></script>
-<script src="media-admin.js?v=image-paste-1" defer></script><script src="member-library.js?v=account-deletion-1" defer></script><script src="member-deletion.js?v=1" defer></script><script src="member.js?v=account-deletion-1" defer></script><script src="app.js?v=service-info-1" defer></script>
+<script src="media-admin.js?v=image-paste-1" defer></script><script src="member-library.js?v=account-deletion-1" defer></script><script src="member-deletion.js?v=1" defer></script><script src="member.js?v=account-deletion-1" defer></script><script src="app.js?v=technique-learning-1" defer></script>
 <link rel="stylesheet" href="member-deletion.css?v=1">
 <link rel="stylesheet" href="service-info.css?v=1">
 <script src="service-info.js?v=1" defer></script>
@@ -125,7 +126,7 @@
 </section>
 <footer class="service-footer" data-service-footer aria-label="CINELIQ 서비스 정보"></footer></main></div>
 </div>
-<div id="detailModal" class="modal-layer" hidden><div class="modal-scrim" data-close="true"></div><section class="detail-panel" role="dialog" aria-labelledby="detailTitle"><button id="closeDetail" class="modal-close" type="button" aria-label="닫기">×</button><div id="detailBody"></div></section></div>
+<div id="detailModal" class="modal-layer" role="dialog" aria-modal="true" aria-labelledby="detailTitle" hidden><div class="modal-scrim" data-close="true"></div><section class="detail-panel"><button id="closeDetail" class="modal-close" type="button" aria-label="닫기">×</button><div id="detailBody"></div></section><nav class="detail-navigation" aria-label="기법 이전·다음 탐색"><button id="detailPrevious" class="detail-step" type="button" aria-label="이전 기법" disabled>←</button><output id="detailPosition" role="status" aria-live="polite"></output><button id="detailNext" class="detail-step" type="button" aria-label="다음 기법" disabled>→</button></nav></div>
 <dialog id="memberDialog" class="admin-dialog member-dialog" aria-labelledby="memberAuthTitle">
   <div class="admin-dialog-head"><h2 id="memberAuthTitle">로그인</h2><button id="closeMemberAuth" class="member-action" type="button">닫기</button></div>
   <button id="memberGoogle" class="member-action member-social" type="button" disabled>

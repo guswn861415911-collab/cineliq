@@ -12,7 +12,7 @@ let toastTimer;function toast(message){const el=$('#toast');el.textContent=messa
 let cleanupDetail=()=>{};
 let catalogRequest=0;
 const admin=window.CINELIQ_ADMIN({state,items:itemById,escape:esc,notify:toast,refresh:refreshCloud,updateDetail});
-const member=window.CINELIQ_MEMBER({items:itemById,navigate:view=>navigateView(view),notify:toast,escape:esc});
+const member=window.CINELIQ_MEMBER({items:itemById,navigate:view=>navigateView(view),notify:toast,escape:esc,thumbnail:item=>mediaHTML(item)});
 
 function readLegacy(){
   return new Promise((resolve,reject)=>{
@@ -46,6 +46,7 @@ async function refreshCloud(){
     const previousMedia=state.mediaMap;
     state.mediaMap=new Map([...catalog].filter(([id])=>itemById.has(id)));
     renderCards(previousMedia);
+    member.refreshMedia();
     return true;
   }catch(error){
     if(request===catalogRequest){
@@ -258,13 +259,14 @@ function setupMobileViews(updateHeroVideo){
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
   let animation;
   let transitionId=0;
-  const currentRoute=()=>location.hash==='#my'?'my':location.hash==='#library'?'library':'hero';
+  const currentRoute=()=>/^#my(?:\/|$)/.test(location.hash)?'my':location.hash==='#library'?'library':'hero';
   const panelFor=view=>view==='my'?$('#memberPage'):view==='library'?library:hero;
 
   async function renderView({animate=false,focus=false}={}){
     const id=++transitionId;
     animation?.cancel();
     const next=currentRoute();
+    if(next==='my')window.dispatchEvent(new Event('cineliq-member-route'));
     if(!mobile.matches&&next!=='my'){
       const leavingMember=main.dataset.mobileView==='my';
       delete main.dataset.mobileView;
@@ -297,7 +299,8 @@ function setupMobileViews(updateHeroVideo){
   }
 
   function navigate(view){
-    if((!mobile.matches&&view==='library'&&currentRoute()!=='my')||currentRoute()===view)return;
+    if((!mobile.matches&&view==='library'&&currentRoute()!=='my')
+      || (currentRoute()===view && (view!=='my'||location.hash==='#my')))return;
     if(state.open)closeDetail();
     history.pushState(null,'',view==='my'?'#my':view==='library'?'#library':'#home');
     void renderView({animate:true,focus:true});

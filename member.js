@@ -10,7 +10,7 @@
     recovery: ['새 비밀번호 설정', '비밀번호 저장'],
   };
 
-  function setup({items, navigate, notify, escape}) {
+  function setup({items, navigate, notify, escape, thumbnail}) {
     const root = document.querySelector('#memberPage');
     const header = document.querySelector('#memberToggle');
     const dialog = document.querySelector('#memberDialog');
@@ -35,6 +35,7 @@
     let identities = null;
     let identityBusy = false;
     let identityRefresh;
+    const library = window.CINELIQ_LIBRARY({items,escape,favoriteButton,thumbnail,notify,resetPassword:cloud.members.reset});
 
     function paintIdentities() {
       for (const row of identityPanel.querySelectorAll('[data-identity-provider]')) {
@@ -51,13 +52,18 @@
     }
 
     async function refreshIdentities(version) {
+      root.querySelector('#retryMemberIdentities').hidden = true;
       try {
         const rows = await cloud.members.identities();
         if (version !== lookupVersion) return null;
         identities = rows;
+        library.setIdentities(rows);
         return rows;
       } catch {
-        if (version === lookupVersion) identityStatus.textContent = '연결된 계정을 불러오지 못했어요. 페이지를 새로고침해 주세요.';
+        if (version === lookupVersion) {
+          identityStatus.textContent = '연결된 계정을 불러오지 못했어요. 다시 시도해 주세요.';
+          root.querySelector('#retryMemberIdentities').hidden = false;
+        }
         return null;
       } finally {
         if (version === lookupVersion) paintIdentities();
@@ -195,16 +201,18 @@
       saved.sort(sort.value === 'name'
         ? (a,b) => a.item.ko.localeCompare(b.item.ko,'ko')
         : (a,b) => b.date.localeCompare(a.date));
-      list.innerHTML = saved.map(({item}) => `<li><button class="member-saved-item" type="button" data-open="${escape(item.id)}"><strong>${escape(item.ko)}</strong><span>${escape(item.en)}</span></button>${favoriteButton(item.id)}</li>`).join('');
+      list.innerHTML = saved.map(({item}) => `<li><button class="member-saved-item" type="button" data-open="${escape(item.id)}"><span class="member-thumbnail">${thumbnail(item)}</span><span><strong>${escape(item.ko)}</strong><small>${escape(item.en)}</small></span></button>${favoriteButton(item.id)}</li>`).join('');
       document.querySelector('#favoriteEmpty').hidden = Boolean(saved.length);
       document.querySelector('#favoriteEmpty').textContent = query ? '검색 결과가 없습니다.' : '저장한 기법이 없습니다.';
       document.querySelectorAll('[data-favorite]').forEach(paintButton);
+      library.setFavorites(favorites,!loadingFavorites);
     }
 
     async function sync(next) {
       const user = next?.user;
       const changed = session?.user.id !== user?.id;
       session = next;
+      library.sync(next);
       header.querySelector('.member-toggle-label').textContent = user ? '마이페이지' : '로그인';
       root.querySelector('#memberEmail').textContent = user ? user.email || '등록된 이메일 없음' : '';
       root.querySelector('#memberSignedIn').hidden = !user;
@@ -223,13 +231,23 @@
       pageStatus.textContent = user ? '즐겨찾기를 불러오는 중입니다.' : '';
       renderFavorites();
       if (!user) return;
+      await loadFavorites(user.id,current);
+    }
+
+    async function loadFavorites(userId,current) {
+      loadingFavorites = true;
+      root.querySelector('#retryMemberFavorites').hidden = true;
+      pageStatus.textContent = '즐겨찾기를 불러오는 중입니다.';
       try {
-        const rows = await cloud.members.favorites(user.id);
+        const rows = await cloud.members.favorites(userId);
         if (current !== lookupVersion) return;
         favorites = new Map(rows.map(row => [row.technique_id,row.created_at]));
         pageStatus.textContent = '';
       } catch (error) {
-        if (current === lookupVersion) pageStatus.textContent = '즐겨찾기를 불러오지 못했습니다.';
+        if (current === lookupVersion) {
+          pageStatus.textContent = '즐겨찾기를 불러오지 못했습니다.';
+          root.querySelector('#retryMemberFavorites').hidden = false;
+        }
         console.warn('CINELIQ favorites:', error);
       } finally {
         if (current === lookupVersion) {
@@ -288,6 +306,12 @@
     }
 
     header.addEventListener('click',()=>session?navigate('my'):openAuth());
+    root.querySelector('#retryMemberFavorites').addEventListener('click',()=>{
+      if (session && !loadingFavorites) void loadFavorites(session.user.id,lookupVersion);
+    });
+    root.querySelector('#retryMemberIdentities').addEventListener('click',()=>{
+      if (session && !identityBusy) void refreshIdentities(lookupVersion);
+    });
     identityPanel.addEventListener('click',event=>{
       const button = event.target.closest('button');
       if (!button || button.disabled) return;
@@ -403,6 +427,7 @@
           const message = identityError(errorCode || authError,errorDescription);
           if (current?.user.id === attempt.userId) {
             navigate('my');
+            library.openAccounts();
             identityStatus.textContent = message;
           } else notify(message);
           return;
@@ -419,13 +444,14 @@
         const rows = await identityRefresh;
         if (session?.user.id !== attempt.userId) return;
         navigate('my');
+        library.openAccounts();
         identityStatus.textContent = rows?.some(identity => identity.provider === attempt.provider)
           ? `${identityNames[attempt.provider]} 계정을 연결했어요.`
           : '계정 연결 결과를 확인하지 못했어요. 다시 로그인하기 전에 연결 상태를 확인해 주세요.';
       }
     }
 
-    return {start,favoriteButton};
+    return {start,favoriteButton,refreshMedia:() => { renderFavorites(); library.refreshMedia(); }};
   }
 
   window.CINELIQ_MEMBER = setup;

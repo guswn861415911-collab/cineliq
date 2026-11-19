@@ -106,6 +106,7 @@
       },
     })).url,
     unlinkIdentity: async identity => unwrap(await client.auth.unlinkIdentity(identity)),
+    updateName: async displayName => unwrap(await client.auth.updateUser({data:{display_name:displayName}})).user,
     favorites: async userId => unwrap(await client.from('cineliq_favorites')
       .select('technique_id,created_at').eq('user_id',userId).order('created_at',{ascending:false})),
     save: async (userId, techniqueId) => unwrap(await client.from('cineliq_favorites')
@@ -113,6 +114,32 @@
     remove: async (userId, techniqueId) => unwrap(await client.from('cineliq_favorites')
       .delete().eq('user_id',userId).eq('technique_id',techniqueId)),
   };
+
+  async function readLibraryRows(table, userId, order) {
+    const rows = [];
+    for (let offset = 0; ; offset += pageSize) {
+      const page = unwrap(await client.from(table).select('*').eq('user_id',userId)
+        .order(order).order(table === 'cineliq_folder_items' ? 'folder_id' : 'id').range(offset,offset + pageSize - 1));
+      rows.push(...page);
+      if (page.length < pageSize) return rows;
+    }
+  }
+
+  members.library = async userId => {
+    const [folders, entries] = await Promise.all([
+      readLibraryRows('cineliq_folders',userId,'id'),
+      readLibraryRows('cineliq_folder_items',userId,'technique_id'),
+    ]);
+    return {folders,entries};
+  };
+  members.createFolder = async name => unwrap(await client.from('cineliq_folders').insert({name}).select().single());
+  members.renameFolder = async (id,name) => unwrap(await client.from('cineliq_folders').update({name}).eq('id',id).select().single());
+  members.deleteFolder = async id => unwrap(await client.from('cineliq_folders').delete().eq('id',id));
+  members.addFolderItems = async (folderId, ids) => unwrap(await client.from('cineliq_folder_items')
+    .upsert(ids.map(techniqueId=>({folder_id:folderId,technique_id:techniqueId})),
+      {onConflict:'user_id,folder_id,technique_id',ignoreDuplicates:true,defaultToNull:false}));
+  members.removeFolderItem = async (folderId, techniqueId) => unwrap(await client.from('cineliq_folder_items')
+    .delete().eq('folder_id',folderId).eq('technique_id',techniqueId));
 
   async function catalog(admin, previous = new Map()) {
     const rows = [];

@@ -19,10 +19,11 @@
 <meta name="twitter:description" content="구도부터 조명, 색감, 카메라 무빙까지. AI 이미지·영상 제작을 위한 시각 연출 가이드.">
 <meta name="twitter:image" content="https://cineliq.art/assets/og-cover.png">
 <meta name="twitter:image:alt" content="CINELIQ 카메라 기법 아틀라스">
-<link rel="stylesheet" href="styles.css?v=image-paste-1">
+<link rel="stylesheet" href="styles.css?v=personal-library-1">
+<link rel="stylesheet" href="member-library.css?v=1">
 <script src="data.js" defer></script>
-<script src="media-config.js" defer></script><script src="media-cloud.js?v=member-identities-1" defer></script>
-<script src="media-admin.js?v=image-paste-1" defer></script><script src="member.js?v=member-identities-1" defer></script><script src="app.js?v=card-media-1" defer></script>
+<script src="media-config.js" defer></script><script src="media-cloud.js?v=personal-library-1" defer></script>
+<script src="media-admin.js?v=image-paste-1" defer></script><script src="member-library.js?v=1" defer></script><script src="member.js?v=personal-library-1" defer></script><script src="app.js?v=personal-library-1" defer></script>
 </head>
 <body>
 <div class="app-shell">
@@ -42,24 +43,59 @@
 <div class="filter-row compact"><span class="filter-label">MEDIA</span><div class="chip-list" id="mediaFilters"><button class="chip active" data-media="all">전체</button><button class="chip admin-media-filter" data-media="ready" hidden>등록 완료</button><button class="chip admin-media-filter" data-media="missing" hidden>미등록</button><button class="chip" data-media="image">이미지 기법</button><button class="chip" data-media="video">영상 기법</button></div></div></div></div>
 <div id="resultSummary" class="result-summary" aria-live="polite"></div><div id="cardGrid" class="card-grid"></div><div id="emptyState" class="empty-state" hidden><div class="empty-mark">⌕</div><h3>검색 결과가 없어요</h3><p>검색어를 줄이거나 필터를 초기화해 보세요.</p><button class="btn dark" id="emptyReset" type="button">전체 기법 보기</button></div><div class="load-more-wrap"><div id="scrollSentinel" class="scroll-sentinel" aria-hidden="true"><span></span><span></span><span></span></div><button id="loadMore" class="btn outline" type="button" hidden>기법 더 보기 ↓</button></div></section>
 <section id="memberPage" aria-labelledby="memberPageTitle">
-  <h1 id="memberPageTitle" tabindex="-1">MY CINELIQ</h1>
+  <div class="member-heading"><h1 id="memberPageTitle" tabindex="-1">MY CINELIQ</h1><p>나만의 촬영 기법 라이브러리</p></div>
   <div id="memberGuest"><p>로그인하고 저장한 기법을 확인하세요.</p><button id="memberGuestLogin" class="member-action" type="button">로그인</button></div>
   <div id="memberSignedIn" hidden>
-    <div class="member-profile"><div><h2>회원 정보</h2><p id="memberEmail"></p></div><button id="memberLogout" class="member-action" type="button">로그아웃</button></div>
-    <section id="memberIdentities" aria-labelledby="memberIdentitiesTitle">
-      <h2 id="memberIdentitiesTitle">연결된 계정</h2>
+    <div class="member-workspace">
+    <nav id="memberNav" aria-label="마이페이지 메뉴">
+      <a class="member-account-link member-nav-card" href="#my/profile"><span data-member-icon="user"></span><span><strong>내 계정</strong><small id="memberAccountSummary">회원 정보</small></span><span aria-hidden="true">›</span></a>
+      <h2>내 라이브러리</h2>
+      <p class="member-nav-description">저장한 카메라 기법을 원하는 방식으로 정리하세요.</p>
+      <a class="member-nav-card" href="#my/categories"><span data-member-icon="layers"></span><span><strong>기법별 분류</strong><small>저장한 기법을 카테고리로 보기</small></span><span aria-hidden="true">›</span></a>
+      <a class="member-nav-card" href="#my/folders"><span data-member-icon="folder"></span><span><strong>내 폴더</strong><small>프로젝트별로 자유롭게 정리</small></span><span aria-hidden="true">›</span></a>
+      <h2>계정 및 설정</h2>
+      <a class="member-nav-card member-settings-link" href="#my/profile"><span data-member-icon="user"></span><span><strong>회원 정보</strong></span><span aria-hidden="true">›</span></a>
+      <a class="member-nav-card member-settings-link" href="#my/accounts"><span data-member-icon="link"></span><span><strong>연결된 계정</strong></span><span aria-hidden="true">›</span></a>
+      <a class="member-nav-card member-settings-link" href="#my/settings"><span data-member-icon="settings"></span><span><strong>설정</strong></span><span aria-hidden="true">›</span></a>
+      <a class="member-all-saved" href="#my/bookmarks">전체 즐겨찾기 보기 <span id="memberSavedCount">0</span></a>
+    </nav>
+    <div class="member-content">
+    <div class="member-detail-heading"><a id="memberBack" href="#my" aria-label="마이페이지로 돌아가기">‹</a><div><h2 id="memberViewTitle" tabindex="-1">회원 정보</h2><p id="memberViewDescription">내 계정의 기본 정보를 확인하고 관리할 수 있습니다.</p></div></div>
+    <section data-member-panel="profile">
+      <dl class="member-info-card">
+        <div><dt>이메일</dt><dd id="memberEmail"></dd></div>
+        <div><dt>이름</dt><dd><span id="memberDisplayName"></span><button id="editMemberName" class="member-action" type="button">이름 수정</button></dd></div>
+        <div><dt>로그인 수단</dt><dd id="memberProviders"></dd></div>
+      </dl>
+      <div class="member-info-card"><h3>계정 관리</h3><button id="memberPasswordChange" class="member-action" type="button" hidden>비밀번호 변경 메일 받기</button><p id="memberPasswordNote">이메일 로그인 사용자에게 비밀번호 변경을 제공합니다.</p></div>
+      <button id="memberLogout" class="member-action member-danger" type="button">로그아웃</button>
+    </section>
+    <section id="memberIdentities" data-member-panel="accounts" aria-labelledby="memberIdentitiesTitle">
+      <h2 id="memberIdentitiesTitle" class="member-visually-hidden">연결된 계정</h2>
       <ul>
-        <li data-identity-provider="google"><strong>Google</strong><span></span><button class="member-action" type="button" disabled>연결하기</button></li>
-        <li data-identity-provider="kakao"><strong>카카오</strong><span></span><button class="member-action" type="button" disabled>연결하기</button></li>
+        <li data-identity-provider="google"><strong><img class="member-provider-logo" src="assets/google-signin-g.png" width="24" height="24" alt="">Google</strong><span></span><button class="member-action" type="button" disabled>연결하기</button></li>
+        <li data-identity-provider="kakao"><strong><img class="member-provider-logo" src="assets/kakao-signin-symbol.svg" width="24" height="24" alt="">카카오</strong><span></span><button class="member-action" type="button" disabled>연결하기</button></li>
       </ul>
       <p id="memberIdentityStatus" role="status"></p>
+      <button id="retryMemberIdentities" class="member-action" type="button" hidden>연결 상태 다시 확인</button>
+      <div class="member-info-card"><h3>계정 연결 안내</h3><p>같은 CINELIQ 계정에 연결한 로그인 수단은 즐겨찾기와 내 폴더를 함께 사용합니다. 다른 계정에 이미 연결된 로그인 수단은 해당 계정의 정리가 필요합니다. 마지막 소셜 로그인 수단은 해제할 수 없습니다.</p></div>
     </section>
-    <h2>즐겨찾기</h2>
+    <section data-member-panel="bookmarks">
     <div class="member-filters"><input id="favoriteSearch" type="search" placeholder="저장한 기법 검색" aria-label="저장한 기법 검색"><select id="favoriteSort" aria-label="즐겨찾기 정렬"><option value="recent">최근 저장순</option><option value="name">이름순</option></select></div>
     <p id="favoriteStatus" role="status"></p>
+    <button id="retryMemberFavorites" class="member-action" type="button" hidden>즐겨찾기 다시 불러오기</button>
     <p id="favoriteEmpty">저장한 기법이 없습니다.</p>
     <ul id="favoriteList"></ul>
+    <a class="member-action member-explore-link" href="#library">기법 탐색하기</a>
+    </section>
+    <section data-member-panel="categories"><p id="memberCategoryCount"></p><div id="memberCategoryList" class="member-stack"></div></section>
+    <section data-member-panel="folders"><button id="newMemberFolder" class="member-action member-primary" type="button">＋ 새 폴더 만들기</button><div id="memberFolderList" class="member-stack"></div></section>
+    <section data-member-panel="collection"><div id="memberCollectionActions" class="member-collection-actions"></div><div class="member-filters"><input id="memberCollectionSearch" type="search" aria-label="목록에서 기법 검색" placeholder="저장한 기법 검색"><select id="memberCollectionSort" aria-label="목록 정렬"><option value="recent">최근 저장순</option><option value="name">이름순</option></select></div><div id="memberCollectionList"></div></section>
+    <section data-member-panel="settings"><div class="member-info-card"><div class="member-setting-row"><span data-member-icon="screen"></span><div><h3>화면 모드</h3><p>현재 사이트의 화면 모드</p></div><strong>다크</strong></div><div class="member-setting-row"><span data-member-icon="language"></span><div><h3>언어</h3><p>현재 제공 언어</p></div><strong>한국어</strong></div></div></section>
+    <p id="memberLibraryStatus" role="status" aria-live="polite"></p><button id="retryMemberLibrary" class="member-action" type="button" hidden>다시 불러오기</button>
+    </div></div>
   </div>
+  <dialog id="memberLibraryDialog" class="member-library-dialog" aria-labelledby="memberLibraryDialogTitle"><form id="memberLibraryForm"><h2 id="memberLibraryDialogTitle"></h2><label id="memberLibraryNameLabel">이름<input id="memberLibraryName" maxlength="60" autocomplete="off" required></label><div id="memberLibraryChoices"></div><p id="memberLibraryDialogStatus" role="status"></p><div class="member-dialog-actions"><button id="cancelMemberLibrary" class="member-action" type="button">취소</button><button id="saveMemberLibrary" class="member-action member-primary" type="submit">저장</button></div></form></dialog>
 </section>
 <footer class="site-footer"><span>CINELIQ · CAMERA ATLAS</span><nav class="policy-links" aria-label="사이트 정책"><a href="privacy.html">개인정보처리방침</a><a href="terms.html">서비스 이용약관</a></nav><span>CRAFT YOUR NEXT FRAME · 2026</span></footer></main></div>
 </div>

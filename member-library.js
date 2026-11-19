@@ -33,6 +33,7 @@
     folders:['내 폴더','프로젝트별로 저장한 기법을 자유롭게 정리하세요.'],
     bookmarks:['즐겨찾기','저장한 카메라 기법을 다시 만나보세요.'],
     settings:['설정','현재 CINELIQ의 사용 환경을 확인할 수 있습니다.'],
+    'delete-account':['회원 탈퇴','계정과 개인 라이브러리의 삭제 내용을 확인해 주세요.'],
   };
 
   window.CINELIQ_LIBRARY = ({items, escape, favoriteButton, thumbnail, notify, resetPassword}) => {

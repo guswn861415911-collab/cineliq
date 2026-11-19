@@ -22,8 +22,9 @@
 <link rel="stylesheet" href="styles.css?v=personal-library-1">
 <link rel="stylesheet" href="member-library.css?v=1">
 <script src="data.js" defer></script>
-<script src="media-config.js" defer></script><script src="media-cloud.js?v=personal-library-1" defer></script>
-<script src="media-admin.js?v=image-paste-1" defer></script><script src="member-library.js?v=1" defer></script><script src="member.js?v=personal-library-2" defer></script><script src="app.js?v=service-info-1" defer></script>
+<script src="media-config.js" defer></script><script src="media-cloud.js?v=account-deletion-1" defer></script>
+<script src="media-admin.js?v=image-paste-1" defer></script><script src="member-library.js?v=account-deletion-1" defer></script><script src="member-deletion.js?v=1" defer></script><script src="member.js?v=account-deletion-1" defer></script><script src="app.js?v=service-info-1" defer></script>
+<link rel="stylesheet" href="member-deletion.css?v=1">
 <link rel="stylesheet" href="service-info.css?v=1">
 <script src="service-info.js?v=1" defer></script>
 </head>
@@ -69,8 +70,31 @@
         <div><dt>이름</dt><dd><span id="memberDisplayName"></span><button id="editMemberName" class="member-action" type="button">이름 수정</button></dd></div>
         <div><dt>로그인 수단</dt><dd id="memberProviders"></dd></div>
       </dl>
-      <div class="member-info-card"><h3>계정 관리</h3><button id="memberPasswordChange" class="member-action" type="button" hidden>비밀번호 변경 메일 받기</button><p id="memberPasswordNote">이메일 로그인 사용자에게 비밀번호 변경을 제공합니다.</p></div>
+      <div class="member-info-card"><h3>계정 관리</h3><button id="memberPasswordChange" class="member-action" type="button" hidden>비밀번호 변경 메일 받기</button><p id="memberPasswordNote">이메일 로그인 사용자에게 비밀번호 변경을 제공합니다.</p><a class="member-action member-withdraw-link" href="#my/delete-account">회원 탈퇴 <span aria-hidden="true">›</span></a></div>
       <button id="memberLogout" class="member-action member-danger" type="button">로그아웃</button>
+    </section>
+    <section id="memberDeletion" data-member-panel="delete-account" hidden aria-label="회원 탈퇴 안내">
+      <div class="member-info-card">
+        <h3>탈퇴하면 아래 정보가 영구 삭제됩니다</h3>
+        <p id="memberDeletionIdentity"></p>
+        <ul><li>CINELIQ 회원 계정과 프로필 이름·이메일 등 계정 정보</li><li>저장한 즐겨찾기</li><li>개인 폴더와 폴더·기법 연결 정보</li><li>CINELIQ에 연결된 Google·카카오·이메일 로그인 정보와 세션</li></ul>
+        <p><strong>삭제된 개인 데이터는 복구할 수 없습니다.</strong> 다시 가입하면 새로운 CINELIQ 회원으로 처리되며 기존 북마크와 폴더는 복원되지 않습니다.</p>
+        <p>Google·카카오 계정 자체는 삭제되지 않습니다. 계정 연결 해제는 로그인 수단 하나를 분리하는 기능이며, 회원 탈퇴와 다릅니다.</p>
+        <p>공통 카메라 기법, 사이트의 공개 이미지·영상과 다른 회원의 데이터는 삭제하지 않습니다. 관리자나 업로드 소유 계정은 공통 자료 보호를 위해 별도 확인이 필요합니다.</p>
+        <p>플랫폼 보안 로그·백업은 운영 데이터 삭제와 별도로 관리됩니다. 운영자가 법적 보존 또는 별도 확인 대상으로 지정한 계정은 자동 삭제를 중단하고 문의로 안내합니다. 자세한 내용은 <a href="privacy.html">개인정보처리방침</a>과 <a href="contact.html">문의하기</a>를 확인해 주세요.</p>
+      </div>
+      <div class="member-info-card">
+        <h3>최근 로그인 확인</h3><p>서버가 최근 5분 이내의 로그인 세션을 확인합니다. 세션 갱신만으로는 인증 시간이 연장되지 않습니다. 소셜 재인증 시 원래 연결된 계정을 선택해 주세요.</p>
+        <button id="checkMemberDeletion" class="member-action" type="button">탈퇴 가능 여부 확인</button>
+        <div class="member-deletion-reauth"><button class="member-action" data-deletion-reauth="google" type="button" hidden>Google로 다시 인증</button><button class="member-action" data-deletion-reauth="kakao" type="button" hidden>카카오로 다시 인증</button></div>
+        <div id="memberDeletionEmailAuth" hidden><label for="memberDeletionPassword">현재 비밀번호</label><input id="memberDeletionPassword" type="password" autocomplete="current-password"><button class="member-action" data-deletion-reauth="email" type="button">이메일 계정 다시 인증</button></div>
+      </div>
+      <form id="memberDeletionForm" class="member-info-card">
+        <label class="member-deletion-consent"><input id="memberDeletionConsent" type="checkbox"> 삭제 대상과 복구 불가능함을 확인했으며 회원 탈퇴에 동의합니다.</label>
+        <label for="memberDeletionPhrase">최종 확인을 위해 ‘CINELIQ 탈퇴’를 입력해 주세요.</label><input id="memberDeletionPhrase" autocomplete="off" spellcheck="false" placeholder="CINELIQ 탈퇴">
+        <p id="memberDeletionStatus" role="status" aria-live="polite"></p>
+        <div class="member-deletion-actions"><a class="member-action" href="#my/profile">취소하고 돌아가기</a><button id="confirmMemberDeletion" class="member-action member-danger" type="submit" disabled>회원 탈퇴 확정</button></div>
+      </form>
     </section>
     <section id="memberIdentities" data-member-panel="accounts" aria-labelledby="memberIdentitiesTitle">
       <h2 id="memberIdentitiesTitle" class="member-visually-hidden">연결된 계정</h2>

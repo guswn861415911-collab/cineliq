@@ -141,6 +141,38 @@
   members.removeFolderItem = async (folderId, techniqueId) => unwrap(await client.from('cineliq_folder_items')
     .delete().eq('folder_id',folderId).eq('technique_id',techniqueId));
 
+  members.deletionRequest = async (action,expectedUserId) => {
+    const {session} = unwrap(await client.auth.getSession());
+    if (!session) throw Object.assign(Error('Authentication required'),{code:'authentication_required'});
+    const {data,error} = await client.functions.invoke('delete-account',{
+      headers:{Authorization:`Bearer ${session.access_token}`},
+      body:{action,expectedUserId,confirmation:'CINELIQ 탈퇴'},
+    });
+    if (error) {
+      let code='deletion_unconfirmed';
+      try { code=(await error.context.json()).code || code; } catch {}
+      throw Object.assign(Error('Account deletion request failed'),{code});
+    }
+    if (data?.code !== (action==='check'?'ready':'deleted') || data.userId!==expectedUserId)
+      throw Object.assign(Error('Deletion result not confirmed'),{code:'deletion_unconfirmed'});
+    return data;
+  };
+  members.deletionReauthenticate = async (provider,password,expectedUserId) => {
+    const {user} = unwrap(await client.auth.getUser());
+    if (user?.id!==expectedUserId) throw Object.assign(Error('Account changed'),{code:'account_changed'});
+    if (provider==='email') {
+      if (!user.email || !user.identities?.some(identity=>identity.provider==='email')) throw Error('Email login unavailable');
+      const data=unwrap(await client.auth.signInWithPassword({email:user.email,password}));
+      if (data.user?.id!==expectedUserId) throw Object.assign(Error('Account changed'),{code:'account_changed'});
+      return null;
+    }
+    if (!['google','kakao'].includes(provider) || !user.identities?.some(identity=>identity.provider===provider)) throw Error('Provider unavailable');
+    return unwrap(await client.auth.signInWithOAuth({provider,options:{
+      redirectTo:callbackUrl(),skipBrowserRedirect:true,
+      queryParams:provider==='kakao'?kakaoQueryParams:googleQueryParams,
+    }})).url;
+  };
+
   async function catalog(admin, previous = new Map()) {
     const rows = [];
     for (let offset = 0; ; offset += pageSize) {

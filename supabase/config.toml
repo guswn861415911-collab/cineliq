@@ -1,0 +1,4 @@
+[functions.delete-account]
+# The handler authenticates every request with auth.getUser(token), then validates
+# the matching live auth.sessions row. This supports current JWT signing keys.
+verify_jwt = false

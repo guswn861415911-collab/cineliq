@@ -36,6 +36,7 @@
     let identityBusy = false;
     let identityRefresh;
     const library = window.CINELIQ_LIBRARY({items,escape,favoriteButton,thumbnail,notify,resetPassword:cloud.members.reset});
+    const deletion = window.CINELIQ_DELETION({navigate,notify});
 
     function paintIdentities() {
       for (const row of identityPanel.querySelectorAll('[data-identity-provider]')) {
@@ -213,6 +214,7 @@
       const changed = session?.user.id !== user?.id;
       session = next;
       library.sync(next);
+      deletion.sync(next);
       header.querySelector('.member-toggle-label').textContent = user ? '마이페이지' : '로그인';
       root.querySelector('#memberEmail').textContent = user ? user.email || '등록된 이메일 없음' : '';
       root.querySelector('#memberSignedIn').hidden = !user;
@@ -418,6 +420,7 @@
       });
       const current = await cloud.members.session();
       void sync(current);
+      if (deletion.restore(current,authCallback)) return;
       if (authError) {
         const callback = new URL(location.href);
         callback.searchParams.delete('code');

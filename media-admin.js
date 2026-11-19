@@ -175,6 +175,12 @@
           <label class="btn dark">파일 선택<input class="file-input" id="mediaUpload" type="file" multiple accept="${accept}"></label>
           <span>또는 여기에 파일을 놓으세요</span>
         </div>
+        ${item.mediaType === 'image' ? `<div class="media-paste">
+          <label for="mediaPaste">이미지 붙여넣기</label>
+          <textarea id="mediaPaste" rows="2" aria-describedby="mediaPasteHelp" placeholder="PC는 Ctrl+V / Cmd+V · 모바일은 길게 눌러 붙여넣기"></textarea>
+          <p id="mediaPasteHelp">이미지 데이터가 복사된 경우 미리보기가 표시됩니다. 붙여넣기가 제공되지 않으면 파일 선택으로 사진을 선택하세요.</p>
+          <button class="btn outline" id="readMediaClipboard" type="button" hidden>클립보드 이미지 읽기</button>
+        </div>` : ''}
         <div class="media-preview" id="mediaPreview" hidden></div>
         <div class="admin-actions" id="mediaSubmit" hidden>
           <button class="btn dark" type="button" id="confirmMedia">등록</button>
@@ -194,6 +200,8 @@
       let replacement = null;
       let previewUrls = [];
       let selection = 0;
+      let readingClipboard = false;
+      let disposed = false;
 
       function clear() {
         selection++;
@@ -299,6 +307,58 @@
         void choose([...event.target.files]);
         event.target.value = '';
       });
+      const pasteArea = search('#mediaPaste');
+      const readClipboard = search('#readMediaClipboard');
+      const noImage = '이미지 데이터가 없어요. Gemini에서 이미지 자체를 복사하거나, 기기에 저장한 뒤 파일 선택을 이용해 주세요. URL이나 텍스트는 이미지로 등록되지 않습니다.';
+      if (pasteArea) {
+        pasteArea.addEventListener('paste',event=>{
+          event.preventDefault();
+          pasteArea.value = '';
+          if (busy || readingClipboard || !state.admin) return;
+          const data = event.clipboardData;
+          const files = [...(data?.files ?? [])];
+          if (!files.length) {
+            for (const entry of data?.items ?? []) {
+              if (entry.kind === 'file') {
+                const file = entry.getAsFile();
+                if (file) files.push(file);
+              }
+            }
+          }
+          const images = files.filter(file=>file.type.startsWith('image/'));
+          if (images.length) void choose(images);
+          else status.textContent = noImage;
+        });
+        readClipboard.hidden = !window.isSecureContext || typeof navigator.clipboard?.read !== 'function';
+        readClipboard.addEventListener('click',async()=>{
+          if (busy || readingClipboard || !state.admin) return;
+          readingClipboard = true;
+          readClipboard.disabled = true;
+          const request = selection;
+          try {
+            // Invoke within the click gesture so Safari can show its native paste prompt.
+            const entries = await navigator.clipboard.read();
+            const files = [];
+            for (const entry of entries) {
+              const type = entry.types.find(type=>Object.hasOwn(cloud.types,type) && type.startsWith('image/'))
+                || entry.types.find(type=>type.startsWith('image/'));
+              if (!type) continue;
+              const blob = await entry.getType(type);
+              files.push(new File([blob],`clipboard-${Date.now()}-${files.length}.${cloud.types[type] || 'image'}`,{type}));
+            }
+            if (disposed || !openedBox.isConnected || busy || !state.admin || request !== selection) return;
+            if (files.length) await choose(files);
+            else status.textContent = noImage;
+          } catch {
+            if (!disposed && openedBox.isConnected && request === selection) {
+              status.textContent = '클립보드를 읽을 수 없어요. 붙여넣기 영역을 길게 눌러 붙여넣거나 파일 선택으로 사진을 선택해 주세요.';
+            }
+          } finally {
+            readingClipboard = false;
+            readClipboard.disabled = busy;
+          }
+        });
+      }
       drop.addEventListener('dragover', event => {
         event.preventDefault();
         if (!busy) drop.dataset.dragging = '';
@@ -335,7 +395,7 @@
       });
       search('#confirmMedia').addEventListener('click', () => void commitQueue());
       search('#cancelMedia').addEventListener('click', clear);
-      return clear;
+      return () => { disposed = true; clear(); };
     }
 
     return {start, markup, bind};

@@ -59,7 +59,7 @@
   }
 
   const callbackUrl = () => new URL('.', location.href).href;
-  const kakaoQueryParams = {scope:'profile_image,profile_nickname'};
+  const kakaoQueryParams = {scope:'profile_image,profile_nickname',prompt:'select_account'};
   const googleQueryParams = {prompt:'select_account'};
 
   async function enabledProviders() {
@@ -79,6 +79,47 @@
     }));
   }
 
+  const identityFailure = code => Object.assign(Error(code),{code});
+  async function identityState(expectedUserId) {
+    // The server user, not cached app_metadata.providers, is authoritative.
+    const {user} = unwrap(await client.auth.getUser());
+    const {session} = unwrap(await client.auth.getSession());
+    if (!user || user.id !== session?.user.id || (expectedUserId && user.id !== expectedUserId)) {
+      throw identityFailure('identity_session_changed');
+    }
+    const identities = user.identities;
+    if (!Array.isArray(identities) || identities.some(row=>row.user_id && row.user_id !== user.id)) {
+      throw identityFailure('identity_state_unverified');
+    }
+    return {userId:user.id,identities};
+  }
+
+  async function linkIdentity(provider, expectedUserId) {
+    if (!['google','kakao'].includes(provider)) throw identityFailure('provider_unavailable');
+    const state = await identityState(expectedUserId);
+    if (state.identities.some(row=>row.provider===provider)) throw identityFailure('identity_already_linked');
+    if (!(await enabledProviders())[provider]) throw identityFailure('provider_unavailable');
+    return unwrap(await client.auth.linkIdentity({provider,options:{
+      redirectTo:callbackUrl(),
+      queryParams:provider==='kakao'?kakaoQueryParams:googleQueryParams,
+      skipBrowserRedirect:true,
+    }})).url;
+  }
+
+  async function unlinkIdentity(identity, expectedUserId) {
+    const state = await identityState(expectedUserId);
+    const current = state.identities.find(row=>row.identity_id===identity.identity_id && row.provider===identity.provider);
+    if (!current) throw identityFailure('identity_not_found');
+    const enabled = await enabledProviders();
+    if (!state.identities.some(row=>row.provider!==current.provider && ['google','kakao'].includes(row.provider) && enabled[row.provider])) {
+      throw identityFailure('single_identity_not_deletable');
+    }
+    unwrap(await client.auth.unlinkIdentity(current));
+    const updated = await identityState(state.userId);
+    if (updated.identities.some(row=>row.provider===current.provider)) throw identityFailure('identity_still_linked');
+    return updated;
+  }
+
   const members = {
     session: async () => unwrap(await client.auth.getSession()).session,
     login: async (email, password) => unwrap(await client.auth.signInWithPassword({email, password})),
@@ -96,16 +137,8 @@
     reset: async email => unwrap(await client.auth.resetPasswordForEmail(email, {redirectTo: callbackUrl()})),
     updatePassword: async password => unwrap(await client.auth.updateUser({password})),
     enabledProviders,
-    identities: async () => unwrap(await client.auth.getUserIdentities()).identities,
-    linkIdentity: async provider => unwrap(await client.auth.linkIdentity({
-      provider,
-      options:{
-        redirectTo:callbackUrl(),
-        queryParams:provider === 'kakao' ? kakaoQueryParams : googleQueryParams,
-        skipBrowserRedirect:true,
-      },
-    })).url,
-    unlinkIdentity: async identity => unwrap(await client.auth.unlinkIdentity(identity)),
+    identities: async () => (await identityState()).identities,
+    identityState,linkIdentity,unlinkIdentity,
     updateName: async displayName => unwrap(await client.auth.updateUser({data:{display_name:displayName}})).user,
     favorites: async userId => unwrap(await client.from('cineliq_favorites')
       .select('technique_id,created_at').eq('user_id',userId).order('created_at',{ascending:false})),

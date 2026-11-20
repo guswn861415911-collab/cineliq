@@ -102,6 +102,8 @@ Supabase 무료 요금제의 파일 저장 공간은 현재 1GB입니다. 프로
 
 ## 회원 탈퇴
 
+Google·Kakao 로그인/연결의 운영 설정 조사, 본인 identities 기반 UUID 검증, 오류 구분, 외부 콘솔 점검과 실제 OAuth 미검증 항목은 [IDENTITY_AUTH_AUDIT.md](IDENTITY_AUTH_AUDIT.md)를 확인하세요. 다른 사용자에게 귀속된 identity를 자동 병합하거나 데이터를 이전하지 않습니다.
+
 회원 탈퇴의 서버 처리, 최근 로그인 검증, 삭제 대상, 운영 승인·배포 절차와 테스트 한계는 [ACCOUNT_DELETION.md](ACCOUNT_DELETION.md)에 정리했습니다. 실제 회원 삭제 테스트는 별도 승인 없이 실행하지 않습니다.
 
 ## 기법 데이터

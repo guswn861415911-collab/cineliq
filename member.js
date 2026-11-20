@@ -34,7 +34,8 @@
     const pending = new Set();
     let identities = null;
     let identityBusy = false;
-    let identityRefresh;
+    let identityReadVersion = 0;
+    let expectedLinkUserId = null;
     const library = window.CINELIQ_LIBRARY({items,escape,favoriteButton,thumbnail,notify,resetPassword:cloud.members.reset});
     const deletion = window.CINELIQ_DELETION({navigate,notify});
 
@@ -53,29 +54,34 @@
     }
 
     async function refreshIdentities(version) {
+      const readVersion = ++identityReadVersion;
       root.querySelector('#retryMemberIdentities').hidden = true;
       try {
-        const rows = await cloud.members.identities();
-        if (version !== lookupVersion) return null;
+        const rows = await verifiedIdentities(session?.user.id);
+        if (version !== lookupVersion || readVersion !== identityReadVersion) return null;
         identities = rows;
         library.setIdentities(rows);
         return rows;
       } catch {
-        if (version === lookupVersion) {
+        if (version === lookupVersion && readVersion === identityReadVersion) {
+          identities = null;
           identityStatus.textContent = '연결된 계정을 불러오지 못했어요. 다시 시도해 주세요.';
           root.querySelector('#retryMemberIdentities').hidden = false;
         }
         return null;
       } finally {
-        if (version === lookupVersion) paintIdentities();
+        if (version === lookupVersion && readVersion === identityReadVersion) paintIdentities();
       }
     }
 
     function identityError(code, description = '') {
-      if (['identity_already_exists','user_already_exists','email_exists'].includes(code)
-        || /already (?:linked|associated)|identity.+already exists/i.test(description)) {
-        return '이미 다른 CINELIQ 계정에 연결된 로그인 방법입니다.';
-      }
+      if (code === 'identity_already_exists') return '이미 다른 CINELIQ 계정에 연결된 로그인 방법입니다. 별도로 가입한 계정일 수 있어요. 현재 계정은 유지되며 자동 병합·삭제하지 않습니다. 다른 소셜 계정을 선택하거나 두 계정의 소유권 확인 후 별도 통합 절차가 필요합니다.';
+      if (code === 'identity_already_linked') return '이미 이 CINELIQ 계정에 연결되어 있어요. 연결 상태를 새로 확인해 주세요.';
+      if (['user_already_exists','email_exists'].includes(code)) return '기존 회원 또는 이메일과 충돌했어요. 다른 계정 소유로 단정할 수 없어 연결을 중단했습니다. 계정 상태를 확인해 주세요.';
+      if (code === 'identity_session_changed') return '로그인한 계정이 변경되어 연결 처리를 중단했어요. 현재 계정과 연결 상태를 다시 확인해 주세요.';
+      if (code === 'identity_state_unverified') return '서버에서 현재 계정의 연결 상태를 확인하지 못했어요. 다시 확인하기 전에는 성공으로 처리하지 않습니다.';
+      if (code === 'provider_unavailable') return '선택한 로그인 제공자를 현재 이용할 수 없어요. 기존 로그인 상태는 유지됩니다.';
+      if (['bad_oauth_state','bad_oauth_callback','flow_state_expired','flow_state_not_found','bad_code_verifier'].includes(code)) return '계정 연결 인증이 만료되었거나 같은 브라우저에서 복귀하지 못했어요. 원래 로그인한 브라우저에서 연결을 다시 시작해 주세요.';
       if (code === 'manual_linking_disabled') return '계정 연결 설정이 아직 활성화되지 않았어요.';
       if (code === 'access_denied' || /access[ _]+denied|cancel(?:led|ed)?|denied access/i.test(description)) {
         return '계정 연결을 취소했어요.';
@@ -87,14 +93,34 @@
       try {
         const attempt = JSON.parse(sessionStorage.getItem(linkAttemptKey) ?? 'null');
         sessionStorage.removeItem(linkAttemptKey);
-        return attempt && Date.now() - attempt.startedAt < 30 * 60 * 1000
+        return attempt && typeof attempt.userId === 'string' && Number.isFinite(attempt.startedAt)
+          && Date.now() - attempt.startedAt >= 0 && Date.now() - attempt.startedAt < 30 * 60 * 1000
           && Object.hasOwn(identityNames,attempt.provider) ? attempt : null;
       } catch { return null; }
     }
 
+    function clearLinkAttempt() {
+      expectedLinkUserId = null;
+      try { sessionStorage.removeItem(linkAttemptKey); } catch {}
+    }
+
     async function hasSameSession(version, userId) {
       const latest = await cloud.members.session();
-      return version === lookupVersion && latest?.user.id === userId;
+      const same = version === lookupVersion && latest?.user.id === userId;
+      if (!same && version === lookupVersion) identityStatus.textContent = identityError('identity_session_changed');
+      return same;
+    }
+
+    async function verifiedIdentities(userId) {
+      if (!userId) throw Object.assign(Error('No current user'),{code:'identity_session_changed'});
+      if (cloud.members.identityState) return (await cloud.members.identityState(userId)).identities;
+      // Compatibility with isolated preview adapters; production uses identityState/getUser.
+      const rows = await cloud.members.identities();
+      const latest = await cloud.members.session();
+      if (latest?.user.id !== userId || rows.some(row=>row.user_id && row.user_id!==userId)) {
+        throw Object.assign(Error('Identity owner changed'),{code:'identity_session_changed'});
+      }
+      return rows;
     }
 
     async function changeIdentity(provider) {
@@ -103,11 +129,12 @@
       const userId = session.user.id;
       const linked = identities.some(identity => identity.provider === provider);
       identityBusy = true;
+      delete identityStatus.dataset.authErrorCode;
       paintIdentities();
       identityStatus.textContent = linked ? '연결을 확인하고 있어요…' : '계정 연결을 시작하고 있어요…';
       let leaving = false;
       try {
-        const rows = await cloud.members.identities();
+        const rows = await verifiedIdentities(userId);
         if (!(await hasSameSession(current,userId))) return;
         identities = rows;
         const identity = rows.find(item => item.provider === provider);
@@ -128,12 +155,14 @@
             return;
           }
           if (!(await hasSameSession(current,userId))) return;
-          await cloud.members.unlinkIdentity(identity);
+          await cloud.members.unlinkIdentity(identity,userId);
           const updated = await refreshIdentities(current);
-          if (updated && current === lookupVersion) identityStatus.textContent = '로그인 수단 연결을 해제했어요.';
+          if (updated && await hasSameSession(current,userId)) identityStatus.textContent = updated.some(row=>row.provider===provider)
+            ? '서버에서 연결 해제를 확인하지 못했어요. 현재 연결 상태를 다시 확인해 주세요.'
+            : '로그인 수단 연결을 해제했어요. 기존 계정과 저장 데이터는 유지됩니다.';
           return;
         }
-        const url = await cloud.members.linkIdentity(provider);
+        const url = await cloud.members.linkIdentity(provider,userId);
         if (!(await hasSameSession(current,userId))) return;
         if (!url) throw Error('No identity authorization URL');
         sessionStorage.setItem(linkAttemptKey,JSON.stringify({provider,userId,startedAt:Date.now()}));
@@ -141,7 +170,13 @@
         leaving = true;
       } catch (error) {
         if (current === lookupVersion) {
-          identityStatus.textContent = linked && error.code !== 'manual_linking_disabled'
+          identityStatus.dataset.authErrorCode = error.code || 'unknown';
+          // Reconcile the server state even on failure; never infer identity ownership from text.
+          const updated = await refreshIdentities(current);
+          if (!(await hasSameSession(current,userId))) return;
+          identityStatus.textContent = !linked && updated?.some(row=>row.provider===provider)
+            ? '이미 이 CINELIQ 계정에 연결되어 있어요. 서버에서 연결 상태를 확인했습니다.'
+            : linked && error.code !== 'manual_linking_disabled'
             ? '연결을 해제하지 못했어요. 잠시 후 다시 시도해 주세요.'
             : identityError(error.code,error.message);
         }
@@ -225,7 +260,7 @@
       identityBusy = false;
       identityStatus.textContent = '';
       paintIdentities();
-      if (user) identityRefresh = refreshIdentities(current);
+      if (user) void refreshIdentities(current);
       favorites = new Map();
       pending.clear();
       search.value = '';
@@ -347,6 +382,7 @@
       logout.disabled = true;
       try {
         await cloud.logout();
+        clearLinkAttempt();
         void sync(null);
         navigate('hero');
       } catch (error) {
@@ -359,6 +395,8 @@
     async function startSocialLogin(provider) {
       google.disabled = kakao.disabled = true;
       status.textContent = '';
+      // An abandoned link attempt must never relabel a normal login callback.
+      clearLinkAttempt();
       try { await cloud.members[provider](); }
       catch (error) {
         if (error.code==='google_unavailable') {
@@ -375,6 +413,7 @@
       event.preventDefault();
       const submit = document.querySelector('#memberSubmit');
       if (!ready || submit.disabled) return;
+      clearLinkAttempt();
       submit.disabled = true;
       status.textContent = '';
       const email = form.elements.email.value.trim();
@@ -414,11 +453,20 @@
       const errorDescription = authCallback.searchParams.get('error_description') || fragment.get('error_description') || '';
       const attempt = readLinkAttempt();
       const linkReturn = attempt && (authError || authCallback.searchParams.has('code'));
+      expectedLinkUserId = linkReturn ? attempt.userId : null;
       cloud.onAuthChange((event,next)=>{
+        if (expectedLinkUserId && next && next.user.id !== expectedLinkUserId) {
+          notify('연결 전후 로그인 UUID가 달라 회원 화면 갱신을 중단했어요. 원래 계정을 다시 확인해 주세요.');
+          return;
+        }
         void sync(next);
         if (event==='PASSWORD_RECOVERY' && next) openAuth('recovery');
       });
       const current = await cloud.members.session();
+      if (linkReturn && current && current.user.id !== attempt.userId) {
+        openAuth('login','연결 전후 로그인 계정이 달라 결과를 확인할 수 없어요. 연결 성공으로 처리하지 않았습니다. 원래 계정으로 다시 로그인해 주세요.');
+        return;
+      }
       void sync(current);
       if (deletion.restore(current,authCallback)) return;
       if (authError) {
@@ -428,12 +476,18 @@
         if (callback.hash.startsWith('#error=')) callback.hash='';
         history.replaceState(history.state,'',callback.href);
         if (linkReturn) {
+          identityStatus.dataset.authErrorCode = errorCode || authError;
           const message = identityError(errorCode || authError,errorDescription);
           if (current?.user.id === attempt.userId) {
             navigate('my');
             library.openAccounts();
-            identityStatus.textContent = message;
+            const rows = await refreshIdentities(lookupVersion);
+            if (session?.user.id !== attempt.userId) return;
+            identityStatus.textContent = rows?.some(row=>row.provider===attempt.provider)
+              ? '이미 이 CINELIQ 계정에 연결되어 있어요. 서버에서 현재 UUID와 연결 상태를 확인했습니다.'
+              : rows ? message : '연결 결과를 서버에서 확인하지 못했어요. 기존 계정 상태를 다시 확인해 주세요.';
           } else notify(message);
+          expectedLinkUserId = null;
           return;
         }
         const cancelled = authError === 'access_denied' || /access[ _]+denied|cancel(?:led|ed)?|denied access/i.test(errorDescription);
@@ -445,13 +499,14 @@
           notify('원래 로그인한 계정을 확인할 수 없어 연결 결과를 확인하지 못했어요.');
           return;
         }
-        const rows = await identityRefresh;
+        const rows = await refreshIdentities(lookupVersion);
         if (session?.user.id !== attempt.userId) return;
         navigate('my');
         library.openAccounts();
         identityStatus.textContent = rows?.some(identity => identity.provider === attempt.provider)
           ? `${identityNames[attempt.provider]} 계정을 연결했어요.`
           : '계정 연결 결과를 확인하지 못했어요. 다시 로그인하기 전에 연결 상태를 확인해 주세요.';
+        expectedLinkUserId = null;
       }
     }
 

@@ -1,5 +1,5 @@
 (()=>{'use strict';
-  window.CINELIQ_LESSON=({item,items,escape,media,copyIcon,practice})=>{
+  window.CINELIQ_LESSON=({item,items,escape,media,copyIcon,practice,fullLearning})=>{
     const lesson=window.CINELIQ_LEARNING?.[item.id];
     if(!lesson)return '';
     const paragraph=text=>`<p>${escape(text)}</p>`;
@@ -18,7 +18,8 @@
       ${section('07','초보자가 자주 헷갈리는 부분',paragraph(lesson.commonMistakes)+(lesson.terminologyNotes?`<div class="lesson-note">${escape(lesson.terminologyNotes)}</div>`:''))}
       <details class="lesson-legacy"><summary>기존 설명과 보충 기록 보기</summary><p class="detail-description">${escape(item.description)}</p></details>
       ${practice?.guideMarkup(item.id)||''}
-      <div class="lesson-prompts">${prompt('image','AI 이미지 프롬프트',lesson.imagePromptExample)}${prompt('video','AI 영상 프롬프트',lesson.videoPromptExample)}${!lesson.videoPromptExample&&!window.CINELIQ_PRODUCTION?.profiles[item.id]?.videoPrompt?'<p class="lesson-note">이 항목은 이미지의 배치·광학 특성·미술 표현을 중심으로 안내합니다. 핵심을 바꾸는 불필요한 영상 움직임은 추가하지 않았습니다.</p>':''}<p class="lesson-note">생성 모델마다 지시를 따르는 정도가 다릅니다. 결과에서 위 관찰 기준을 확인하고, 실제 장비로 촬영한 자료나 사실 검증 결과로 오인하지 마세요.</p></div>
+      ${fullLearning?.markup(item.id)||''}
+      <div class="lesson-prompts">${prompt('image','AI 이미지 프롬프트',lesson.imagePromptExample)}${prompt('video','AI 영상 프롬프트',lesson.videoPromptExample)}${!lesson.videoPromptExample&&!window.CINELIQ_PRODUCTION?.profiles[item.id]?.videoPrompt&&!window.CINELIQ_FULL_LEARNING?.records[item.id]?.videoGuide?'<p class="lesson-note">이 항목은 이미지의 배치·광학 특성·미술 표현을 중심으로 안내합니다. 핵심을 바꾸는 불필요한 영상 움직임은 추가하지 않았습니다.</p>':''}<p class="lesson-note">생성 모델마다 지시를 따르는 정도가 다릅니다. 결과에서 위 관찰 기준을 확인하고, 실제 장비로 촬영한 자료나 사실 검증 결과로 오인하지 마세요.</p></div>
       <section class="lesson-section lesson-related" aria-labelledby="related-${item.id}"><h3 id="related-${item.id}">비슷한 촬영 기법 비교하기</h3><div class="lesson-related-grid">${related.map(id=>{const target=items.get(id);return `<button class="lesson-related-card" type="button" data-related-technique="${id}" aria-label="${escape(target.ko)} 상세 보기"><span class="lesson-related-media">${media(target)}</span><strong>${escape(target.ko)}</strong><small>${escape(target.en)}</small><span class="lesson-related-difference">${escape(lesson.relatedTechniqueDifferences[id])}</span><span class="lesson-related-open">상세 보기 <span aria-hidden="true">↗</span></span></button>`;}).join('')}</div>${practice?.comparisons(item.id)||''}</section>
     </div>`;
   };

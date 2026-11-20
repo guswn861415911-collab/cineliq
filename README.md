@@ -112,4 +112,4 @@ Supabase 무료 요금제의 파일 저장 공간은 현재 1GB입니다. 프로
 
 추가된 7개 학습 섹션, 완성형 이미지·영상 프롬프트, 관련 기법 비교 카드와 대표 이미지 검토 기록은 [LEARNING_CONTENT.md](LEARNING_CONTENT.md)를 참고하세요. 보충 콘텐츠는 `learning-data.js`에서 기존 기법 ID별로 관리합니다. 기존 설명과 수정용 프롬프트 템플릿도 유지합니다.
 
-실무 약어·발음 검색, 용어집, AI 오류 점검과 대표 6개 기법의 제작·편집 가이드 확장은 [PRACTICAL_LEARNING.md](PRACTICAL_LEARNING.md)에 정리했습니다. 새 개별 실무 가이드가 아직 없는 408개 기법은 기존 학습 콘텐츠를 유지하며, 미작성 항목을 자동 문장으로 채우지 않습니다.
+실무 약어·발음 검색과 대표 6개 기법의 초기 확장은 [PRACTICAL_LEARNING.md](PRACTICAL_LEARNING.md)에 기록했습니다. 이후 전체 414개 ID의 이미지 학습·399개 영상 가이드·15개 영상 생략 사유·176개 영상 프롬프트 누락 보완과 검증 범위는 [FULL_LEARNING_AUDIT.md](FULL_LEARNING_AUDIT.md)를 확인하세요. 전체 목록은 `content/technique-inventory.csv`, 개별 작성·검증 원장은 `content/learning-status.json`에서 관리합니다.

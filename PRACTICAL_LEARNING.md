@@ -1,5 +1,7 @@
 # 실무 용어·AI 제작·편집 학습 확장
 
+> 이 문서는 2026-11-20 대표 6개 시범 적용 기록입니다. 2026-11-21 전체 범위 확장과 현재 집계는 [FULL_LEARNING_AUDIT.md](FULL_LEARNING_AUDIT.md)를 확인하세요. 아래 미작성 408개 표기는 당시 단계의 상태입니다.
+
 ## 구조와 이번 적용 범위
 
 기존 사이트는 프레임워크·번들러 없는 HTML/CSS/JavaScript 정적 앱이며 GitHub Pages의 기존 main 배포를 사용합니다. `data.js`와 `learning-data.js`가 기법 및 학습 콘텐츠를, `app.js`와 `learning-ui.js`가 목록·상세 모달·검색·필터·기존 복사를 담당합니다. 공개 미디어와 회원 인증·북마크·개인 폴더는 기존 Supabase 연결을 유지합니다. 이번 작업에는 Supabase 마이그레이션이나 운영 데이터 쓰기가 없습니다.

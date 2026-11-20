@@ -103,7 +103,7 @@ function renderMobileFilters(){
  mediaRoot.innerHTML=[['all','전체'],['image','이미지 기법'],['video','영상 기법']].map(([v,n])=>`<button class="mobile-filter-chip ${state.media===v?'active':''}" data-media="${v}">${n}</button>`).join('');
 }
 function renderTags(){$('#tagFilters').innerHTML=`<button class="chip ${state.tags.size===0?'active':''}" data-tag="all">전체</button>`+TAGS.map(t=>`<button class="chip ${state.tags.has(t)?'active':''}" data-tag="${esc(t)}">${esc(t)}</button>`).join('');document.querySelectorAll('[data-media]').forEach(b=>b.classList.toggle('active',b.dataset.media===state.media));document.querySelectorAll('.admin-media-filter').forEach(b=>b.hidden=!state.admin);renderMobileFilters()}
-function filtered(){const q=state.search.toLocaleLowerCase().trim();let a=ITEMS.filter(i=>{if(state.major!=='all'&&i.major!==state.major)return false;if(state.section&&i.sectionNo!==state.section)return false;if(state.tags.size&&![...state.tags].some(t=>i.tags.includes(t)))return false;const has=state.mediaMap.has(i.id);if(state.media==='ready'&&!has||state.media==='missing'&&has||state.media==='image'&&i.mediaType!=='image'||state.media==='video'&&i.mediaType!=='video')return false;return !q||[i.ko,i.en,i.description,i.section,...i.tags].join(' ').toLocaleLowerCase().includes(q)});const sort=state.sort;if(sort==='az')a.sort((a,b)=>a.en.localeCompare(b.en,'en'));else if(sort==='za')a.sort((a,b)=>b.en.localeCompare(a.en,'en'));else if(sort==='ko')a.sort((a,b)=>a.ko.localeCompare(b.ko,'ko'));else if(sort==='media')a.sort((a,b)=>Number(state.mediaMap.has(b.id))-Number(state.mediaMap.has(a.id))||a.number-b.number);return a}
+function filtered(){const q=state.search.toLocaleLowerCase().trim();let a=ITEMS.filter(i=>{if(state.major!=='all'&&i.major!==state.major)return false;if(state.section&&i.sectionNo!==state.section)return false;if(state.tags.size&&![...state.tags].some(t=>i.tags.includes(t)))return false;const has=state.mediaMap.has(i.id);if(state.media==='ready'&&!has||state.media==='missing'&&has||state.media==='image'&&i.mediaType!=='image'||state.media==='video'&&i.mediaType!=='video')return false;return !q||(practice?practice.matches(i,q):[i.ko,i.en,i.description,i.section,...i.tags].join(' ').toLocaleLowerCase().includes(q))});const sort=state.sort;if(sort==='az')a.sort((a,b)=>a.en.localeCompare(b.en,'en'));else if(sort==='za')a.sort((a,b)=>b.en.localeCompare(a.en,'en'));else if(sort==='ko')a.sort((a,b)=>a.ko.localeCompare(b.ko,'ko'));else if(sort==='media')a.sort((a,b)=>Number(state.mediaMap.has(b.id))-Number(state.mediaMap.has(a.id))||a.number-b.number);return a}
 function mediaElement(item,row,detail){
   const source=detail?row.url:row.thumbnail||row.url;
   if(row.kind==='video'){
@@ -137,6 +137,7 @@ function cardSummary(i){
   return (lastSpace>max*0.65?slice.slice(0,lastSpace):slice).replace(/[\s,，;；]+$/,'')+'…';
 }
 const copyIcon = `<svg class="copy-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="8.5" width="12" height="12" rx="3"/><path d="M8.5 8.5V6.5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-2"/></svg>`;
+const practice=window.CINELIQ_PRACTICE?.({items:itemById,escape:esc,copyIcon});
 function card(i){return `<article class="tech-card" data-open="${i.id}"${state.open===i.id?' data-selected':''} tabindex="0" role="button" aria-label="${esc(i.ko)} 상세 보기">${mediaHTML(i)}<div class="card-content"><div class="card-section">${esc(i.section)} · ${majorName(i.major)}</div><div class="card-title-row"><h3 class="card-title">${esc(i.ko)}</h3><button class="copy-icon-btn" type="button" data-copy="${i.id}" aria-label="${esc(i.en)} 영문 명칭 복사" title="영문 명칭 복사">${copyIcon}</button></div><div class="card-en">${esc(i.en)}</div><p class="card-description">${esc(cardSummary(i))}</p><div class="card-actions">${member.favoriteButton(i.id)}<span class="open-link">기법 살펴보기 <span aria-hidden="true">↗</span></span></div></div></article>`}
 let revealObserver=null;
 let scrollObserver=null;
@@ -177,7 +178,8 @@ function renderCards(previousMedia){
     grid.insertAdjacentHTML('beforeend',shown.slice(old.length).map(card).join(''));
   }
   else{revealObserver?.disconnect();grid.innerHTML=shown.map(card).join('')}
-  $('#emptyState').hidden=arr.length!==0;
+  const termCount=practice?.renderSearch(state.search,$('#termBrowser'))||0;
+  $('#emptyState').hidden=arr.length!==0||termCount>0;
   $('#loadMore').hidden=true;
   $('#scrollSentinel').hidden=arr.length<=state.limit;
   observeReveals();refreshCounts();
@@ -244,7 +246,7 @@ function openDetail(id,focus=true,order=null){const i=itemById.get(id);if(!i)ret
   if(order){detailOrder=[...new Set(order)].filter(key=>itemById.has(key));detailReturn=document.activeElement;}
   if(!detailOrder.includes(id))detailOrder=[id];
   $('#detailBody').querySelectorAll('video').forEach(video=>video.pause());
-  cleanupDetail();detailAnimation?.cancel();state.open=id;document.querySelector('.tech-card[data-selected]')?.removeAttribute('data-selected');$('.tech-card[data-open="'+id+'"]')?.setAttribute('data-selected','');const prompt=makePrompt(i);const lesson=window.CINELIQ_LESSON?.({item:i,items:itemById,escape:esc,media:item=>mediaHTML(item),copyIcon})||'';$('#detailBody').innerHTML=`<div class="detail-inner"><div class="detail-overline">${esc(majorName(i.major).toUpperCase())} / ${esc(i.section)} / ${i.id}</div><div class="detail-heading"><h2 id="detailTitle" tabindex="-1">${esc(i.ko)}</h2><div class="detail-actions">${member.favoriteButton(i.id)}<button class="btn outline small" data-copy="${i.id}" type="button">${copyIcon} 영문명 복사</button></div></div><p class="detail-en">${esc(i.en)}</p><p class="detail-summary">${esc(i.summary||cardSummary(i))}</p>${mediaHTML(i,true)}<div class="detail-info">${lesson||`<p class="info-label">ABOUT THIS TECHNIQUE</p><p class="detail-description">${esc(i.description)}</p>`}<div class="detail-tags">${i.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div><div class="prompt-box"><div class="prompt-head"><strong>프롬프트 템플릿 (수정용)</strong><button class="btn outline small" type="button" id="copyPrompt">${copyIcon} 템플릿 복사</button></div><p class="prompt-text">${esc(prompt)}</p><div class="prompt-hint">인물·장소·연출을 바꿔 쓰는 수정용 템플릿입니다. 위의 완성형 예시와 구분해 활용하세요.</div></div>${state.admin?admin.markup(i,state.mediaMap.get(i.id)||[]):legacyDownload(i)}</div>`;
+  cleanupDetail();detailAnimation?.cancel();state.open=id;document.querySelector('.tech-card[data-selected]')?.removeAttribute('data-selected');$('.tech-card[data-open="'+id+'"]')?.setAttribute('data-selected','');const prompt=makePrompt(i);const lesson=window.CINELIQ_LESSON?.({item:i,items:itemById,escape:esc,media:item=>mediaHTML(item),copyIcon,practice})||'';$('#detailBody').innerHTML=`<div class="detail-inner"><div class="detail-overline">${esc(majorName(i.major).toUpperCase())} / ${esc(i.section)} / ${i.id}</div><div class="detail-heading"><h2 id="detailTitle" tabindex="-1">${esc(i.ko)}</h2><div class="detail-actions">${member.favoriteButton(i.id)}<button class="btn outline small" data-copy="${i.id}" type="button">${copyIcon} 영문명 복사</button></div></div><p class="detail-en">${esc(i.en)} ${practice?.badges(id)||''}</p><p class="detail-summary">${esc(i.summary||cardSummary(i))}</p>${mediaHTML(i,true)}<div class="detail-info">${lesson||`<p class="info-label">ABOUT THIS TECHNIQUE</p><p class="detail-description">${esc(i.description)}</p>`}<div class="detail-tags">${i.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div><div class="prompt-box"><div class="prompt-head"><strong>프롬프트 템플릿 (수정용)</strong><button class="btn outline small" type="button" id="copyPrompt">${copyIcon} 템플릿 복사</button></div><p class="prompt-text">${esc(prompt)}</p><div class="prompt-hint">인물·장소·연출을 바꿔 쓰는 수정용 템플릿입니다. 위의 완성형 예시와 구분해 활용하세요.</div></div>${state.admin?admin.markup(i,state.mediaMap.get(i.id)||[]):legacyDownload(i)}</div>`;
   $('#detailModal').hidden=false;
   panel.scrollTop=changed?0:scroll;
   paintDetailNavigation();
@@ -254,6 +256,8 @@ function openDetail(id,focus=true,order=null){const i=itemById.get(id);if(!i)ret
   if(focus)$('#closeDetail').focus();
   $('#copyPrompt').addEventListener('click',()=>copyText(prompt));
   $('#detailBody').onclick=event=>{
+    const practicalCopy=event.target.closest('[data-practice-copy]');
+    if(practicalCopy){const value=practice?.copy(practicalCopy.dataset.practiceId,practicalCopy.dataset.practiceCopy);if(value)copyText(value);return;}
     const copy=event.target.closest('[data-lesson-copy]');
     if(copy){const data=window.CINELIQ_LEARNING?.[id];const value=copy.dataset.lessonCopy==='video'?data?.videoPromptExample:data?.imagePromptExample;if(value)copyText(value);return;}
     const related=event.target.closest('[data-related-technique]');

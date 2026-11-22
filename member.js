@@ -38,6 +38,7 @@
     let expectedLinkUserId = null;
     const library = window.CINELIQ_LIBRARY({items,escape,favoriteButton,thumbnail,notify,resetPassword:cloud.members.reset});
     const deletion = window.CINELIQ_DELETION({navigate,notify});
+    const mergeNotice = window.CINELIQ_MERGE_NOTICE?.({members:cloud.members});
 
     function paintIdentities() {
       for (const row of identityPanel.querySelectorAll('[data-identity-provider]')) {
@@ -179,6 +180,7 @@
             : linked && error.code !== 'manual_linking_disabled'
             ? '연결을 해제하지 못했어요. 잠시 후 다시 시도해 주세요.'
             : identityError(error.code,error.message);
+          if (!linked && error.code === 'identity_already_exists' && updated && !updated.some(row=>row.provider===provider)) mergeNotice?.show(userId);
         }
       } finally {
         if (!leaving && current === lookupVersion) {
@@ -250,6 +252,7 @@
       session = next;
       library.sync(next);
       deletion.sync(next);
+      mergeNotice?.sync(user?.id);
       header.querySelector('.member-toggle-label').textContent = user ? '마이페이지' : '로그인';
       root.querySelector('#memberEmail').textContent = user ? user.email || '등록된 이메일 없음' : '';
       root.querySelector('#memberSignedIn').hidden = !user;
@@ -486,6 +489,7 @@
             identityStatus.textContent = rows?.some(row=>row.provider===attempt.provider)
               ? '이미 이 CINELIQ 계정에 연결되어 있어요. 서버에서 현재 UUID와 연결 상태를 확인했습니다.'
               : rows ? message : '연결 결과를 서버에서 확인하지 못했어요. 기존 계정 상태를 다시 확인해 주세요.';
+            if (rows && !rows.some(row=>row.provider===attempt.provider) && errorCode === 'identity_already_exists') mergeNotice?.show(attempt.userId);
           } else notify(message);
           expectedLinkUserId = null;
           return;

@@ -1,10 +1,21 @@
 # 계정 통합 격리 테스트 준비
 
+## 2026-11-22 테스트 프로젝트 구성 기록
+
+- 사용자 생성 완료 확인: `cineliq-account-merge-test`, ref `bxnhnhqymjimytzxylxa`, Tokyo/Nano. 운영 ref와 다름을 콘솔에서 확인.
+- 테스트 SQL Editor에서 개인 라이브러리 bootstrap(빈 관리자 테이블 + 002/003/004)과 005를 적용했다. 공통 미디어용 001 전체는 적용하지 않았다. 재현용 `supabase/test_personal_library_bootstrap.sql`을 추가했다. 이미 적용한 프로젝트에 재실행하지 않는다.
+- favorites/folders/folder_items/admins/merge_backups 5개 테이블의 RLS=true, anon SELECT=false를 조회로 확인. admins/merge_backups는 authenticated SELECT=false. 테스트 회원 수=0.
+- Allow manual linking을 켜고 `Successfully updated settings`를 확인했다. Confirm email은 ON, anonymous sign-in은 OFF 유지. Google/Kakao는 아직 DISABLED.
+- 테스트 프로젝트에 `account-merge-test` Edge Function 배포. 환경 허용값과 테스트 origin은 아직 미설정. 대시보드 기본 legacy JWT 검증도 아직 ON이며 코드 내부 Auth 검증과 맞춰 조정하기 전에는 실제 통합에 사용하지 않는다.
+- 무인증 POST는 401 `UNAUTHORIZED_NO_AUTH_HEADER`로 차단됨. 이는 게이트웨이 차단 확인이며 함수 내부 검증·데이터 이전의 실제 성공 증거는 아니다.
+- 운영 DB/계정/Storage 및 운영 OAuth 설정은 변경하지 않았다. 테스트 데이터 이전·계정 삭제·identity 해제도 실행하지 않았다.
+- 테스트 사이트 생성 승인, Google 운영자 계정 전환, Kakao 로그인·테스트 앱 설정이 남아 있다. 실제 OAuth 통합과 복구 UI/전체 검증은 미완성.
+
 ## 이번 단계의 구현 상태
 
 실제 계정 통합 완료 아님. 구현한 것은 테스트 전용 서버 데이터 요약·복사 단계다. 운영 로그인 UI와 연결 로직은 변경하지 않았다. OAuth 재인증 화면, 대표 계정 선택 화면, 대체 로그인 등록 화면, identity 해제·재연결·실패 재개 UI는 아직 미구현이다. 실제 OAuth 통합 테스트를 시작할 수 있는 완성된 도구로 사용하지 않는다.
 
-`supabase/005_account_merge_test.sql`과 `supabase/functions/account-merge-test/index.ts`는 검토용으로 저장소에만 추가한다. 운영 DB 적용 및 Edge Function 배포는 실행하지 않는다.
+`supabase/005_account_merge_test.sql`과 `supabase/functions/account-merge-test/index.ts`는 위 테스트 프로젝트에만 적용했다. 운영 DB 적용 및 운영 Edge Function 배포는 실행하지 않았다.
 
 ## 사용자 준비 항목
 

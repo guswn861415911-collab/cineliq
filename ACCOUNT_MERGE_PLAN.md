@@ -2,6 +2,8 @@
 
 ## 현재 상태
 
+추가 구현: 격리 테스트 전용 데이터 복사 SQL 및 Edge Function 초안을 추가했다. [테스트 설정·진행 상태](ACCOUNT_MERGE_TEST_SETUP.md)를 참조한다. 운영 적용하지 않았으며, identity 이전과 전체 통합은 여전히 미완성이다.
+
 실제 계정 통합은 **미구현 / 비활성**이다. 충돌 안내와 본인 계정의 읽기 전용 데이터 요약만 제공한다. 통합 완료, 두 로그인 방식의 동일 UUID, 데이터 이전 완료로 해석하면 안 된다. 기존 계정 탈퇴를 해결책으로 안내하지 않는다.
 
 일반 로그인은 `media-cloud.js`의 `signInWithOAuth`, 연결은 `linkIdentity`를 사용한다. `member.js`는 저장한 연결 시도의 UUID와 서버 `getUser()` 결과를 대조한다. `identity_already_exists` 이후에도 서버 identities를 갱신하고 요청 provider가 현재 계정에 없을 때만 충돌 안내를 연다. 이 오류만으로 상대 계정의 UUID나 소유자를 알아낼 수는 없다. 운영 회원의 실제 identity 충돌 여부는 두 계정 재인증 없이는 미확인이다.

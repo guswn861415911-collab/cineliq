@@ -2,3 +2,7 @@
 # The handler authenticates every request with auth.getUser(token), then validates
 # the matching live auth.sessions row. This supports current JWT signing keys.
 verify_jwt = false
+
+[functions.account-merge-test]
+# Test-only: validates both tokens with Auth, live sessions, recent AMR and backup login.
+verify_jwt = false

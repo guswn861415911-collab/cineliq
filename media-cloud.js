@@ -174,6 +174,13 @@
   members.removeFolderItem = async (folderId, techniqueId) => unwrap(await client.from('cineliq_folder_items')
     .delete().eq('folder_id',folderId).eq('technique_id',techniqueId));
   members.folderStorageReady = async () => unwrap(await client.rpc('cineliq_folder_storage_version')) === 2;
+  members.updateTheme = async (theme,expectedUserId) => {
+    if(!['dark','light','system'].includes(theme))throw Error('invalid_theme');
+    const {user}=unwrap(await client.auth.getUser());
+    if(!user||user.id!==expectedUserId)throw identityFailure('identity_session_changed');
+    const updated=unwrap(await client.auth.updateUser({data:{cineliq_preferences:{...user.user_metadata?.cineliq_preferences,theme}}})).user;
+    if(updated.id!==expectedUserId)throw identityFailure('identity_session_changed');return updated;
+  };
   members.setTechniqueFolders = async (technique,selected,expected) => unwrap(await client.rpc('cineliq_set_technique_folders',{
     technique,selected_folders:selected,expected_folders:expected,
   }));

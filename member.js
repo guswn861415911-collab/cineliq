@@ -251,6 +251,7 @@
       const user = next?.user;
       const changed = session?.user.id !== user?.id;
       session = next;
+      window.CINELIQ_THEME?.sync(user||null);
       library.sync(next);
       folderSave.sync(next);
       deletion.sync(next);

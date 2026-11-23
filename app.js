@@ -118,7 +118,8 @@ function mediaHTML(i,detail=false,catalog=state.mediaMap){
   if(primary){
     if(detail){
       const ordered=[primary,...rows.filter(row=>row!==primary)];
-      const guide=window.CINELIQ_FULL_LEARNING?.records[i.id]?.videoGuide;return `<div class="media-gallery">${ordered.map(row=>`<div class="detail-media">${mediaElement(i,row,true)}</div>`).join('')}</div><p class="media-motion-description" id="motion-${i.id}">${esc(guide?'영상 관찰 기준: 카메라 '+guide.cameraAction+' 피사체 '+guide.subjectAction+' '+(guide.direction||''):i.summary||cardSummary(i))} · 실제 업로드 영상이 이 기준을 충족하는지는 별도 확인이 필요합니다.</p>`;
+      const images=ordered.filter(row=>row.kind!=='video');let imagesShown=false;const gallery=ordered.map(row=>{if(row.kind!=='video'&&images.length>1){if(imagesShown)return '';imagesShown=true;return window.CINELIQ_IMAGE_CAROUSEL.markup(i,images,mediaElement,esc);}return `<div class="detail-media">${mediaElement(i,row,true)}</div>`;}).join('');
+      const guide=window.CINELIQ_FULL_LEARNING?.records[i.id]?.videoGuide;return `<div class="media-gallery">${gallery}</div><p class="media-motion-description" id="motion-${i.id}">${esc(guide?'영상 관찰 기준: 카메라 '+guide.cameraAction+' 피사체 '+guide.subjectAction+' '+(guide.direction||''):i.summary||cardSummary(i))} · 실제 업로드 영상이 이 기준을 충족하는지는 별도 확인이 필요합니다.</p>`;
     }
     return `<div class="card-media">${mediaElement(i,primary,false)}</div>`;
   }
@@ -253,7 +254,7 @@ function openDetail(id,focus=true,order=null){const i=itemById.get(id);if(!i)ret
   cleanupDetail();detailAnimation?.cancel();state.open=id;document.querySelector('.tech-card[data-selected]')?.removeAttribute('data-selected');$('.tech-card[data-open="'+id+'"]')?.setAttribute('data-selected','');const prompt=makePrompt(i);const lesson=window.CINELIQ_LESSON?.({item:i,items:itemById,escape:esc,media:item=>mediaHTML(item),copyIcon,practice,fullLearning})||'';$('#detailBody').innerHTML=`<div class="detail-inner"><div class="detail-overline">${esc(majorName(i.major).toUpperCase())} / ${esc(i.section)}</div><div class="detail-heading"><h2 id="detailTitle" tabindex="-1">${esc(i.ko)}</h2><div class="detail-actions">${member.favoriteButton(i.id)}<button class="btn outline small" data-copy="${i.id}" type="button">${copyIcon} 영문명 복사</button></div></div><p class="detail-en">${esc(i.displaySubtitle||i.en)} ${practice?.badges(id)||''}</p><p class="detail-summary">${esc(i.summary||cardSummary(i))}</p>${mediaHTML(i,true)}<div class="detail-info">${lesson||`<p class="info-label">ABOUT THIS TECHNIQUE</p><p class="detail-description">${esc(i.description)}</p>`}<div class="detail-tags">${i.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div><div class="prompt-box"><div class="prompt-head"><strong>프롬프트 템플릿 (수정용)</strong><button class="btn outline small" type="button" id="copyPrompt">${copyIcon} 템플릿 복사</button></div><p class="prompt-text">${esc(prompt)}</p><div class="prompt-hint">인물·장소·연출을 바꿔 쓰는 수정용 템플릿입니다. 위의 완성형 예시와 구분해 활용하세요.</div></div>${state.admin?admin.markup(i,state.mediaMap.get(i.id)||[]):legacyDownload(i)}</div>`;
   $('#detailModal').hidden=false;$('.app-shell').inert=true;
   panel.scrollTop=changed?0:scroll;
-  paintDetailNavigation();
+  paintDetailNavigation();window.CINELIQ_IMAGE_CAROUSEL.bind($('#detailBody'));
   document.addEventListener('keydown',detailKeys);
   if(changed&&!(window.CINELIQ_A11Y?.reducedMotion()||matchMedia('(prefers-reduced-motion: reduce)').matches))detailAnimation=$('#detailBody').animate([{opacity:.65},{opacity:1}],{duration:140,easing:'ease-out'});
   document.body.style.overflow='hidden';

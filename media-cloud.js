@@ -173,6 +173,10 @@
       {onConflict:'user_id,folder_id,technique_id',ignoreDuplicates:true,defaultToNull:false}));
   members.removeFolderItem = async (folderId, techniqueId) => unwrap(await client.from('cineliq_folder_items')
     .delete().eq('folder_id',folderId).eq('technique_id',techniqueId));
+  members.folderStorageReady = async () => unwrap(await client.rpc('cineliq_folder_storage_version')) === 2;
+  members.setTechniqueFolders = async (technique,selected,expected) => unwrap(await client.rpc('cineliq_set_technique_folders',{
+    technique,selected_folders:selected,expected_folders:expected,
+  }));
 
   members.deletionRequest = async (action,expectedUserId) => {
     const {session} = unwrap(await client.auth.getSession());

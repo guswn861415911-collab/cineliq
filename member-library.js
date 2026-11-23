@@ -117,14 +117,14 @@
         return;
       }
       find('#memberFolderList').innerHTML = folders.length ? folders.map(folder => {
-        const count = entries.filter(entry => entry.folder_id === folder.id && favorites.has(entry.technique_id)).length;
+        const count = entries.filter(entry => entry.folder_id === folder.id && items.has(entry.technique_id)).length;
         return `<div class="member-folder-row"><a href="#my/folders/${folder.id}">${icon('folder')}<span><strong>${escape(folder.name)}</strong><small>${count}개</small></span></a><button class="member-action" data-folder-edit="${folder.id}" aria-label="${escape(folder.name)} 이름 수정">수정</button><button class="member-action" data-folder-delete="${folder.id}" aria-label="${escape(folder.name)} 삭제">삭제</button></div>`;
       }).join('') : empty('아직 폴더가 없어요','새 폴더를 만들어 촬영 기법을 정리해 보세요.');
     }
     function collectionRows() {
       const {page,id} = route();
       if (page === 'categories') return [...favorites.keys()].filter(key => String(items.get(key)?.sectionNo) === id);
-      return entries.filter(entry => entry.folder_id === id && favorites.has(entry.technique_id)).map(entry => entry.technique_id);
+      return entries.filter(entry => entry.folder_id === id && items.has(entry.technique_id)).map(entry => entry.technique_id);
     }
     function renderCollection() {
       const {page,id} = route();
@@ -190,7 +190,6 @@
         if (current !== version || request !== loadRequest) return;
         folders = data.folders.sort((a,b) => b.updated_at.localeCompare(a.updated_at));
         entries = data.entries;
-        if (favoritesLoaded) entries = entries.filter(entry => favorites.has(entry.technique_id));
       } catch {
         if (current !== version || request !== loadRequest) return;
         failed = true;
@@ -217,8 +216,9 @@
       if (type === 'add') {
         const alreadyAdded = new Set(entries.filter(entry => entry.folder_id === id).map(entry => entry.technique_id));
         choices.innerHTML = [...favorites.keys()].map(key => items.get(key)).filter(item => item && !alreadyAdded.has(item.id))
-          .map(item => `<label><input type="checkbox" value="${item.id}"><span>${escape(item.ko)}<small>${escape(item.en)}</small></span></label>`).join('')
+          .map(item => `<label data-choice-row><input data-library-choice type="checkbox" value="${item.id}"><span>${escape(item.ko)}<small>${escape(item.en)}</small></span></label>`).join('')
           || '<p>추가할 즐겨찾기가 없습니다.</p>';
+        window.CINELIQ_BULK_SELECTION(choices);
       }
       dialogStatus.textContent = '';
       find('#saveMemberLibrary').disabled = false;
@@ -270,7 +270,7 @@
         dialogStatus.textContent = '이름을 1~60자로 입력해 주세요.';
         return;
       }
-      const ids = [...choices.querySelectorAll('input:checked')].map(input => input.value);
+      const ids = [...choices.querySelectorAll('input[data-library-choice]:checked')].map(input => input.value);
       if (task.type === 'add' && !ids.length) { dialogStatus.textContent = '추가할 기법을 선택해 주세요.'; return; }
       find('#saveMemberLibrary').disabled = true;
       find('#cancelMemberLibrary').disabled = true;
@@ -326,6 +326,7 @@
     window.addEventListener('popstate',renderRoute);
     window.addEventListener('hashchange',renderRoute);
     window.addEventListener('cineliq-member-route',renderRoute);
+    window.addEventListener('cineliq-library-changed',()=>{if(user)void load();});
     renderRoute();
     return {
       sync(next) {
@@ -356,7 +357,6 @@
       setFavorites(rows,loaded) {
         favorites = new Map(rows);
         favoritesLoaded = loaded;
-        if (loaded) entries = entries.filter(entry => favorites.has(entry.technique_id));
         find('#memberSavedCount').textContent = favorites.size;
         renderRoute();
       },

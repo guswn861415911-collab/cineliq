@@ -39,6 +39,7 @@
     const library = window.CINELIQ_LIBRARY({items,escape,favoriteButton,thumbnail,notify,resetPassword:cloud.members.reset});
     const deletion = window.CINELIQ_DELETION({navigate,notify});
     const mergeNotice = window.CINELIQ_MERGE_NOTICE?.({members:cloud.members});
+    const folderSave = window.CINELIQ_FOLDER_SAVE({members:cloud.members,escape,notify,openAuth:()=>openAuth('login','로그인하면 개인 폴더에 기법을 저장할 수 있어요.')});
 
     function paintIdentities() {
       for (const row of identityPanel.querySelectorAll('[data-identity-provider]')) {
@@ -251,6 +252,7 @@
       const changed = session?.user.id !== user?.id;
       session = next;
       library.sync(next);
+      folderSave.sync(next);
       deletion.sync(next);
       mergeNotice?.sync(user?.id);
       header.querySelector('.member-toggle-label').textContent = user ? '마이페이지' : '로그인';
@@ -376,6 +378,8 @@
     search.addEventListener('input',renderFavorites);
     sort.addEventListener('change',renderFavorites);
     document.addEventListener('click',event=>{
+      const folderButton = event.target.closest('[data-save-folders]');
+      if(folderButton){event.stopPropagation();const item=items.get(folderButton.dataset.saveFolders);if(item)void folderSave.open(item);return;}
       const button = event.target.closest('[data-favorite]');
       if (!button) return;
       event.stopPropagation();
@@ -514,7 +518,7 @@
       }
     }
 
-    return {start,favoriteButton,refreshMedia:() => { renderFavorites(); library.refreshMedia(); }};
+    return {start,favoriteButton,folderButton:folderSave.button,refreshMedia:() => { renderFavorites(); library.refreshMedia(); }};
   }
 
   window.CINELIQ_MEMBER = setup;

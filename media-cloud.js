@@ -165,7 +165,11 @@
     ]);
     return {folders,entries};
   };
-  members.createFolder = async name => unwrap(await client.from('cineliq_folders').insert({name}).select().single());
+  members.createFolder = async (name,expectedUserId) => {
+    const {user}=unwrap(await client.auth.getUser());
+    if(!user||(expectedUserId&&user.id!==expectedUserId))throw identityFailure('identity_session_changed');
+    return unwrap(await client.from('cineliq_folders').insert({name,user_id:user.id}).select().single());
+  };
   members.renameFolder = async (id,name) => unwrap(await client.from('cineliq_folders').update({name}).eq('id',id).select().single());
   members.deleteFolder = async id => unwrap(await client.from('cineliq_folders').delete().eq('id',id));
   members.addFolderItems = async (folderId, ids) => unwrap(await client.from('cineliq_folder_items')
@@ -179,6 +183,14 @@
     const {user}=unwrap(await client.auth.getUser());
     if(!user||user.id!==expectedUserId)throw identityFailure('identity_session_changed');
     const updated=unwrap(await client.auth.updateUser({data:{cineliq_preferences:{...user.user_metadata?.cineliq_preferences,theme}}})).user;
+    if(updated.id!==expectedUserId)throw identityFailure('identity_session_changed');return updated;
+  };
+  members.updateAccessibility = async (preferences,expectedUserId) => {
+    const {user}=unwrap(await client.auth.getUser());
+    if(!user||user.id!==expectedUserId)throw identityFailure('identity_session_changed');
+    const safe={textSize:['normal','large','xlarge'].includes(preferences.textSize)?preferences.textSize:'normal'};
+    for(const key of ['contrast','motion','links','captions'])safe[key]=preferences[key]===true;
+    const updated=unwrap(await client.auth.updateUser({data:{cineliq_accessibility:safe}})).user;
     if(updated.id!==expectedUserId)throw identityFailure('identity_session_changed');return updated;
   };
   members.setTechniqueFolders = async (technique,selected,expected) => unwrap(await client.rpc('cineliq_set_technique_folders',{

@@ -27,14 +27,14 @@
     status.textContent='북마크와 별도로 저장합니다. 체크 해제 시 해당 폴더에서만 제거됩니다.';
     current.ready=true;
    }catch{if(task===current)status.textContent='폴더 저장 기능을 준비 중이거나 목록을 불러오지 못했어요. 기존 데이터는 변경하지 않았습니다.';}
-   finally{if(task===current){locked(false);commit.disabled=!current.ready;dialog.querySelector('[data-folder-create]').disabled=!current.ready;}}
+   finally{if(task===current){locked(false);commit.disabled=!current.ready;dialog.querySelector('[data-folder-create]').disabled=!current.ready;(list.querySelector('input')||dialog.querySelector('[data-folder-cancel]')).focus();}}
   }
   dialog.querySelector('[data-folder-create]').onclick=async()=>{
    const current=task;if(!current?.ready||busy)return;
    const name=dialog.querySelector('.folder-save-create input').value.trim();
    if(!name||[...name].length>60){status.textContent='폴더 이름을 1~60자로 입력해 주세요.';return;}
    locked(true);
-   try{await verify(current);const folder=await members.createFolder(name);await verify(current);if(task!==current)return;
+   try{await verify(current);const folder=await members.createFolder(name,current.userId);await verify(current);if(task!==current)return;
     list.querySelector('p')?.remove();list.insertAdjacentHTML('beforeend',row(folder,true));dialog.querySelector('.folder-save-create input').value='';status.textContent='폴더를 만들고 선택했어요. 저장을 눌러 기법을 추가하세요.';
     window.dispatchEvent(new Event('cineliq-library-changed'));
    }catch{if(task===current)status.textContent='폴더를 만들지 못했어요. 같은 이름이 있는지 확인해 주세요.';}

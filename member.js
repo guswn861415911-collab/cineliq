@@ -252,6 +252,7 @@
       const changed = session?.user.id !== user?.id;
       session = next;
       window.CINELIQ_THEME?.sync(user||null);
+      window.CINELIQ_A11Y?.sync(user||null);
       library.sync(next);
       folderSave.sync(next);
       deletion.sync(next);
@@ -313,7 +314,7 @@
       pending.add(id);
       const selector = `[data-favorite="${CSS.escape(id)}"]`;
       document.querySelectorAll(selector).forEach(paintButton);
-      if (!saved && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (!saved && !window.CINELIQ_A11Y?.reducedMotion()&&!matchMedia('(prefers-reduced-motion: reduce)').matches) {
         button.querySelector('.bookmark-icon').animate(
           [{transform:'scale(1)'},{transform:'scale(1.14)',offset:.45},{transform:'scale(1)'}],
           {duration:210,easing:'ease-in-out'});

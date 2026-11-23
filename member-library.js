@@ -33,6 +33,7 @@
     folders:['내 폴더','프로젝트별로 저장한 기법을 자유롭게 정리하세요.'],
     bookmarks:['즐겨찾기','저장한 카메라 기법을 다시 만나보세요.'],
     settings:['설정','현재 CINELIQ의 사용 환경을 확인할 수 있습니다.'],
+    accessibility:['접근성','읽기와 조작을 편하게 설정하세요. 기기의 움직임 줄이기 설정도 존중합니다.'],
     'delete-account':['회원 탈퇴','계정과 개인 라이브러리의 삭제 내용을 확인해 주세요.'],
   };
 
@@ -230,6 +231,7 @@
       if (!user || saving) return false;
       const current = version;
       saving = true;
+      if(dialog.open)dialog.querySelectorAll('input,button').forEach(control=>control.disabled=true);
       root.querySelectorAll('[data-folder-delete],[data-folder-remove]').forEach(button => { button.disabled = true; });
       try {
         await action();
@@ -248,6 +250,7 @@
       } finally {
         if (current === version) {
           saving = false;
+          dialog.querySelectorAll('input,button').forEach(control=>control.disabled=false);
           find('#saveMemberLibrary').disabled = false;
           find('#cancelMemberLibrary').disabled = false;
           renderRoute();
@@ -275,7 +278,7 @@
       find('#saveMemberLibrary').disabled = true;
       find('#cancelMemberLibrary').disabled = true;
       const success = await perform(async () => {
-        if (task.type === 'create') await cloud.members.createFolder(name);
+        if (task.type === 'create') await cloud.members.createFolder(name,task.userId);
         if (task.type === 'rename') await cloud.members.renameFolder(task.id,name);
         if (task.type === 'add') await cloud.members.addFolderItems(task.id,ids);
         if (task.type === 'name') {

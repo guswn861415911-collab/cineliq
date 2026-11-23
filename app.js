@@ -257,7 +257,7 @@ function openDetail(id,focus=true,order=null){const i=itemById.get(id);if(!i)ret
   if(changed&&!matchMedia('(prefers-reduced-motion: reduce)').matches)detailAnimation=$('#detailBody').animate([{opacity:.65},{opacity:1}],{duration:140,easing:'ease-out'});
   document.body.style.overflow='hidden';
   if(focus)$('#closeDetail').focus();
-  $('#copyPrompt').addEventListener('click',()=>copyText(prompt));
+  $('#copyPrompt').addEventListener('click',()=>copyText(prompt));window.CINELIQ_VIDEO_MODELS?.bind($('#detailBody'),esc,copyIcon,copyText);
   $('#detailBody').onclick=event=>{
     const fullCopy=event.target.closest('[data-full-video-copy]');
     if(fullCopy){const value=fullLearning?.copy(fullCopy.dataset.fullVideoCopy);if(value)copyText(value);return;}

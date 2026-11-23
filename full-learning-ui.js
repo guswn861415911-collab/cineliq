@@ -17,7 +17,7 @@
       const promptMarkup=details('Veo 3.1 Lite · 한국어 완성형 영상 예시',`<p class="lesson-note">${esc(data.model.notice)} <a href="${data.model.sources[0]}" target="_blank" rel="noopener noreferrer">공식 모델 사양</a></p><div class="lesson-prompt-head"><p>기존 예시를 보존한 추가 학습 예시 · 빈칸 없음</p><button class="btn outline small" type="button" data-full-video-copy="${id}">${copyIcon} 전체 복사</button></div><p class="lesson-prompt-text">${esc(video.veoKoreanPrompt)}</p>`);
       const editingMarkup=details('AI 오류 점검 · 영상 편집 활용',`<h4>생성 단계에서 점검</h4>`+p(video.issues.problem)+ul(video.issues.check)+p(video.editing.generationFix)+`<h4>편집 단계에서 조절</h4>`+p(video.editing.use)+p(video.editing.rhythm)+p(video.editing.continuity)+p(video.editing.postFix)+`<h4>함께 연결할 기법</h4><div class="practice-links">${links(record.comparisonIds)}</div>`+ul(video.editing.connection.map(row=>items.get(row.id).ko+': '+row.difference)));
       const comparisonMarkup=comparisons.length?details('혼동하기 쉬운 영상 기법 비교',comparisons.map(pair=>`<h4>${pair.ids.map(key=>esc(items.get(key).ko)).join(' / ')}</h4>${facts([['공통점',pair.common],['결정적 차이·관찰',pair.difference],['AI 지시 주의',pair.ai]])}<div class="practice-links">${links(pair.ids.filter(key=>key!==id))}</div>`).join('')):'';
-      return `<div class="full-learning" data-full-learning="${id}">${imageMarkup}${videoMarkup}${promptMarkup}${editingMarkup}${comparisonMarkup}</div>`;
+      return `<div class="full-learning" data-full-learning="${id}">${imageMarkup}${videoMarkup}${window.CINELIQ_VIDEO_MODELS?'':promptMarkup}${editingMarkup}${comparisonMarkup}</div>`;
     };
     return{markup,copy:id=>data.records[id]?.videoGuide?.veoKoreanPrompt||null};
   };

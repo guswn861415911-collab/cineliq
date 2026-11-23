@@ -138,6 +138,7 @@ function cardSummary(i){
 }
 const copyIcon = `<svg class="copy-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="8.5" width="12" height="12" rx="3"/><path d="M8.5 8.5V6.5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-2"/></svg>`;
 const practice=window.CINELIQ_PRACTICE?.({items:itemById,escape:esc,copyIcon});
+window.CINELIQ_GLOSSARY({practice});
 const fullLearning=window.CINELIQ_FULL_UI?.({items:itemById,escape:esc,copyIcon});
 function card(i){return `<article class="tech-card" data-open="${i.id}"${state.open===i.id?' data-selected':''} tabindex="0" role="button" aria-label="${esc(i.ko)} 상세 보기">${mediaHTML(i)}<div class="card-content"><div class="card-section">${esc(i.section)} · ${majorName(i.major)}</div><div class="card-title-row"><h3 class="card-title">${esc(i.ko)}</h3><button class="copy-icon-btn" type="button" data-copy="${i.id}" aria-label="${esc(i.en)} 영문 명칭 복사" title="영문 명칭 복사">${copyIcon}</button></div><div class="card-en">${esc(i.displaySubtitle||i.en)}</div><p class="card-description">${esc(cardSummary(i))}</p><div class="card-actions">${member.favoriteButton(i.id)}${member.folderButton(i.id)}<span class="open-link">기법 살펴보기 <span aria-hidden="true">↗</span></span></div></div></article>`}
 let revealObserver=null;
@@ -180,7 +181,7 @@ function renderCards(previousMedia){
     grid.insertAdjacentHTML('beforeend',shown.slice(old.length).map(card).join(''));
   }
   else{revealObserver?.disconnect();grid.innerHTML=shown.map(card).join('')}
-  const termCount=practice?.renderSearch(state.search,$('#termBrowser'))||0;
+  const termCount=state.search.trim()?practice.matchingTerms(state.search).length:0;const termLink=$('#termSearchLink');termLink.hidden=!termCount;termLink.innerHTML=termCount?`<a href="#glossary?q=${encodeURIComponent(state.search)}">관련 실무 용어 ${termCount}개 보기 ↗</a>`:'';
   $('#emptyState').hidden=arr.length!==0||termCount>0;
   $('#loadMore').hidden=true;
   $('#scrollSentinel').hidden=arr.length<=state.limit;
@@ -336,7 +337,7 @@ function setupNavigation(openLibrary){
   toggle.addEventListener('click',()=>setOpen(toggle.getAttribute('aria-expanded')!=='true'));
   backdrop.addEventListener('click',()=>close());
   panel.addEventListener('click',e=>{
-    if(e.target.closest('.service-menu a')){close();return;}
+    if(e.target.closest('.service-menu a,[data-site-view]')){close();return;}
     if(!e.target.closest('[data-major],[data-section],[data-tag],[data-media],[data-type]'))return;
     close();
     openLibrary();
@@ -364,16 +365,16 @@ function setupMobileViews(updateHeroVideo){
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
   let animation;
   let transitionId=0;
-  const currentRoute=()=>/^#my(?:\/|$)/.test(location.hash)?'my':location.hash==='#library'?'library':'hero';
-  const panelFor=view=>view==='my'?$('#memberPage'):view==='library'?library:hero;
+  const currentRoute=()=>/^#my(?:\/|$)/.test(location.hash)?'my':location.hash.startsWith('#glossary')?'glossary':location.hash==='#library'?'library':'hero';
+  const panelFor=view=>view==='glossary'?$('#glossaryPage'):view==='my'?$('#memberPage'):view==='library'?library:hero;
 
   async function renderView({animate=false,focus=false}={}){
     const id=++transitionId;
     animation?.cancel();
     const next=currentRoute();
-    if(next==='my')window.dispatchEvent(new Event('cineliq-member-route'));
-    if(!mobile.matches&&next!=='my'){
-      const leavingMember=main.dataset.mobileView==='my';
+    if(next==='my')window.dispatchEvent(new Event('cineliq-member-route'));if(next==='glossary')window.dispatchEvent(new Event('cineliq-glossary-route'));
+    if(!mobile.matches&&next!=='my'&&next!=='glossary'){
+      const leavingMember=['my','glossary'].includes(main.dataset.mobileView);
       delete main.dataset.mobileView;
       history.scrollRestoration='auto';
       updateHeroVideo();
@@ -397,17 +398,17 @@ function setupMobileViews(updateHeroVideo){
     main.dataset.mobileView=next;
     window.scrollTo({top:0,behavior:'instant'});
     updateHeroVideo();
-    if(focus)(next==='my'?$('#memberPageTitle'):next==='hero'?$('.hero-explore'):$('#catalogTitle')).focus({preventScroll:true});
+    if(focus)(next==='glossary'?$('#glossaryTitle'):next==='my'?$('#memberPageTitle'):next==='hero'?$('.hero-explore'):$('#catalogTitle')).focus({preventScroll:true});
     if(fade){
       animation=panelFor(next).animate([{opacity:0},{opacity:1}],{duration:180,easing:'ease-out'});
     }
   }
 
   function navigate(view){
-    if((!mobile.matches&&view==='library'&&currentRoute()!=='my')
+    if((!mobile.matches&&view==='library'&&!['my','glossary'].includes(currentRoute()))
       || (currentRoute()===view && (view!=='my'||location.hash==='#my')))return;
     if(state.open)closeDetail();
-    history.pushState(null,'',view==='my'?'#my':view==='library'?'#library':'#home');
+    history.pushState(null,'',view==='glossary'?'#glossary':view==='my'?'#my':view==='library'?'#library':'#home');
     void renderView({animate:true,focus:true});
   }
 
@@ -417,11 +418,11 @@ function setupMobileViews(updateHeroVideo){
     navigate('library');
   });
   $('.brand').addEventListener('click',e=>{
-    if(!mobile.matches&&currentRoute()!=='my')return;
+    if(!mobile.matches&&!['my','glossary'].includes(currentRoute()))return;
     e.preventDefault();
     navigate('hero');
   });
-  window.addEventListener('popstate',()=>void renderView({focus:true}));
+  window.addEventListener('popstate',()=>void renderView({focus:true}));window.addEventListener('hashchange',()=>void renderView({focus:true}));
   mobile.addEventListener('change',()=>void renderView());
   reducedMotion.addEventListener('change',()=>void renderView());
   void renderView();
@@ -462,6 +463,6 @@ function setupHeroVideo() {
   return updateVideo;
 }
 
-const navigateView=setupMobileViews(setupHeroVideo());
+const navigateView=setupMobileViews(setupHeroVideo());document.addEventListener('click',e=>{const link=e.target.closest('[data-site-view]');if(!link)return;e.preventDefault();if(link.dataset.siteView==='library'&&!matchMedia('(max-width:760px)').matches&&!['my','glossary'].includes(location.hash.slice(1))){document.querySelector('.catalog').scrollIntoView();return;}navigateView(link.dataset.siteView);});
 renderAll();events(()=>navigateView('library'));void initMedia();
 })();

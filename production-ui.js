@@ -36,7 +36,7 @@
     }).join('');
     let lastQuery=null;
     const matchingTerms=query=>{const q=normalize(query);return q?catalog.terms.filter(term=>termMatch(term,q)):catalog.terms;};
-    return {normalize,badges,termMarkup,guideMarkup,comparisons,
+    return {normalize,badges,termMarkup,guideMarkup,comparisons,termCard,
       matches:(item,query)=>{const q=normalize(query);if(!q)return true;const termHit=(techniqueTerms.get(item.id)||[]).some(term=>termMatch(term,q));return termHit||(!shortAliases.has(q)&&originalIndex.get(item.id).includes(q));},
       matchingTerms,
       copy:(id,kind)=>data.profiles[id]?.[kind==='video'?'videoPrompt':'imagePrompt'],

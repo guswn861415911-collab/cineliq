@@ -25,6 +25,8 @@
     }
 
     function update() {
+      toggle.hidden = !state.admin;
+      toggle.closest('.sidebar-admin').hidden = !state.admin;
       label.textContent = state.admin ? '미디어 관리' : '관리자 로그인';
       toggle.classList.toggle('active-admin', state.admin);
       document.querySelectorAll('.admin-media-filter, .admin-only-count').forEach(el => { el.hidden = !state.admin; });
@@ -153,7 +155,7 @@
     async function start() {
       connected = true;
       await checkSession();
-      if (cloud.showAdmin) toggle.hidden = false;
+      update();
       cloud.onAuthChange(() => void checkSession());
     }
 

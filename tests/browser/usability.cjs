@@ -11,7 +11,10 @@ await cdp('Runtime.enable');await cdp('Page.enable');await cdp('Emulation.setDev
 await check(`document.querySelectorAll('.tech-card').length>=24&&document.querySelector('.member-toggle-label').textContent==='마이페이지'`,'catalog/member initialization');
 await check(`document.querySelector('[data-registration-group]').hidden`,'non-admin registration hidden');
 await evaluate(`document.querySelector('[data-type="image"]').click();document.querySelector('[data-type="video"]').click()`);
-await check(`document.querySelectorAll('#mediaFilters [aria-pressed="true"]').length===2`,'image/video simultaneous selection');
+await check(`document.querySelectorAll('#mediaFilters [aria-pressed="true"]').length===1`,'image/video exclusive selection');
+await check(`document.querySelector('#visibleCount').textContent==='137'&&document.querySelector('.tech-card').dataset.open==='CAM-105'`,'video filter contains video techniques only');
+await evaluate(`document.querySelector('[data-type="image"]').click()`);
+await check(`document.querySelector('#visibleCount').textContent==='277'&&document.querySelector('.tech-card').dataset.open==='CAM-001'`,'image filter contains image techniques only');
 await evaluate(`document.querySelector('#clearFilters').click();document.querySelector('.tech-card [data-favorite]').click()`);
 await check(`document.querySelector('.folder-save-dialog').open&&!document.querySelector('[data-folder-commit]').disabled`,'card folder dialog without detail');
 await check(`document.querySelector('#detailModal').hidden`,'folder action does not open detail');

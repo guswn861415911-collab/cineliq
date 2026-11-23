@@ -1,12 +1,15 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const window={},root=path.join(__dirname,'..');
 for(const file of ['data.js','learning-data.js','terminology-data.js','production-data.js','full-learning-data.js','technique-names.js','content-types.js','video-models.js'])vm.runInNewContext(fs.readFileSync(path.join(root,file),'utf8'),{window});
-test('independent content type sets form a deduplicated union and empty selection means all',()=>{
+test('registered image and video technique types are disjoint and empty selection means all',()=>{
  const items=window.CAMERA_TECHNIQUES,filter=window.CINELIQ_CONTENT_TYPES;
  assert.equal(items.filter(item=>filter.matches(item,new Set())).length,414);
  assert.equal(items.filter(item=>filter.matches(item,new Set(['image','video']))).length,414);
- assert.equal(items.filter(item=>filter.matches(item,new Set(['image']))).length,226);
- assert.equal(items.filter(item=>filter.matches(item,new Set(['video']))).length,399);
+ assert.equal(items.filter(item=>filter.matches(item,new Set(['image']))).length,277);
+ assert.equal(items.filter(item=>filter.matches(item,new Set(['video']))).length,137);
+ assert.ok(items.every(item=>filter.forItem(item).image!==filter.forItem(item).video));
+ assert.equal(filter.matches(items.find(item=>item.id==='CAM-001'),new Set(['video'])),false);
+ assert.equal(filter.matches(items.find(item=>item.id==='CAM-107'),new Set(['video'])),true);
 });
 test('reviewed display overrides retain stable IDs, exact English and searchable old meanings',()=>{
  assert.equal(window.CAMERA_TECHNIQUES.length,414);assert.equal(Object.keys(window.CINELIQ_NAME_OVERRIDES).length,4);

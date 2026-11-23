@@ -1,10 +1,8 @@
 (() => {
  'use strict';
+ // Library types describe the registered technique, not optional learning prompts.
  window.CINELIQ_CONTENT_TYPES={
-  forItem(item){const record=window.CINELIQ_FULL_LEARNING?.records[item.id];return{
-   image:record?record.imageApplicable:item.mediaType==='image',
-   video:Boolean(record?.videoGuide||window.CINELIQ_LEARNING?.[item.id]?.videoPromptExample||item.mediaType==='video'),
-  };},
-  matches(item,selected){if(!selected.size)return true;const kinds=this.forItem(item);return[...selected].some(kind=>kinds[kind]);},
+  forItem(item){return {image:item.mediaType==='image',video:item.mediaType==='video'};},
+  matches(item,selected){if(!selected.size)return true;const kinds=this.forItem(item);return [...selected].some(kind=>kinds[kind]);},
  };
 })();

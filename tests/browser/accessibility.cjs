@@ -27,7 +27,7 @@ await evaluate("document.querySelector('.card-title-open').focus()");await key('
 await check("!document.querySelector('#detailModal').hidden&&document.activeElement.id==='closeDetail'",'keyboard Enter opens detail and focuses close');
 await key('Tab');await check("document.querySelector('#detailModal').contains(document.activeElement)",'detail Tab stays inside');
 await key('Escape');await check("document.querySelector('#detailModal').hidden&&document.activeElement.matches('.card-title-open')",'Escape closes and restores focus');
-await evaluate("document.querySelector('.tech-card [data-save-folders]').focus()");await key('Enter');
+await evaluate("document.querySelector('.tech-card [data-favorite]').focus()");await key('Enter');
 await check("document.querySelector('.folder-save-dialog').open&&document.activeElement.matches('.folder-save-list input')",'keyboard folder opens with choice focus');
 const before=await evaluate("document.activeElement.checked");await key(' ');await check("document.activeElement.checked!=="+before,'Space toggles folder checkbox');await key('Escape');
 await check("!document.querySelector('.folder-save-dialog').open&&document.activeElement.matches('[data-save-folders]')",'folder Escape restores focus');
@@ -50,7 +50,7 @@ const result=await evaluate("axe.run(document,{runOnly:{type:'tag',values:['wcag
 for(const modal of ['detail','folder','bulk','login']){
 await evaluate("location.hash='#library'");
 if(modal==='detail')await evaluate("document.querySelector('.card-title-open').click()");
-if(modal==='folder')await evaluate("document.querySelector('.tech-card [data-save-folders]').click()");
+if(modal==='folder')await evaluate("document.querySelector('.tech-card [data-favorite]').click()");
 if(modal==='bulk'){await evaluate("location.hash='#my/folders/11111111-1111-4111-8111-111111111111'");await check("document.querySelector('[data-folder-add]')!==null",'bulk ready');await evaluate("document.querySelector('[data-folder-add]').click()");}
 if(modal==='login')await evaluate("document.querySelector('#memberGuestLogin').click()");
 await new Promise(r=>setTimeout(r,150));

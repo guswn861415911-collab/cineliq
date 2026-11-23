@@ -12,7 +12,7 @@ await check(`document.querySelectorAll('.tech-card').length>=24&&document.queryS
 await check(`document.querySelector('[data-registration-group]').hidden`,'non-admin registration hidden');
 await evaluate(`document.querySelector('[data-type="image"]').click();document.querySelector('[data-type="video"]').click()`);
 await check(`document.querySelectorAll('#mediaFilters [aria-pressed="true"]').length===2`,'image/video simultaneous selection');
-await evaluate(`document.querySelector('#clearFilters').click();document.querySelector('.tech-card [data-save-folders]').click()`);
+await evaluate(`document.querySelector('#clearFilters').click();document.querySelector('.tech-card [data-favorite]').click()`);
 await check(`document.querySelector('.folder-save-dialog').open&&!document.querySelector('[data-folder-commit]').disabled`,'card folder dialog without detail');
 await check(`document.querySelector('#detailModal').hidden`,'folder action does not open detail');
 await evaluate(`document.querySelector('.folder-save-list input:checked').checked=false;document.querySelector('.folder-save-create input').value='새 폴더';document.querySelector('[data-folder-create]').click()`);
@@ -53,7 +53,7 @@ await cdp('Page.reload');await check(`document.documentElement.dataset.theme==='
 await evaluate(`__mock.admin(true)`);await check(`!document.querySelector('[data-registration-group]').hidden`,'verified-admin filter branch');
 await evaluate(`__mock.admin(false)`);await check(`document.querySelector('[data-registration-group]').hidden&&getComputedStyle(document.querySelector('[data-registration-group]')).display==='none'`,'permission loss hides admin branch');
 for(const width of[1440,768,320]){await cdp('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:width<600});await evaluate(`location.hash='#library'`);await new Promise(r=>setTimeout(r,1200));assert.ok(await evaluate(`document.documentElement.scrollWidth<=innerWidth`),'horizontal overflow '+width);const image=await cdp('Page.captureScreenshot',{format:'png'});await fs.writeFile(path.join(root,'work','upgrade-light-'+width+'.png'),Buffer.from(image.data,'base64'));}
-await evaluate(`__mock.guest();location.hash='#library';document.querySelector('.tech-card [data-save-folders]').click()`);await check(`document.querySelector('#memberDialog').open`,'guest folder action opens login');
+await evaluate(`__mock.guest();location.hash='#library';document.querySelector('.tech-card [data-favorite]').click()`);await check(`document.querySelector('#memberDialog').open`,'guest folder action opens login');
 await evaluate("document.querySelector('#closeMemberAuth').click();location.hash='#my/accessibility'");await check("document.querySelector('[data-member-panel=accessibility]').hidden===false",'accessibility route');
 assert.deepEqual(errors,[]);console.log('BROWSER CHECKS COMPLETE');
 }finally{ws?.close();proc.kill();server.close();}

@@ -39,7 +39,7 @@
     const library = window.CINELIQ_LIBRARY({items,escape,favoriteButton,thumbnail,notify,resetPassword:cloud.members.reset});
     const deletion = window.CINELIQ_DELETION({navigate,notify});
     const mergeNotice = window.CINELIQ_MERGE_NOTICE?.({members:cloud.members});
-    const folderSave = window.CINELIQ_FOLDER_SAVE({members:cloud.members,escape,notify,openAuth:()=>openAuth('login','로그인하면 개인 폴더에 기법을 저장할 수 있어요.')});
+    const folderSave = window.CINELIQ_FOLDER_SAVE({members:cloud.members,escape,notify,isBookmarked:id=>favorites.has(id),setBookmarked:async(id,wanted)=>{if(favorites.has(id)===wanted)return;const button=document.querySelector(`[data-favorite="${CSS.escape(id)}"]`);if(!button||!await toggleFavorite(button))throw Error('bookmark_failed');},openAuth:()=>openAuth('login','로그인하면 개인 폴더에 기법을 저장할 수 있어요.')});
 
     function paintIdentities() {
       for (const row of identityPanel.querySelectorAll('[data-identity-provider]')) {
@@ -327,6 +327,7 @@
         else favorites.set(id,new Date().toISOString());
         renderFavorites();
         notify(saved?'즐겨찾기를 해제했습니다.':'즐겨찾기에 저장했습니다.');
+        return true;
       } catch (error) {
         if (version === lookupVersion) {
           pending.delete(id);
@@ -385,7 +386,7 @@
       const button = event.target.closest('[data-favorite]');
       if (!button) return;
       event.stopPropagation();
-      void toggleFavorite(button);
+      const item=items.get(button.dataset.favorite);if(item&&!loadingFavorites&&!pending.has(item.id))void folderSave.open(item);
     },true);
     logout.addEventListener('click',async()=>{
       logout.disabled = true;

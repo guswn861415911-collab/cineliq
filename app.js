@@ -436,13 +436,17 @@ function setupHeroVideo() {
   const video = document.querySelector('.hero-background-video');
   const mobile = matchMedia('(max-width:760px)');
   const reducedMotion = matchMedia('(prefers-reduced-motion:reduce)');
+  const toggle=$('#heroVideoToggle');let userPaused=false;
+  toggle.addEventListener('click',()=>{userPaused=!userPaused;updateVideo();});
+  video.addEventListener('play',()=>{if(userPaused||reducedMotion.matches||window.CINELIQ_A11Y?.reducedMotion())video.pause();});
 
   function updateVideo() {
     const device = mobile.matches ? 'mobile' : 'pc';
     const revision = mobile.matches ? '?v=mobile-v02' : '';
     const source = `assets/cineliq-hero-${device}.mp4${revision}`;
     video.poster = `assets/cineliq-hero-${device}-poster.jpg${revision}`;
-    if (reducedMotion.matches || window.CINELIQ_A11Y?.reducedMotion()) {
+    const reduced=reducedMotion.matches||window.CINELIQ_A11Y?.reducedMotion();toggle.disabled=Boolean(reduced);toggle.setAttribute('aria-pressed',String(Boolean(reduced||userPaused)));toggle.textContent=reduced?'움직임 줄이기 적용':userPaused?'배경 영상 재생':'배경 영상 멈춤';toggle.setAttribute('aria-label',reduced?'움직임 줄이기로 배경 영상이 정지됨':userPaused?'배경 영상 재생':'배경 영상 일시정지');
+    if (reduced) {
       if (video.hasAttribute('src')) {
         video.pause();
         video.removeAttribute('src');
@@ -451,7 +455,7 @@ function setupHeroVideo() {
       return;
     }
     const view = $('.main-content').dataset.mobileView;
-    if (view === 'my' || view === 'glossary' || (mobile.matches && view === 'library')) {
+    if (userPaused || view === 'my' || view === 'glossary' || (mobile.matches && view === 'library')) {
       video.pause();
       return;
     }

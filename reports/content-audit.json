@@ -1,0 +1,25 @@
+{
+  "uniqueTechniques": 414,
+  "imagePrompts": 414,
+  "baseVideoPrompts": 218,
+  "previousVideoUnion": 223,
+  "extendedVeoVideoPrompts": 399,
+  "glossaryTerms": 37,
+  "issueEntries": 9,
+  "displayChanges": 4,
+  "contentTypes": {
+    "image": 226,
+    "video": 399,
+    "common": 211
+  },
+  "preservedFiles": {
+    "data.js": "f5325bd4625c56e84699deaac599444d37996b6dc2fd5d99a84d44000937c85b",
+    "learning-data.js": "1db189c74261c3a94d029bef5a193eb4a9de7a50e4e6ec81a02f6469ce7733df",
+    "terminology-data.js": "dd1fda39bc36f99aaac30e47331ac5e50fb065fbaed60234b512ced6a259778d",
+    "production-data.js": "e5054462a4f04ec3836ea1bf16ad1dfc9eb18b6f550a84090d3e8053d75241fd",
+    "full-learning-data.js": "74ddb306a2480a8b16f2c814592912b42b2c598e54830756da6418c143e8e944",
+    "google896cae5064a99afa.html": "f7000aaf1f8d4fac0664bbb3bab5c04a903bb12f45cd533d5990352f021893c8",
+    "media-config.js": "c1a3fad980534c6cf173d5eecdcb04af955937acf5dae7c18b27d56a4a4cc7d9"
+  },
+  "hashNormalization": "CRLF normalized to LF; no other normalization"
+}

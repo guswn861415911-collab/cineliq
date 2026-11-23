@@ -1,0 +1,582 @@
+[
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "dark",
+    "view": "#library",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 9,
+        "nodes": [
+          {
+            "target": [
+              ".hero-copy > .eyebrow"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          },
+          {
+            "target": [
+              ".hero-copy > h1"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          },
+          {
+            "target": [
+              "em"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "dark",
+    "view": "#my/accessibility",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "dark",
+    "view": "#glossary",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "dark",
+    "view": "detail",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 14,
+        "nodes": [
+          {
+            "target": [
+              ".detail-overline"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          },
+          {
+            "target": [
+              "#detailTitle"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          },
+          {
+            "target": [
+              ".small.outline[data-copy=\"CAM-001\"]"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "dark",
+    "view": "folder",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "dark",
+    "view": "bulk",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 4,
+        "nodes": [
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(8) > span"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(8) > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(9) > span"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "dark",
+    "view": "login",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "light",
+    "view": "#library",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 9,
+        "nodes": [
+          {
+            "target": [
+              ".hero-copy > .eyebrow"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          },
+          {
+            "target": [
+              ".hero-copy > h1"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          },
+          {
+            "target": [
+              "em"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "light",
+    "view": "#my/accessibility",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "light",
+    "view": "#glossary",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "light",
+    "view": "detail",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 14,
+        "nodes": [
+          {
+            "target": [
+              ".detail-overline"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          },
+          {
+            "target": [
+              "#detailTitle"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          },
+          {
+            "target": [
+              ".small.outline[data-copy=\"CAM-001\"]"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "light",
+    "view": "folder",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "light",
+    "view": "bulk",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 4,
+        "nodes": [
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(8) > span"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(8) > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(9) > span"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": false,
+      "textSize": "normal"
+    },
+    "mode": "light",
+    "view": "login",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "dark",
+    "view": "#library",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 9,
+        "nodes": [
+          {
+            "target": [
+              ".hero-copy > .eyebrow"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          },
+          {
+            "target": [
+              ".hero-copy > h1"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          },
+          {
+            "target": [
+              "em"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "dark",
+    "view": "#my/accessibility",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "dark",
+    "view": "#glossary",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "dark",
+    "view": "detail",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 14,
+        "nodes": [
+          {
+            "target": [
+              ".detail-overline"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          },
+          {
+            "target": [
+              "#detailTitle"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          },
+          {
+            "target": [
+              ".small.outline[data-copy=\"CAM-001\"]"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "dark",
+    "view": "folder",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "dark",
+    "view": "bulk",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 4,
+        "nodes": [
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(6) > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(7) > span"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(7) > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "dark",
+    "view": "login",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "light",
+    "view": "#library",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 9,
+        "nodes": [
+          {
+            "target": [
+              ".hero-copy > .eyebrow"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          },
+          {
+            "target": [
+              ".hero-copy > h1"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          },
+          {
+            "target": [
+              "em"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "light",
+    "view": "#my/accessibility",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "light",
+    "view": "#glossary",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "light",
+    "view": "detail",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 14,
+        "nodes": [
+          {
+            "target": [
+              ".detail-overline"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          },
+          {
+            "target": [
+              "#detailTitle"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          },
+          {
+            "target": [
+              ".small.outline[data-copy=\"CAM-001\"]"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "light",
+    "view": "folder",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "light",
+    "view": "bulk",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 4,
+        "nodes": [
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(6) > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(7) > span"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "target": [
+              "label[data-choice-row=\"\"]:nth-child(7) > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "scenario": {
+      "contrast": true,
+      "textSize": "xlarge"
+    },
+    "mode": "light",
+    "view": "login",
+    "violations": [],
+    "incomplete": []
+  }
+]

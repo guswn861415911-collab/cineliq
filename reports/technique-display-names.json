@@ -1,0 +1,3314 @@
+[
+  {
+    "id": "CAM-001",
+    "before": "익스트림 롱 샷",
+    "display": "익스트림 롱 샷",
+    "english": "Extreme Long Shot",
+    "subtitle": "Extreme Long Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-002",
+    "before": "익스트림 와이드 샷",
+    "display": "익스트림 와이드 샷",
+    "english": "Extreme Wide Shot",
+    "subtitle": "Extreme Wide Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-003",
+    "before": "베리 와이드 샷",
+    "display": "베리 와이드 샷",
+    "english": "Very Wide Shot",
+    "subtitle": "Very Wide Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-004",
+    "before": "와이드 샷",
+    "display": "와이드 샷",
+    "english": "Wide Shot",
+    "subtitle": "Wide Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-005",
+    "before": "롱 샷",
+    "display": "롱 샷",
+    "english": "Long Shot",
+    "subtitle": "Long Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-006",
+    "before": "풀 샷",
+    "display": "풀 샷",
+    "english": "Full Shot",
+    "subtitle": "Full Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-007",
+    "before": "미디엄 롱 샷",
+    "display": "미디엄 롱 샷",
+    "english": "Medium Long Shot",
+    "subtitle": "Medium Long Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-008",
+    "before": "카우보이 샷",
+    "display": "카우보이 샷",
+    "english": "Cowboy Shot",
+    "subtitle": "Cowboy Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-009",
+    "before": "아메리칸 샷",
+    "display": "아메리칸 샷",
+    "english": "American Shot",
+    "subtitle": "American Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-010",
+    "before": "미디엄 샷",
+    "display": "미디엄 샷",
+    "english": "Medium Shot",
+    "subtitle": "Medium Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-011",
+    "before": "미디엄 클로즈업",
+    "display": "미디엄 클로즈업",
+    "english": "Medium Close-Up",
+    "subtitle": "Medium Close-Up",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-012",
+    "before": "클로즈업",
+    "display": "클로즈업",
+    "english": "Close-Up",
+    "subtitle": "Close-Up",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-013",
+    "before": "빅 클로즈업",
+    "display": "빅 클로즈업",
+    "english": "Big Close-Up",
+    "subtitle": "Big Close-Up",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-014",
+    "before": "익스트림 클로즈업",
+    "display": "익스트림 클로즈업",
+    "english": "Extreme Close-Up",
+    "subtitle": "Extreme Close-Up",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-015",
+    "before": "인서트 샷",
+    "display": "인서트 샷",
+    "english": "Insert Shot",
+    "subtitle": "Insert Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-016",
+    "before": "디테일 샷",
+    "display": "디테일 샷",
+    "english": "Detail Shot",
+    "subtitle": "Detail Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-017",
+    "before": "매크로 샷",
+    "display": "매크로 샷",
+    "english": "Macro Shot",
+    "subtitle": "Macro Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-018",
+    "before": "설정 샷",
+    "display": "설정 샷",
+    "english": "Establishing Shot",
+    "subtitle": "Establishing Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-019",
+    "before": "마스터 샷",
+    "display": "마스터 샷",
+    "english": "Master Shot",
+    "subtitle": "Master Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-020",
+    "before": "아이 레벨",
+    "display": "아이 레벨",
+    "english": "Eye-Level",
+    "subtitle": "Eye-Level",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-021",
+    "before": "하이 앵글",
+    "display": "하이 앵글",
+    "english": "High Angle",
+    "subtitle": "High Angle",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-022",
+    "before": "로우 앵글",
+    "display": "로우 앵글",
+    "english": "Low Angle",
+    "subtitle": "Low Angle",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-023",
+    "before": "버즈아이 뷰",
+    "display": "버즈아이 뷰",
+    "english": "Bird's-Eye View",
+    "subtitle": "Bird's-Eye View",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-024",
+    "before": "오버헤드 샷",
+    "display": "오버헤드 샷",
+    "english": "Overhead Shot",
+    "subtitle": "Overhead Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-025",
+    "before": "탑다운 샷",
+    "display": "탑다운 샷",
+    "english": "Top-Down Shot",
+    "subtitle": "Top-Down Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-026",
+    "before": "웜즈아이 뷰",
+    "display": "웜즈아이 뷰",
+    "english": "Worm's-Eye View",
+    "subtitle": "Worm's-Eye View",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-027",
+    "before": "그라운드 레벨 샷",
+    "display": "그라운드 레벨 샷",
+    "english": "Ground-Level Shot",
+    "subtitle": "Ground-Level Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-028",
+    "before": "니 레벨 샷",
+    "display": "니 레벨 샷",
+    "english": "Knee-Level Shot",
+    "subtitle": "Knee-Level Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-029",
+    "before": "힙 레벨 샷",
+    "display": "힙 레벨 샷",
+    "english": "Hip-Level Shot",
+    "subtitle": "Hip-Level Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-030",
+    "before": "숄더 레벨 샷",
+    "display": "숄더 레벨 샷",
+    "english": "Shoulder-Level Shot",
+    "subtitle": "Shoulder-Level Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-031",
+    "before": "더치 앵글",
+    "display": "더치 앵글",
+    "english": "Dutch Angle",
+    "subtitle": "Dutch Angle",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-032",
+    "before": "캔티드 앵글",
+    "display": "캔티드 앵글",
+    "english": "Canted Angle",
+    "subtitle": "Canted Angle",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-033",
+    "before": "정면 앵글",
+    "display": "정면 앵글",
+    "english": "Frontal Angle",
+    "subtitle": "Frontal Angle",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-034",
+    "before": "3/4 앵글",
+    "display": "3/4 앵글",
+    "english": "Three-Quarter Angle",
+    "subtitle": "Three-Quarter Angle",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-035",
+    "before": "프로필 샷",
+    "display": "프로필 샷",
+    "english": "Profile Shot",
+    "subtitle": "Profile Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-036",
+    "before": "후면 앵글",
+    "display": "후면 앵글",
+    "english": "Rear Angle",
+    "subtitle": "Rear Angle",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-037",
+    "before": "후면 3/4 앵글",
+    "display": "후면 3/4 앵글",
+    "english": "Rear Three-Quarter",
+    "subtitle": "Rear Three-Quarter",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-038",
+    "before": "사선 앵글",
+    "display": "사선 앵글",
+    "english": "Oblique Angle",
+    "subtitle": "Oblique Angle",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-039",
+    "before": "삼분할 구도",
+    "display": "룰 오브 서즈",
+    "english": "Rule of Thirds",
+    "subtitle": "Rule of Thirds · 삼분할 구도",
+    "rule": "사용자 지정 예시에 따른 표시 변경"
+  },
+  {
+    "id": "CAM-040",
+    "before": "중앙 구도",
+    "display": "센터드 컴포지션",
+    "english": "Centered Composition",
+    "subtitle": "Centered Composition · 중앙 구도",
+    "rule": "사용자 지정 예시에 따른 표시 변경"
+  },
+  {
+    "id": "CAM-041",
+    "before": "대칭 구도",
+    "display": "시메트리컬 컴포지션",
+    "english": "Symmetrical Composition",
+    "subtitle": "Symmetrical Composition · 대칭 구도",
+    "rule": "사용자 지정 예시에 따른 표시 변경"
+  },
+  {
+    "id": "CAM-042",
+    "before": "비대칭 구도",
+    "display": "에이시메트리컬 컴포지션",
+    "english": "Asymmetrical Composition",
+    "subtitle": "Asymmetrical Composition · 비대칭 구도",
+    "rule": "사용자 지정 예시에 따른 표시 변경"
+  },
+  {
+    "id": "CAM-043",
+    "before": "황금비 구도",
+    "display": "황금비 구도",
+    "english": "Golden Ratio",
+    "subtitle": "Golden Ratio",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-044",
+    "before": "황금나선 구도",
+    "display": "황금나선 구도",
+    "english": "Golden Spiral",
+    "subtitle": "Golden Spiral",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-045",
+    "before": "유도선 구도",
+    "display": "유도선 구도",
+    "english": "Leading Lines",
+    "subtitle": "Leading Lines",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-046",
+    "before": "대각선 구도",
+    "display": "대각선 구도",
+    "english": "Diagonal Composition",
+    "subtitle": "Diagonal Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-047",
+    "before": "삼각형 구도",
+    "display": "삼각형 구도",
+    "english": "Triangular Composition",
+    "subtitle": "Triangular Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-048",
+    "before": "원형 구도",
+    "display": "원형 구도",
+    "english": "Circular Composition",
+    "subtitle": "Circular Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-049",
+    "before": "방사형 구도",
+    "display": "방사형 구도",
+    "english": "Radial Composition",
+    "subtitle": "Radial Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-050",
+    "before": "S자 곡선 구도",
+    "display": "S자 곡선 구도",
+    "english": "S-Curve Composition",
+    "subtitle": "S-Curve Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-051",
+    "before": "프레임 속 프레임",
+    "display": "프레임 속 프레임",
+    "english": "Frame Within a Frame",
+    "subtitle": "Frame Within a Frame",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-052",
+    "before": "레이어 구도",
+    "display": "레이어 구도",
+    "english": "Layered Composition",
+    "subtitle": "Layered Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-053",
+    "before": "깊은 공간 구도",
+    "display": "깊은 공간 구도",
+    "english": "Deep Space Composition",
+    "subtitle": "Deep Space Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-054",
+    "before": "평면 구도",
+    "display": "평면 구도",
+    "english": "Flat Composition",
+    "subtitle": "Flat Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-055",
+    "before": "네거티브 스페이스",
+    "display": "네거티브 스페이스",
+    "english": "Negative Space",
+    "subtitle": "Negative Space",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-056",
+    "before": "포지티브 스페이스",
+    "display": "포지티브 스페이스",
+    "english": "Positive Space",
+    "subtitle": "Positive Space",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-057",
+    "before": "미니멀 구도",
+    "display": "미니멀 구도",
+    "english": "Minimal Composition",
+    "subtitle": "Minimal Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-058",
+    "before": "밀집 구도",
+    "display": "밀집 구도",
+    "english": "Crowded Composition",
+    "subtitle": "Crowded Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-059",
+    "before": "불균형 구도",
+    "display": "불균형 구도",
+    "english": "Unbalanced Composition",
+    "subtitle": "Unbalanced Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-060",
+    "before": "헤드룸",
+    "display": "헤드룸",
+    "english": "Headroom",
+    "subtitle": "Headroom",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-061",
+    "before": "시선 여백",
+    "display": "시선 여백",
+    "english": "Lead Room / Look Room",
+    "subtitle": "Lead Room / Look Room",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-062",
+    "before": "노즈룸",
+    "display": "노즈룸",
+    "english": "Nose Room",
+    "subtitle": "Nose Room",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-063",
+    "before": "이동 여백",
+    "display": "이동 여백",
+    "english": "Walking Room",
+    "subtitle": "Walking Room",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-064",
+    "before": "전경 프레이밍",
+    "display": "전경 프레이밍",
+    "english": "Foreground Framing",
+    "subtitle": "Foreground Framing",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-065",
+    "before": "실루엣 구도",
+    "display": "실루엣 구도",
+    "english": "Silhouette Composition",
+    "subtitle": "Silhouette Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-066",
+    "before": "반사 구도",
+    "display": "반사 구도",
+    "english": "Reflection Composition",
+    "subtitle": "Reflection Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-067",
+    "before": "분할 구도",
+    "display": "분할 구도",
+    "english": "Split Composition",
+    "subtitle": "Split Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-068",
+    "before": "강제 원근 구도",
+    "display": "강제 원근 구도",
+    "english": "Forced Perspective",
+    "subtitle": "Forced Perspective",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-069",
+    "before": "탑뷰 플랫레이",
+    "display": "탑뷰 플랫레이",
+    "english": "Top-Down Flat Lay",
+    "subtitle": "Top-Down Flat Lay",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-070",
+    "before": "놀링 구도",
+    "display": "놀링 구도",
+    "english": "Knolling Composition",
+    "subtitle": "Knolling Composition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-071",
+    "before": "1점 투시",
+    "display": "1점 투시",
+    "english": "One-Point Perspective",
+    "subtitle": "One-Point Perspective",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-072",
+    "before": "2점 투시",
+    "display": "2점 투시",
+    "english": "Two-Point Perspective",
+    "subtitle": "Two-Point Perspective",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-073",
+    "before": "3점 투시",
+    "display": "3점 투시",
+    "english": "Three-Point Perspective",
+    "subtitle": "Three-Point Perspective",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-074",
+    "before": "싱글 샷",
+    "display": "싱글 샷",
+    "english": "Single Shot",
+    "subtitle": "Single Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-075",
+    "before": "클린 싱글",
+    "display": "클린 싱글",
+    "english": "Clean Single",
+    "subtitle": "Clean Single",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-076",
+    "before": "더티 싱글",
+    "display": "더티 싱글",
+    "english": "Dirty Single",
+    "subtitle": "Dirty Single",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-077",
+    "before": "투 샷",
+    "display": "투 샷",
+    "english": "Two Shot",
+    "subtitle": "Two Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-078",
+    "before": "쓰리 샷",
+    "display": "쓰리 샷",
+    "english": "Three Shot",
+    "subtitle": "Three Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-079",
+    "before": "그룹 샷",
+    "display": "그룹 샷",
+    "english": "Group Shot",
+    "subtitle": "Group Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-080",
+    "before": "오버 더 숄더",
+    "display": "오버 더 숄더",
+    "english": "Over-the-Shoulder",
+    "subtitle": "Over-the-Shoulder",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-081",
+    "before": "오버 더 힙",
+    "display": "오버 더 힙",
+    "english": "Over-the-Hip",
+    "subtitle": "Over-the-Hip",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-082",
+    "before": "POV 샷",
+    "display": "POV 샷",
+    "english": "Point-of-View",
+    "subtitle": "Point-of-View",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-083",
+    "before": "주관적 샷",
+    "display": "주관적 샷",
+    "english": "Subjective Shot",
+    "subtitle": "Subjective Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-084",
+    "before": "객관적 샷",
+    "display": "객관적 샷",
+    "english": "Objective Shot",
+    "subtitle": "Objective Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-085",
+    "before": "리버스 샷",
+    "display": "리버스 샷",
+    "english": "Reverse Shot",
+    "subtitle": "Reverse Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-086",
+    "before": "샷·리버스 샷",
+    "display": "샷·리버스 샷",
+    "english": "Shot/Reverse Shot",
+    "subtitle": "Shot/Reverse Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-087",
+    "before": "리액션 샷",
+    "display": "리액션 샷",
+    "english": "Reaction Shot",
+    "subtitle": "Reaction Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-088",
+    "before": "시선 연결 샷",
+    "display": "시선 연결 샷",
+    "english": "Eyeline Match Shot",
+    "subtitle": "Eyeline Match Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-089",
+    "before": "컷어웨이 샷",
+    "display": "컷어웨이 샷",
+    "english": "Cutaway Shot",
+    "subtitle": "Cutaway Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-090",
+    "before": "컷인 샷",
+    "display": "컷인 샷",
+    "english": "Cut-In Shot",
+    "subtitle": "Cut-In Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-091",
+    "before": "리빌 샷",
+    "display": "리빌 샷",
+    "english": "Reveal Shot",
+    "subtitle": "Reveal Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-092",
+    "before": "히든 리빌",
+    "display": "히든 리빌",
+    "english": "Hidden Reveal",
+    "subtitle": "Hidden Reveal",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-093",
+    "before": "실루엣 샷",
+    "display": "실루엣 샷",
+    "english": "Silhouette Shot",
+    "subtitle": "Silhouette Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-094",
+    "before": "미러 샷",
+    "display": "미러 샷",
+    "english": "Mirror Shot",
+    "subtitle": "Mirror Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-095",
+    "before": "리플렉션 샷",
+    "display": "리플렉션 샷",
+    "english": "Reflection Shot",
+    "subtitle": "Reflection Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-096",
+    "before": "창 너머 샷",
+    "display": "창 너머 샷",
+    "english": "Through-the-Window",
+    "subtitle": "Through-the-Window",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-097",
+    "before": "문 너머 샷",
+    "display": "문 너머 샷",
+    "english": "Through-the-Doorway",
+    "subtitle": "Through-the-Doorway",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-098",
+    "before": "엿보는 샷",
+    "display": "엿보는 샷",
+    "english": "Peeking Shot",
+    "subtitle": "Peeking Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-099",
+    "before": "감시 카메라 샷",
+    "display": "감시 카메라 샷",
+    "english": "Surveillance Shot",
+    "subtitle": "Surveillance Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-100",
+    "before": "스크린라이프 샷",
+    "display": "스크린라이프 샷",
+    "english": "Screenlife Shot",
+    "subtitle": "Screenlife Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-101",
+    "before": "카메라 응시 샷",
+    "display": "카메라 응시 샷",
+    "english": "Direct-to-Camera Shot",
+    "subtitle": "Direct-to-Camera Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-102",
+    "before": "제4의 벽 깨기",
+    "display": "제4의 벽 깨기",
+    "english": "Fourth-Wall Break",
+    "subtitle": "Fourth-Wall Break",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-103",
+    "before": "바디 마운트 샷",
+    "display": "바디 마운트 샷",
+    "english": "Body-Mounted Shot",
+    "subtitle": "Body-Mounted Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-104",
+    "before": "스노리캠 샷",
+    "display": "스노리캠 샷",
+    "english": "Snorricam Shot",
+    "subtitle": "Snorricam Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-105",
+    "before": "스태틱 샷",
+    "display": "스태틱 샷",
+    "english": "Static Shot",
+    "subtitle": "Static Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-106",
+    "before": "락드오프 샷",
+    "display": "락드오프 샷",
+    "english": "Locked-Off Shot",
+    "subtitle": "Locked-Off Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-107",
+    "before": "팬 레프트",
+    "display": "팬 레프트",
+    "english": "Pan Left",
+    "subtitle": "Pan Left",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-108",
+    "before": "팬 라이트",
+    "display": "팬 라이트",
+    "english": "Pan Right",
+    "subtitle": "Pan Right",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-109",
+    "before": "틸트 업",
+    "display": "틸트 업",
+    "english": "Tilt Up",
+    "subtitle": "Tilt Up",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-110",
+    "before": "틸트 다운",
+    "display": "틸트 다운",
+    "english": "Tilt Down",
+    "subtitle": "Tilt Down",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-111",
+    "before": "시계 방향 롤",
+    "display": "시계 방향 롤",
+    "english": "Roll Clockwise",
+    "subtitle": "Roll Clockwise",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-112",
+    "before": "반시계 방향 롤",
+    "display": "반시계 방향 롤",
+    "english": "Roll Counterclockwise",
+    "subtitle": "Roll Counterclockwise",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-113",
+    "before": "돌리 인",
+    "display": "돌리 인",
+    "english": "Dolly In",
+    "subtitle": "Dolly In",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-114",
+    "before": "돌리 아웃",
+    "display": "돌리 아웃",
+    "english": "Dolly Out",
+    "subtitle": "Dolly Out",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-115",
+    "before": "푸시 인",
+    "display": "푸시 인",
+    "english": "Push-In",
+    "subtitle": "Push-In",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-116",
+    "before": "풀 아웃·풀 백",
+    "display": "풀 아웃·풀 백",
+    "english": "Pull-Out / Pull-Back",
+    "subtitle": "Pull-Out / Pull-Back",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-117",
+    "before": "트럭 레프트",
+    "display": "트럭 레프트",
+    "english": "Truck Left",
+    "subtitle": "Truck Left",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-118",
+    "before": "트럭 라이트",
+    "display": "트럭 라이트",
+    "english": "Truck Right",
+    "subtitle": "Truck Right",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-119",
+    "before": "크랩 무브",
+    "display": "크랩 무브",
+    "english": "Crab Left / Right",
+    "subtitle": "Crab Left / Right",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-120",
+    "before": "페데스털 업",
+    "display": "페데스털 업",
+    "english": "Pedestal Up",
+    "subtitle": "Pedestal Up",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-121",
+    "before": "페데스털 다운",
+    "display": "페데스털 다운",
+    "english": "Pedestal Down",
+    "subtitle": "Pedestal Down",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-122",
+    "before": "줌 인",
+    "display": "줌 인",
+    "english": "Zoom In",
+    "subtitle": "Zoom In",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-123",
+    "before": "줌 아웃",
+    "display": "줌 아웃",
+    "english": "Zoom Out",
+    "subtitle": "Zoom Out",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-124",
+    "before": "트래킹 샷",
+    "display": "트래킹 샷",
+    "english": "Tracking Shot",
+    "subtitle": "Tracking Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-125",
+    "before": "팔로 샷",
+    "display": "팔로 샷",
+    "english": "Follow Shot",
+    "subtitle": "Follow Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-126",
+    "before": "리딩 샷",
+    "display": "리딩 샷",
+    "english": "Leading Shot",
+    "subtitle": "Leading Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-127",
+    "before": "리어 팔로 샷",
+    "display": "리어 팔로 샷",
+    "english": "Rear Follow Shot",
+    "subtitle": "Rear Follow Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-128",
+    "before": "사이드 트래킹",
+    "display": "사이드 트래킹",
+    "english": "Side Tracking",
+    "subtitle": "Side Tracking",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-129",
+    "before": "패러렐 트래킹",
+    "display": "패러렐 트래킹",
+    "english": "Parallel Tracking",
+    "subtitle": "Parallel Tracking",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-130",
+    "before": "래터럴 트래킹",
+    "display": "래터럴 트래킹",
+    "english": "Lateral Tracking",
+    "subtitle": "Lateral Tracking",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-131",
+    "before": "대각선 트래킹",
+    "display": "대각선 트래킹",
+    "english": "Diagonal Tracking",
+    "subtitle": "Diagonal Tracking",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-132",
+    "before": "아크 샷",
+    "display": "아크 샷",
+    "english": "Arc Shot",
+    "subtitle": "Arc Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-133",
+    "before": "오빗 샷",
+    "display": "오빗 샷",
+    "english": "Orbit Shot",
+    "subtitle": "Orbit Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-134",
+    "before": "180도 오빗",
+    "display": "180도 오빗",
+    "english": "180° Orbit",
+    "subtitle": "180° Orbit",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-135",
+    "before": "360도 오빗",
+    "display": "360도 오빗",
+    "english": "360° Orbit",
+    "subtitle": "360° Orbit",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-136",
+    "before": "스파이럴 무빙",
+    "display": "스파이럴 무빙",
+    "english": "Spiral Movement",
+    "subtitle": "Spiral Movement",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-137",
+    "before": "서큘러 트래킹",
+    "display": "서큘러 트래킹",
+    "english": "Circular Tracking",
+    "subtitle": "Circular Tracking",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-138",
+    "before": "S커브 트래킹",
+    "display": "S커브 트래킹",
+    "english": "S-Curve Tracking",
+    "subtitle": "S-Curve Tracking",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-139",
+    "before": "리빌 무브",
+    "display": "리빌 무브",
+    "english": "Reveal Move",
+    "subtitle": "Reveal Move",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-140",
+    "before": "패럴랙스 무브",
+    "display": "패럴랙스 무브",
+    "english": "Parallax Move",
+    "subtitle": "Parallax Move",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-141",
+    "before": "워크스루",
+    "display": "워크스루",
+    "english": "Walk-Through",
+    "subtitle": "Walk-Through",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-142",
+    "before": "플라이스루",
+    "display": "플라이스루",
+    "english": "Fly-Through",
+    "subtitle": "Fly-Through",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-143",
+    "before": "패스바이 샷",
+    "display": "패스바이 샷",
+    "english": "Pass-By Shot",
+    "subtitle": "Pass-By Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-144",
+    "before": "패스스루 샷",
+    "display": "패스스루 샷",
+    "english": "Pass-Through Shot",
+    "subtitle": "Pass-Through Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-145",
+    "before": "랩어라운드 샷",
+    "display": "랩어라운드 샷",
+    "english": "Wrap-Around Shot",
+    "subtitle": "Wrap-Around Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-146",
+    "before": "푸시패스트 샷",
+    "display": "푸시패스트 샷",
+    "english": "Push-Past Shot",
+    "subtitle": "Push-Past Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-147",
+    "before": "리트리팅 샷",
+    "display": "리트리팅 샷",
+    "english": "Retreating Shot",
+    "subtitle": "Retreating Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-148",
+    "before": "체이스 샷",
+    "display": "체이스 샷",
+    "english": "Chase Shot",
+    "subtitle": "Chase Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-149",
+    "before": "슬로 푸시 인",
+    "display": "슬로 푸시 인",
+    "english": "Slow Push-In",
+    "subtitle": "Slow Push-In",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-150",
+    "before": "슬로 풀 백",
+    "display": "슬로 풀 백",
+    "english": "Slow Pull-Back",
+    "subtitle": "Slow Pull-Back",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-151",
+    "before": "크립 인",
+    "display": "크립 인",
+    "english": "Creep-In",
+    "subtitle": "Creep-In",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-152",
+    "before": "크립 줌",
+    "display": "크립 줌",
+    "english": "Creep Zoom",
+    "subtitle": "Creep Zoom",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-153",
+    "before": "스냅 줌",
+    "display": "스냅 줌",
+    "english": "Snap Zoom",
+    "subtitle": "Snap Zoom",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-154",
+    "before": "크래시 줌",
+    "display": "크래시 줌",
+    "english": "Crash Zoom",
+    "subtitle": "Crash Zoom",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-155",
+    "before": "휩 팬",
+    "display": "휩 팬",
+    "english": "Whip Pan",
+    "subtitle": "Whip Pan",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-156",
+    "before": "스위시 팬",
+    "display": "스위시 팬",
+    "english": "Swish Pan",
+    "subtitle": "Swish Pan",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-157",
+    "before": "휩 틸트",
+    "display": "휩 틸트",
+    "english": "Whip Tilt",
+    "subtitle": "Whip Tilt",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-158",
+    "before": "패스트 푸시 인",
+    "display": "패스트 푸시 인",
+    "english": "Fast Push-In",
+    "subtitle": "Fast Push-In",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-159",
+    "before": "서든 풀 백",
+    "display": "서든 풀 백",
+    "english": "Sudden Pull-Back",
+    "subtitle": "Sudden Pull-Back",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-160",
+    "before": "핸드헬드 셰이크",
+    "display": "핸드헬드 셰이크",
+    "english": "Handheld Shake",
+    "subtitle": "Handheld Shake",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-161",
+    "before": "카메라 졸트",
+    "display": "카메라 졸트",
+    "english": "Camera Jolt",
+    "subtitle": "Camera Jolt",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-162",
+    "before": "카메라 범프",
+    "display": "카메라 범프",
+    "english": "Camera Bump",
+    "subtitle": "Camera Bump",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-163",
+    "before": "마이크로 무빙",
+    "display": "마이크로 무빙",
+    "english": "Micro-Movement",
+    "subtitle": "Micro-Movement",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-164",
+    "before": "플로팅 무빙",
+    "display": "플로팅 무빙",
+    "english": "Floating Movement",
+    "subtitle": "Floating Movement",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-165",
+    "before": "스웨잉 무빙",
+    "display": "스웨잉 무빙",
+    "english": "Swaying Movement",
+    "subtitle": "Swaying Movement",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-166",
+    "before": "드리프팅 무빙",
+    "display": "드리프팅 무빙",
+    "english": "Drifting Movement",
+    "subtitle": "Drifting Movement",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-167",
+    "before": "불규칙 무빙",
+    "display": "불규칙 무빙",
+    "english": "Erratic Movement",
+    "subtitle": "Erratic Movement",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-168",
+    "before": "셰이키 캠",
+    "display": "셰이키 캠",
+    "english": "Shaky Cam",
+    "subtitle": "Shaky Cam",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-169",
+    "before": "크레인 업",
+    "display": "크레인 업",
+    "english": "Crane Up",
+    "subtitle": "Crane Up",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-170",
+    "before": "크레인 다운",
+    "display": "크레인 다운",
+    "english": "Crane Down",
+    "subtitle": "Crane Down",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-171",
+    "before": "크레인 스윕",
+    "display": "크레인 스윕",
+    "english": "Crane Sweep",
+    "subtitle": "Crane Sweep",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-172",
+    "before": "붐 업",
+    "display": "붐 업",
+    "english": "Boom Up",
+    "subtitle": "Boom Up",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-173",
+    "before": "붐 다운",
+    "display": "붐 다운",
+    "english": "Boom Down",
+    "subtitle": "Boom Down",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-174",
+    "before": "지브 샷",
+    "display": "지브 샷",
+    "english": "Jib Shot",
+    "subtitle": "Jib Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-175",
+    "before": "테크노크레인 샷",
+    "display": "테크노크레인 샷",
+    "english": "Technocrane Shot",
+    "subtitle": "Technocrane Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-176",
+    "before": "에어리얼 샷",
+    "display": "에어리얼 샷",
+    "english": "Aerial Shot",
+    "subtitle": "Aerial Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-177",
+    "before": "드론 샷",
+    "display": "드론 샷",
+    "english": "Drone Shot",
+    "subtitle": "Drone Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-178",
+    "before": "드론 라이즈",
+    "display": "드론 라이즈",
+    "english": "Drone Rise",
+    "subtitle": "Drone Rise",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-179",
+    "before": "드론 디센트",
+    "display": "드론 디센트",
+    "english": "Drone Descent",
+    "subtitle": "Drone Descent",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-180",
+    "before": "드론 오빗",
+    "display": "드론 오빗",
+    "english": "Drone Orbit",
+    "subtitle": "Drone Orbit",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-181",
+    "before": "드론 플라이오버",
+    "display": "드론 플라이오버",
+    "english": "Drone Flyover",
+    "subtitle": "Drone Flyover",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-182",
+    "before": "드론 리빌",
+    "display": "드론 리빌",
+    "english": "Drone Reveal",
+    "subtitle": "Drone Reveal",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-183",
+    "before": "탑다운 드론",
+    "display": "탑다운 드론",
+    "english": "Top-Down Drone",
+    "subtitle": "Top-Down Drone",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-184",
+    "before": "FPV 드론 샷",
+    "display": "FPV 드론 샷",
+    "english": "FPV Drone Shot",
+    "subtitle": "FPV Drone Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-185",
+    "before": "짐벌 샷",
+    "display": "짐벌 샷",
+    "english": "Gimbal Shot",
+    "subtitle": "Gimbal Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-186",
+    "before": "스테디캠 샷",
+    "display": "스테디캠 샷",
+    "english": "Steadicam Shot",
+    "subtitle": "Steadicam Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-187",
+    "before": "핸드헬드 샷",
+    "display": "핸드헬드 샷",
+    "english": "Handheld Shot",
+    "subtitle": "Handheld Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-188",
+    "before": "슬라이더 샷",
+    "display": "슬라이더 샷",
+    "english": "Slider Shot",
+    "subtitle": "Slider Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-189",
+    "before": "케이블캠 샷",
+    "display": "케이블캠 샷",
+    "english": "Cablecam Shot",
+    "subtitle": "Cablecam Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-190",
+    "before": "차량 부착 샷",
+    "display": "차량 부착 샷",
+    "english": "Vehicle-Mounted Shot",
+    "subtitle": "Vehicle-Mounted Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-191",
+    "before": "카 리그 샷",
+    "display": "카 리그 샷",
+    "english": "Car Rig Shot",
+    "subtitle": "Car Rig Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-192",
+    "before": "로봇 암 샷",
+    "display": "로봇 암 샷",
+    "english": "Robot Arm Shot",
+    "subtitle": "Robot Arm Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-193",
+    "before": "모션 컨트롤 샷",
+    "display": "모션 컨트롤 샷",
+    "english": "Motion-Control Shot",
+    "subtitle": "Motion-Control Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-194",
+    "before": "바디캠 샷",
+    "display": "바디캠 샷",
+    "english": "Bodycam Shot",
+    "subtitle": "Bodycam Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-195",
+    "before": "얕은 심도",
+    "display": "얕은 심도",
+    "english": "Shallow Depth of Field",
+    "subtitle": "Shallow Depth of Field",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-196",
+    "before": "딥 포커스",
+    "display": "딥 포커스",
+    "english": "Deep Focus",
+    "subtitle": "Deep Focus",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-197",
+    "before": "소프트 포커스",
+    "display": "소프트 포커스",
+    "english": "Soft Focus",
+    "subtitle": "Soft Focus",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-198",
+    "before": "선택적 초점",
+    "display": "선택적 초점",
+    "english": "Selective Focus",
+    "subtitle": "Selective Focus",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-199",
+    "before": "랙 포커스",
+    "display": "랙 포커스",
+    "english": "Rack Focus",
+    "subtitle": "Rack Focus",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-200",
+    "before": "포커스 풀",
+    "display": "포커스 풀",
+    "english": "Focus Pull",
+    "subtitle": "Focus Pull",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-201",
+    "before": "팔로 포커스",
+    "display": "팔로 포커스",
+    "english": "Follow Focus",
+    "subtitle": "Follow Focus",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-202",
+    "before": "디포커스",
+    "display": "디포커스",
+    "english": "Defocus",
+    "subtitle": "Defocus",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-203",
+    "before": "리포커스",
+    "display": "리포커스",
+    "english": "Refocus",
+    "subtitle": "Refocus",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-204",
+    "before": "스플릿 디옵터 샷",
+    "display": "스플릿 디옵터 샷",
+    "english": "Split Diopter Shot",
+    "subtitle": "Split Diopter Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-205",
+    "before": "틸트시프트 샷",
+    "display": "틸트시프트 샷",
+    "english": "Tilt-Shift Shot",
+    "subtitle": "Tilt-Shift Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-206",
+    "before": "매크로 촬영",
+    "display": "매크로 촬영",
+    "english": "Macro Photography",
+    "subtitle": "Macro Photography",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-207",
+    "before": "광각 렌즈 샷",
+    "display": "광각 렌즈 샷",
+    "english": "Wide-Angle Shot",
+    "subtitle": "Wide-Angle Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-208",
+    "before": "초광각 렌즈 샷",
+    "display": "초광각 렌즈 샷",
+    "english": "Ultra-Wide Shot",
+    "subtitle": "Ultra-Wide Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-209",
+    "before": "망원 렌즈 샷",
+    "display": "망원 렌즈 샷",
+    "english": "Telephoto Shot",
+    "subtitle": "Telephoto Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-210",
+    "before": "망원 압축 효과",
+    "display": "망원 압축 효과",
+    "english": "Long-Lens Compression",
+    "subtitle": "Long-Lens Compression",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-211",
+    "before": "어안 렌즈 샷",
+    "display": "어안 렌즈 샷",
+    "english": "Fisheye Shot",
+    "subtitle": "Fisheye Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-212",
+    "before": "아나모픽 샷",
+    "display": "아나모픽 샷",
+    "english": "Anamorphic Shot",
+    "subtitle": "Anamorphic Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-213",
+    "before": "렌즈 플레어",
+    "display": "렌즈 플레어",
+    "english": "Lens Flare",
+    "subtitle": "Lens Flare",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-214",
+    "before": "보케",
+    "display": "보케",
+    "english": "Bokeh",
+    "subtitle": "Bokeh",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-215",
+    "before": "렌즈 브리딩",
+    "display": "렌즈 브리딩",
+    "english": "Lens Breathing",
+    "subtitle": "Lens Breathing",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-216",
+    "before": "돌리 줌",
+    "display": "돌리 줌",
+    "english": "Dolly Zoom",
+    "subtitle": "Dolly Zoom",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-217",
+    "before": "버티고 효과",
+    "display": "버티고 효과",
+    "english": "Vertigo Effect",
+    "subtitle": "Vertigo Effect",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-218",
+    "before": "디지털 줌",
+    "display": "디지털 줌",
+    "english": "Digital Zoom",
+    "subtitle": "Digital Zoom",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-219",
+    "before": "펀치 인",
+    "display": "펀치 인",
+    "english": "Punch-In",
+    "subtitle": "Punch-In",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-220",
+    "before": "줌 버스트",
+    "display": "줌 버스트",
+    "english": "Zoom Burst",
+    "subtitle": "Zoom Burst",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-221",
+    "before": "스트레이트 컷",
+    "display": "스트레이트 컷",
+    "english": "Straight Cut",
+    "subtitle": "Straight Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-222",
+    "before": "하드 컷",
+    "display": "하드 컷",
+    "english": "Hard Cut",
+    "subtitle": "Hard Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-223",
+    "before": "점프 컷",
+    "display": "점프 컷",
+    "english": "Jump Cut",
+    "subtitle": "Jump Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-224",
+    "before": "매치 컷",
+    "display": "매치 컷",
+    "english": "Match Cut",
+    "subtitle": "Match Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-225",
+    "before": "그래픽 매치 컷",
+    "display": "그래픽 매치 컷",
+    "english": "Graphic Match Cut",
+    "subtitle": "Graphic Match Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-226",
+    "before": "동작 연결 컷",
+    "display": "동작 연결 컷",
+    "english": "Match on Action",
+    "subtitle": "Match on Action",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-227",
+    "before": "시선 연결 컷",
+    "display": "시선 연결 컷",
+    "english": "Eyeline Match",
+    "subtitle": "Eyeline Match",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-228",
+    "before": "컷어웨이",
+    "display": "컷어웨이",
+    "english": "Cutaway",
+    "subtitle": "Cutaway",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-229",
+    "before": "컷인",
+    "display": "컷인",
+    "english": "Cut-In",
+    "subtitle": "Cut-In",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-230",
+    "before": "리액션 컷",
+    "display": "리액션 컷",
+    "english": "Reaction Cut",
+    "subtitle": "Reaction Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-231",
+    "before": "크로스 컷",
+    "display": "크로스 컷",
+    "english": "Cross-Cut",
+    "subtitle": "Cross-Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-232",
+    "before": "병렬 편집",
+    "display": "병렬 편집",
+    "english": "Parallel Editing",
+    "subtitle": "Parallel Editing",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-233",
+    "before": "인터컷",
+    "display": "인터컷",
+    "english": "Intercut",
+    "subtitle": "Intercut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-234",
+    "before": "스매시 컷",
+    "display": "스매시 컷",
+    "english": "Smash Cut",
+    "subtitle": "Smash Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-235",
+    "before": "인비저블 컷",
+    "display": "인비저블 컷",
+    "english": "Invisible Cut",
+    "subtitle": "Invisible Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-236",
+    "before": "히든 컷",
+    "display": "히든 컷",
+    "english": "Hidden Cut",
+    "subtitle": "Hidden Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-237",
+    "before": "생략 컷",
+    "display": "생략 컷",
+    "english": "Elliptical Cut",
+    "subtitle": "Elliptical Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-238",
+    "before": "블랙 컷",
+    "display": "블랙 컷",
+    "english": "Cut to Black",
+    "subtitle": "Cut to Black",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-239",
+    "before": "화이트 컷",
+    "display": "화이트 컷",
+    "english": "Cut to White",
+    "subtitle": "Cut to White",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-240",
+    "before": "프리즈 프레임",
+    "display": "프리즈 프레임",
+    "english": "Freeze Frame",
+    "subtitle": "Freeze Frame",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-241",
+    "before": "플래시 프레임",
+    "display": "플래시 프레임",
+    "english": "Flash Frame",
+    "subtitle": "Flash Frame",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-242",
+    "before": "인서트 컷",
+    "display": "인서트 컷",
+    "english": "Insert Cut",
+    "subtitle": "Insert Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-243",
+    "before": "페이드 인",
+    "display": "페이드 인",
+    "english": "Fade In",
+    "subtitle": "Fade In",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-244",
+    "before": "페이드 아웃",
+    "display": "페이드 아웃",
+    "english": "Fade Out",
+    "subtitle": "Fade Out",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-245",
+    "before": "크로스 디졸브",
+    "display": "크로스 디졸브",
+    "english": "Cross Dissolve",
+    "subtitle": "Cross Dissolve",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-246",
+    "before": "디졸브",
+    "display": "디졸브",
+    "english": "Dissolve",
+    "subtitle": "Dissolve",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-247",
+    "before": "와이프",
+    "display": "와이프",
+    "english": "Wipe",
+    "subtitle": "Wipe",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-248",
+    "before": "아이리스 인",
+    "display": "아이리스 인",
+    "english": "Iris In",
+    "subtitle": "Iris In",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-249",
+    "before": "아이리스 아웃",
+    "display": "아이리스 아웃",
+    "english": "Iris Out",
+    "subtitle": "Iris Out",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-250",
+    "before": "휩 팬 전환",
+    "display": "휩 팬 전환",
+    "english": "Whip Pan Transition",
+    "subtitle": "Whip Pan Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-251",
+    "before": "휩 틸트 전환",
+    "display": "휩 틸트 전환",
+    "english": "Whip Tilt Transition",
+    "subtitle": "Whip Tilt Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-252",
+    "before": "줌 전환",
+    "display": "줌 전환",
+    "english": "Zoom Transition",
+    "subtitle": "Zoom Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-253",
+    "before": "블러 전환",
+    "display": "블러 전환",
+    "english": "Blur Transition",
+    "subtitle": "Blur Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-254",
+    "before": "모션 블러 전환",
+    "display": "모션 블러 전환",
+    "english": "Motion Blur Transition",
+    "subtitle": "Motion Blur Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-255",
+    "before": "마스크 전환",
+    "display": "마스크 전환",
+    "english": "Mask Transition",
+    "subtitle": "Mask Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-256",
+    "before": "오브젝트 와이프",
+    "display": "오브젝트 와이프",
+    "english": "Object Wipe",
+    "subtitle": "Object Wipe",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-257",
+    "before": "라이트 리크 전환",
+    "display": "라이트 리크 전환",
+    "english": "Light Leak Transition",
+    "subtitle": "Light Leak Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-258",
+    "before": "플래시 전환",
+    "display": "플래시 전환",
+    "english": "Flash Transition",
+    "subtitle": "Flash Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-259",
+    "before": "글리치 전환",
+    "display": "글리치 전환",
+    "english": "Glitch Transition",
+    "subtitle": "Glitch Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-260",
+    "before": "모프 전환",
+    "display": "모프 전환",
+    "english": "Morph Transition",
+    "subtitle": "Morph Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-261",
+    "before": "루마 페이드",
+    "display": "루마 페이드",
+    "english": "Luma Fade",
+    "subtitle": "Luma Fade",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-262",
+    "before": "매치 디졸브",
+    "display": "매치 디졸브",
+    "english": "Match Dissolve",
+    "subtitle": "Match Dissolve",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-263",
+    "before": "J컷",
+    "display": "J컷",
+    "english": "J-Cut",
+    "subtitle": "J-Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-264",
+    "before": "L컷",
+    "display": "L컷",
+    "english": "L-Cut",
+    "subtitle": "L-Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-265",
+    "before": "스플릿 편집",
+    "display": "스플릿 편집",
+    "english": "Split Edit",
+    "subtitle": "Split Edit",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-266",
+    "before": "몽타주",
+    "display": "몽타주",
+    "english": "Montage",
+    "subtitle": "Montage",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-267",
+    "before": "타임랩스",
+    "display": "타임랩스",
+    "english": "Time-Lapse",
+    "subtitle": "Time-Lapse",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-268",
+    "before": "하이퍼랩스",
+    "display": "하이퍼랩스",
+    "english": "Hyperlapse",
+    "subtitle": "Hyperlapse",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-269",
+    "before": "슬로모션",
+    "display": "슬로모션",
+    "english": "Slow Motion",
+    "subtitle": "Slow Motion",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-270",
+    "before": "스피드 램프",
+    "display": "스피드 램프",
+    "english": "Speed Ramp",
+    "subtitle": "Speed Ramp",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-271",
+    "before": "스피드 업",
+    "display": "스피드 업",
+    "english": "Speed-Up",
+    "subtitle": "Speed-Up",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-272",
+    "before": "리버스 모션",
+    "display": "리버스 모션",
+    "english": "Reverse Motion",
+    "subtitle": "Reverse Motion",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-273",
+    "before": "루프",
+    "display": "루프",
+    "english": "Loop",
+    "subtitle": "Loop",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-274",
+    "before": "프리즈 홀드",
+    "display": "프리즈 홀드",
+    "english": "Freeze Hold",
+    "subtitle": "Freeze Hold",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-275",
+    "before": "플래시백",
+    "display": "플래시백",
+    "english": "Flashback",
+    "subtitle": "Flashback",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-276",
+    "before": "플래시포워드",
+    "display": "플래시포워드",
+    "english": "Flashforward",
+    "subtitle": "Flashforward",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-277",
+    "before": "불릿 타임",
+    "display": "불릿 타임",
+    "english": "Bullet Time",
+    "subtitle": "Bullet Time",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-278",
+    "before": "롱 테이크",
+    "display": "롱 테이크",
+    "english": "Long Take",
+    "subtitle": "Long Take",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-279",
+    "before": "원 테이크 샷",
+    "display": "원 테이크 샷",
+    "english": "Oner",
+    "subtitle": "Oner",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-280",
+    "before": "시퀀스 샷",
+    "display": "시퀀스 샷",
+    "english": "Sequence Shot",
+    "subtitle": "Sequence Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-281",
+    "before": "스플릿 스크린",
+    "display": "스플릿 스크린",
+    "english": "Split Screen",
+    "subtitle": "Split Screen",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-282",
+    "before": "화면 속 화면",
+    "display": "화면 속 화면",
+    "english": "Picture-in-Picture",
+    "subtitle": "Picture-in-Picture",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-283",
+    "before": "멀티캠 편집",
+    "display": "멀티캠 편집",
+    "english": "Multicam Editing",
+    "subtitle": "Multicam Editing",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-284",
+    "before": "1인칭 샷",
+    "display": "1인칭 샷",
+    "english": "First-Person Shot",
+    "subtitle": "First-Person Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-285",
+    "before": "3인칭 샷",
+    "display": "3인칭 샷",
+    "english": "Third-Person Shot",
+    "subtitle": "Third-Person Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-286",
+    "before": "오버헤드 트래킹",
+    "display": "오버헤드 트래킹",
+    "english": "Overhead Tracking",
+    "subtitle": "Overhead Tracking",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-287",
+    "before": "수중 샷",
+    "display": "수중 샷",
+    "english": "Underwater Shot",
+    "subtitle": "Underwater Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-288",
+    "before": "수중 트래킹",
+    "display": "수중 트래킹",
+    "english": "Underwater Tracking",
+    "subtitle": "Underwater Tracking",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-289",
+    "before": "수면 분할 샷",
+    "display": "수면 분할 샷",
+    "english": "Split-Level Shot",
+    "subtitle": "Split-Level Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-290",
+    "before": "유리 너머 샷",
+    "display": "유리 너머 샷",
+    "english": "Through-Glass Shot",
+    "subtitle": "Through-Glass Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-291",
+    "before": "물체 너머 샷",
+    "display": "물체 너머 샷",
+    "english": "Through-Object Shot",
+    "subtitle": "Through-Object Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-292",
+    "before": "반사 트래킹",
+    "display": "반사 트래킹",
+    "english": "Reflection Tracking",
+    "subtitle": "Reflection Tracking",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-293",
+    "before": "미러 리빌",
+    "display": "미러 리빌",
+    "english": "Mirror Reveal",
+    "subtitle": "Mirror Reveal",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-294",
+    "before": "실루엣 리빌",
+    "display": "실루엣 리빌",
+    "english": "Silhouette Reveal",
+    "subtitle": "Silhouette Reveal",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-295",
+    "before": "그림자 샷",
+    "display": "그림자 샷",
+    "english": "Shadow Shot",
+    "subtitle": "Shadow Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-296",
+    "before": "그림자 트래킹",
+    "display": "그림자 트래킹",
+    "english": "Shadow Tracking",
+    "subtitle": "Shadow Tracking",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-297",
+    "before": "섀도 리빌",
+    "display": "섀도 리빌",
+    "english": "Shadow Reveal",
+    "subtitle": "Shadow Reveal",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-298",
+    "before": "열화상 샷",
+    "display": "열화상 샷",
+    "english": "Thermal Camera Shot",
+    "subtitle": "Thermal Camera Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-299",
+    "before": "적외선 샷",
+    "display": "적외선 샷",
+    "english": "Infrared Shot",
+    "subtitle": "Infrared Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-300",
+    "before": "야간투시 샷",
+    "display": "야간투시 샷",
+    "english": "Night Vision Shot",
+    "subtitle": "Night Vision Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-301",
+    "before": "360도 카메라 샷",
+    "display": "360도 카메라 샷",
+    "english": "360° Camera Shot",
+    "subtitle": "360° Camera Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-302",
+    "before": "VR 시점 샷",
+    "display": "VR 시점 샷",
+    "english": "VR POV Shot",
+    "subtitle": "VR POV Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-303",
+    "before": "미니어처 효과",
+    "display": "미니어처 효과",
+    "english": "Miniature Effect",
+    "subtitle": "Miniature Effect",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-304",
+    "before": "강제 원근 샷",
+    "display": "강제 원근 샷",
+    "english": "Forced Perspective Shot",
+    "subtitle": "Forced Perspective Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-305",
+    "before": "모션 컨트롤 반복",
+    "display": "모션 컨트롤 반복",
+    "english": "Motion-Control Repeat",
+    "subtitle": "Motion-Control Repeat",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-306",
+    "before": "모션 컨트롤 합성",
+    "display": "모션 컨트롤 합성",
+    "english": "Motion-Control Composite",
+    "subtitle": "Motion-Control Composite",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-307",
+    "before": "프로브 렌즈 샷",
+    "display": "프로브 렌즈 샷",
+    "english": "Probe Lens Shot",
+    "subtitle": "Probe Lens Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-308",
+    "before": "페리스코프 렌즈 샷",
+    "display": "페리스코프 렌즈 샷",
+    "english": "Periscope Lens Shot",
+    "subtitle": "Periscope Lens Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-309",
+    "before": "고속 촬영",
+    "display": "고속 촬영",
+    "english": "High-Speed Shot",
+    "subtitle": "High-Speed Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-310",
+    "before": "스톱모션 샷",
+    "display": "스톱모션 샷",
+    "english": "Stop-Motion Shot",
+    "subtitle": "Stop-Motion Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-311",
+    "before": "회전 카메라 샷",
+    "display": "회전 카메라 샷",
+    "english": "Rotating Camera Shot",
+    "subtitle": "Rotating Camera Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-312",
+    "before": "반전 샷",
+    "display": "반전 샷",
+    "english": "Inverted Shot",
+    "subtitle": "Inverted Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-313",
+    "before": "만화경 샷",
+    "display": "만화경 샷",
+    "english": "Kaleidoscope Shot",
+    "subtitle": "Kaleidoscope Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-314",
+    "before": "렌즈 왜곡 샷",
+    "display": "렌즈 왜곡 샷",
+    "english": "Lens Distortion Shot",
+    "subtitle": "Lens Distortion Shot",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-315",
+    "before": "보케 효과",
+    "display": "보케 효과",
+    "english": "Bokeh Effect",
+    "subtitle": "Bokeh Effect",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-316",
+    "before": "얕은 피사계 심도",
+    "display": "얕은 피사계 심도",
+    "english": "Shallow Depth of Field",
+    "subtitle": "Shallow Depth of Field",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-317",
+    "before": "깊은 피사계 심도",
+    "display": "깊은 피사계 심도",
+    "english": "Deep Depth of Field",
+    "subtitle": "Deep Depth of Field",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-318",
+    "before": "렌즈 플레어",
+    "display": "렌즈 플레어",
+    "english": "Lens Flare",
+    "subtitle": "Lens Flare",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-319",
+    "before": "아나모픽 플레어",
+    "display": "아나모픽 플레어",
+    "english": "Anamorphic Flare",
+    "subtitle": "Anamorphic Flare",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-320",
+    "before": "블룸",
+    "display": "블룸",
+    "english": "Bloom",
+    "subtitle": "Bloom",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-321",
+    "before": "소프트 포커스",
+    "display": "소프트 포커스",
+    "english": "Soft Focus",
+    "subtitle": "Soft Focus",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-322",
+    "before": "비네팅",
+    "display": "비네팅",
+    "english": "Vignetting",
+    "subtitle": "Vignetting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-323",
+    "before": "색수차",
+    "display": "색수차",
+    "english": "Chromatic Aberration",
+    "subtitle": "Chromatic Aberration",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-324",
+    "before": "틸트 시프트",
+    "display": "틸트 시프트",
+    "english": "Tilt-Shift Effect",
+    "subtitle": "Tilt-Shift Effect",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-325",
+    "before": "어안 렌즈 왜곡",
+    "display": "어안 렌즈 왜곡",
+    "english": "Fisheye Distortion",
+    "subtitle": "Fisheye Distortion",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-326",
+    "before": "배럴 왜곡",
+    "display": "배럴 왜곡",
+    "english": "Barrel Distortion",
+    "subtitle": "Barrel Distortion",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-327",
+    "before": "핀쿠션 왜곡",
+    "display": "핀쿠션 왜곡",
+    "english": "Pincushion Distortion",
+    "subtitle": "Pincushion Distortion",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-328",
+    "before": "모션 블러",
+    "display": "모션 블러",
+    "english": "Motion Blur",
+    "subtitle": "Motion Blur",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-329",
+    "before": "방사형 블러",
+    "display": "방사형 블러",
+    "english": "Radial Blur",
+    "subtitle": "Radial Blur",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-330",
+    "before": "가우시안 블러",
+    "display": "가우시안 블러",
+    "english": "Gaussian Blur",
+    "subtitle": "Gaussian Blur",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-331",
+    "before": "디포커스",
+    "display": "디포커스",
+    "english": "Defocus",
+    "subtitle": "Defocus",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-332",
+    "before": "포커스 브리딩",
+    "display": "포커스 브리딩",
+    "english": "Focus Breathing",
+    "subtitle": "Focus Breathing",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-333",
+    "before": "빛 갈라짐",
+    "display": "빛 갈라짐",
+    "english": "Sunstar Diffraction",
+    "subtitle": "Sunstar Diffraction",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-334",
+    "before": "렌즈 헤이즈",
+    "display": "렌즈 헤이즈",
+    "english": "Lens Haze",
+    "subtitle": "Lens Haze",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-335",
+    "before": "세피아 효과",
+    "display": "세피아 효과",
+    "english": "Sepia Tone",
+    "subtitle": "Sepia Tone",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-336",
+    "before": "흑백",
+    "display": "흑백",
+    "english": "Black and White",
+    "subtitle": "Black and White",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-337",
+    "before": "모노크롬",
+    "display": "모노크롬",
+    "english": "Monochrome",
+    "subtitle": "Monochrome",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-338",
+    "before": "듀오톤",
+    "display": "듀오톤",
+    "english": "Duotone",
+    "subtitle": "Duotone",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-339",
+    "before": "틸 앤 오렌지",
+    "display": "틸 앤 오렌지",
+    "english": "Teal and Orange",
+    "subtitle": "Teal and Orange",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-340",
+    "before": "필름 그레인",
+    "display": "필름 그레인",
+    "english": "Film Grain",
+    "subtitle": "Film Grain",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-341",
+    "before": "빈티지 필름 룩",
+    "display": "빈티지 필름 룩",
+    "english": "Vintage Film Look",
+    "subtitle": "Vintage Film Look",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-342",
+    "before": "크로스 프로세싱",
+    "display": "크로스 프로세싱",
+    "english": "Cross Processing",
+    "subtitle": "Cross Processing",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-343",
+    "before": "디새추레이션",
+    "display": "디새추레이션",
+    "english": "Desaturation",
+    "subtitle": "Desaturation",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-344",
+    "before": "고채도",
+    "display": "고채도",
+    "english": "High Saturation",
+    "subtitle": "High Saturation",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-345",
+    "before": "하이 콘트라스트",
+    "display": "하이 콘트라스트",
+    "english": "High Contrast",
+    "subtitle": "High Contrast",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-346",
+    "before": "로우 콘트라스트",
+    "display": "로우 콘트라스트",
+    "english": "Low Contrast",
+    "subtitle": "Low Contrast",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-347",
+    "before": "페이드 필름",
+    "display": "페이드 필름",
+    "english": "Faded Film",
+    "subtitle": "Faded Film",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-348",
+    "before": "매트 블랙",
+    "display": "매트 블랙",
+    "english": "Matte Blacks",
+    "subtitle": "Matte Blacks",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-349",
+    "before": "시네마틱 LUT",
+    "display": "시네마틱 LUT",
+    "english": "Cinematic LUT",
+    "subtitle": "Cinematic LUT",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-350",
+    "before": "컬러 스플래시",
+    "display": "컬러 스플래시",
+    "english": "Selective Color",
+    "subtitle": "Selective Color",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-351",
+    "before": "컬러 그레이딩",
+    "display": "컬러 그레이딩",
+    "english": "Color Grading",
+    "subtitle": "Color Grading",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-352",
+    "before": "할레이션",
+    "display": "할레이션",
+    "english": "Halation",
+    "subtitle": "Halation",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-353",
+    "before": "필름 번",
+    "display": "필름 번",
+    "english": "Film Burn",
+    "subtitle": "Film Burn",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-354",
+    "before": "라이트 리크",
+    "display": "라이트 리크",
+    "english": "Light Leak",
+    "subtitle": "Light Leak",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-355",
+    "before": "키 라이트",
+    "display": "키 라이트",
+    "english": "Key Light",
+    "subtitle": "Key Light",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-356",
+    "before": "필 라이트",
+    "display": "필 라이트",
+    "english": "Fill Light",
+    "subtitle": "Fill Light",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-357",
+    "before": "백라이트",
+    "display": "백라이트",
+    "english": "Backlight",
+    "subtitle": "Backlight",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-358",
+    "before": "림 라이트",
+    "display": "림 라이트",
+    "english": "Rim Light",
+    "subtitle": "Rim Light",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-359",
+    "before": "헤어 라이트",
+    "display": "헤어 라이트",
+    "english": "Hair Light",
+    "subtitle": "Hair Light",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-360",
+    "before": "렘브란트 조명",
+    "display": "렘브란트 조명",
+    "english": "Rembrandt Lighting",
+    "subtitle": "Rembrandt Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-361",
+    "before": "버터플라이 조명",
+    "display": "버터플라이 조명",
+    "english": "Butterfly Lighting",
+    "subtitle": "Butterfly Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-362",
+    "before": "스플릿 라이팅",
+    "display": "스플릿 라이팅",
+    "english": "Split Lighting",
+    "subtitle": "Split Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-363",
+    "before": "루프 라이팅",
+    "display": "루프 라이팅",
+    "english": "Loop Lighting",
+    "subtitle": "Loop Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-364",
+    "before": "하이키 라이팅",
+    "display": "하이키 라이팅",
+    "english": "High-Key Lighting",
+    "subtitle": "High-Key Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-365",
+    "before": "로우키 라이팅",
+    "display": "로우키 라이팅",
+    "english": "Low-Key Lighting",
+    "subtitle": "Low-Key Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-366",
+    "before": "키아로스쿠로",
+    "display": "키아로스쿠로",
+    "english": "Chiaroscuro Lighting",
+    "subtitle": "Chiaroscuro Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-367",
+    "before": "볼류메트릭 라이팅",
+    "display": "볼류메트릭 라이팅",
+    "english": "Volumetric Lighting",
+    "subtitle": "Volumetric Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-368",
+    "before": "고보 조명",
+    "display": "고보 조명",
+    "english": "Gobo Lighting",
+    "subtitle": "Gobo Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-369",
+    "before": "실루엣 조명",
+    "display": "실루엣 조명",
+    "english": "Silhouette Lighting",
+    "subtitle": "Silhouette Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-370",
+    "before": "실용 조명",
+    "display": "실용 조명",
+    "english": "Practical Lighting",
+    "subtitle": "Practical Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-371",
+    "before": "골든아워",
+    "display": "골든아워",
+    "english": "Golden Hour",
+    "subtitle": "Golden Hour",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-372",
+    "before": "블루아워",
+    "display": "블루아워",
+    "english": "Blue Hour",
+    "subtitle": "Blue Hour",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-373",
+    "before": "역광",
+    "display": "역광",
+    "english": "Backlighting",
+    "subtitle": "Backlighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-374",
+    "before": "측광",
+    "display": "측광",
+    "english": "Side Lighting",
+    "subtitle": "Side Lighting",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-375",
+    "before": "스타일라이즈드 3D 애니메이션",
+    "display": "스타일라이즈드 3D 애니메이션",
+    "english": "Stylized 3D Animation",
+    "subtitle": "Stylized 3D Animation",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-376",
+    "before": "치비 스타일",
+    "display": "치비 스타일",
+    "english": "Chibi Style",
+    "subtitle": "Chibi Style",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-377",
+    "before": "SD 캐릭터",
+    "display": "SD 캐릭터",
+    "english": "Super Deformed Character",
+    "subtitle": "Super Deformed Character",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-378",
+    "before": "셀 셰이딩",
+    "display": "셀 셰이딩",
+    "english": "Cel Shading",
+    "subtitle": "Cel Shading",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-379",
+    "before": "클레이메이션",
+    "display": "클레이메이션",
+    "english": "Claymation Style",
+    "subtitle": "Claymation Style",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-380",
+    "before": "스톱모션 스타일",
+    "display": "스톱모션 스타일",
+    "english": "Stop Motion Style",
+    "subtitle": "Stop Motion Style",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-381",
+    "before": "픽셀 아트",
+    "display": "픽셀 아트",
+    "english": "Pixel Art",
+    "subtitle": "Pixel Art",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-382",
+    "before": "로우 폴리",
+    "display": "로우 폴리",
+    "english": "Low Poly",
+    "subtitle": "Low Poly",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-383",
+    "before": "아이소메트릭",
+    "display": "아이소메트릭",
+    "english": "Isometric Illustration",
+    "subtitle": "Isometric Illustration",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-384",
+    "before": "수채화",
+    "display": "수채화",
+    "english": "Watercolor Illustration",
+    "subtitle": "Watercolor Illustration",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-385",
+    "before": "유화",
+    "display": "유화",
+    "english": "Oil Painting Style",
+    "subtitle": "Oil Painting Style",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-386",
+    "before": "펜 드로잉",
+    "display": "펜 드로잉",
+    "english": "Ink Line Art",
+    "subtitle": "Ink Line Art",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-387",
+    "before": "플랫 일러스트",
+    "display": "플랫 일러스트",
+    "english": "Flat Illustration",
+    "subtitle": "Flat Illustration",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-388",
+    "before": "벡터 일러스트",
+    "display": "벡터 일러스트",
+    "english": "Vector Illustration",
+    "subtitle": "Vector Illustration",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-389",
+    "before": "페이퍼 컷",
+    "display": "페이퍼 컷",
+    "english": "Paper Cut Art",
+    "subtitle": "Paper Cut Art",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-390",
+    "before": "로토스코프 애니메이션",
+    "display": "로토스코프 애니메이션",
+    "english": "Rotoscope Animation",
+    "subtitle": "Rotoscope Animation",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-391",
+    "before": "애니메이션풍",
+    "display": "애니메이션풍",
+    "english": "Anime Style",
+    "subtitle": "Anime Style",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-392",
+    "before": "웹툰 스타일",
+    "display": "웹툰 스타일",
+    "english": "Webtoon Style",
+    "subtitle": "Webtoon Style",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-393",
+    "before": "미니어처 디오라마",
+    "display": "미니어처 디오라마",
+    "english": "Miniature Diorama",
+    "subtitle": "Miniature Diorama",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-394",
+    "before": "포토리얼리즘",
+    "display": "포토리얼리즘",
+    "english": "Photorealism",
+    "subtitle": "Photorealism",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-395",
+    "before": "슬로 모션",
+    "display": "슬로 모션",
+    "english": "Slow Motion",
+    "subtitle": "Slow Motion",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-396",
+    "before": "타임랩스",
+    "display": "타임랩스",
+    "english": "Time-lapse",
+    "subtitle": "Time-lapse",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-397",
+    "before": "하이퍼랩스",
+    "display": "하이퍼랩스",
+    "english": "Hyperlapse",
+    "subtitle": "Hyperlapse",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-398",
+    "before": "스피드 램핑",
+    "display": "스피드 램핑",
+    "english": "Speed Ramping",
+    "subtitle": "Speed Ramping",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-399",
+    "before": "프리즈 프레임",
+    "display": "프리즈 프레임",
+    "english": "Freeze Frame",
+    "subtitle": "Freeze Frame",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-400",
+    "before": "리버스 모션",
+    "display": "리버스 모션",
+    "english": "Reverse Motion",
+    "subtitle": "Reverse Motion",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-401",
+    "before": "글리치 효과",
+    "display": "글리치 효과",
+    "english": "Glitch Effect",
+    "subtitle": "Glitch Effect",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-402",
+    "before": "더블 익스포저",
+    "display": "더블 익스포저",
+    "english": "Double Exposure",
+    "subtitle": "Double Exposure",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-403",
+    "before": "크로마키",
+    "display": "크로마키",
+    "english": "Chroma Key",
+    "subtitle": "Chroma Key",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-404",
+    "before": "로토스코핑",
+    "display": "로토스코핑",
+    "english": "Rotoscoping",
+    "subtitle": "Rotoscoping",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-405",
+    "before": "패럴랙스 효과",
+    "display": "패럴랙스 효과",
+    "english": "Parallax Effect",
+    "subtitle": "Parallax Effect",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-406",
+    "before": "모핑",
+    "display": "모핑",
+    "english": "Morphing",
+    "subtitle": "Morphing",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-407",
+    "before": "디졸브",
+    "display": "디졸브",
+    "english": "Dissolve Transition",
+    "subtitle": "Dissolve Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-408",
+    "before": "매치 컷",
+    "display": "매치 컷",
+    "english": "Match Cut",
+    "subtitle": "Match Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-409",
+    "before": "점프 컷",
+    "display": "점프 컷",
+    "english": "Jump Cut",
+    "subtitle": "Jump Cut",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-410",
+    "before": "휘프 팬 전환",
+    "display": "휘프 팬 전환",
+    "english": "Whip Pan Transition",
+    "subtitle": "Whip Pan Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-411",
+    "before": "줌 블러 전환",
+    "display": "줌 블러 전환",
+    "english": "Zoom Blur Transition",
+    "subtitle": "Zoom Blur Transition",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-412",
+    "before": "필름 스크래치",
+    "display": "필름 스크래치",
+    "english": "Film Scratches",
+    "subtitle": "Film Scratches",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-413",
+    "before": "VHS 효과",
+    "display": "VHS 효과",
+    "english": "VHS Effect",
+    "subtitle": "VHS Effect",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  },
+  {
+    "id": "CAM-414",
+    "before": "CRT 화면 효과",
+    "display": "CRT 화면 효과",
+    "english": "CRT Screen Effect",
+    "subtitle": "CRT Screen Effect",
+    "rule": "기존 한국어 명칭 유지. 검증하지 않은 기계적 음역을 적용하지 않음."
+  }
+]

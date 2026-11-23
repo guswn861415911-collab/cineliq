@@ -30,3 +30,9 @@ html[data-theme] .member-dialog :is(.member-email-divider,.member-auth-links but
 html[data-theme] .member-dialog [data-auth-mode]{color:var(--ui-text)!important}
 html[data-theme] .member-dialog a[href$="privacy.html"],html[data-theme] .member-dialog a[href$="terms.html"]{color:var(--ui-text)!important}
 html[data-theme] .legal-page{--legal-text:var(--ui-text);--legal-muted:var(--ui-secondary);--dark-line:var(--ui-line);--focus:var(--ui-text)}html[data-theme] .legal-page :is(h1,h2,.legal-home-link,.legal-top-link){color:var(--ui-text)}
+html[data-theme] .member-library-dialog small{color:var(--ui-secondary)}
+html[data-theme] .member-library-dialog #cancelMemberLibrary {
+  color: var(--ui-text) !important;
+  background: var(--ui-panel) !important;
+  border-color: var(--ui-line) !important;
+}

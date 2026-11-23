@@ -20,3 +20,8 @@
 검증: 단위/모의 인증/로컬 PGlite SQL16개 통과. 모의 회원 브라우저 회귀 검사 및 Enter/Space/Tab/Escape 키보드 자동화 통과. axe28개 조합의 확정 위반0건. 그라데이션·겹침·스크롤 가림 대비 판정 보류는 미완료로 남깁니다(reports/accessibility-axe.json). 별도 CUA 수동 키보드 검사는 localhost 연결 제한으로 미완료입니다. 실제 iOS/Android·스크린 리더·OAuth·운영 회원 CRUD 및 회원 설정 서버 저장은 미검증입니다. WCAG2.2AA 전체 준수를 주장하지 않습니다. 전체414개 설명의 전문가 의미 재검수 및 타 모델 전용 프롬프트도 미완료입니다.
 
 재실행: node --test tests/*.cjs supabase/tests/independent-folders.test.mjs / node scripts/audit-ui-upgrade.cjs / node tests/browser/usability.cjs / node tests/browser/accessibility.cjs. SQL은 work/sql-tools PGlite, 브라우저 검사는 Edge와 work/a11y-tools axe-core를 사용하며 앱 런타임 의존성은 추가하지 않았습니다. 인증 설정·Google 인증 HTML·미디어 원본·계정 통합 테스트 환경은 보존했습니다.
+
+## 배포 후 확인
+기능 커밋1b4f9c7을 main에 push했고 GitHub Pages 실행45106563748이 success로 완료되었습니다. 운영 HTML·접근성 JS/CSS·테마 CSS·Google 인증 HTML 모두 HTTP200, 새 버전 문자열 확인. 실제 Edge 비로그인 화면에서 카드·접근성 로드·용어집·320/1440px 가로 넘침 없음·런타임 예외 없음 확인.
+
+별도 CUA 운영 수동 키보드 점검: 카드 제목 Enter로 상세 열기→닫기 버튼 포커스, Tab→즐겨찾기, Escape→원래 카드 제목 포커스 복귀를 직접 확인했습니다. 수동 점검은 이 흐름에 한정하며 모든 기능의 완전한 수동 검사 또는 스크린 리더 검사로 간주하지 않습니다.

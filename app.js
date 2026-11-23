@@ -100,7 +100,7 @@ function renderMobileFilters(){
  const tagRoot=$('#mobileTagFilters'),mediaRoot=$('#mobileMediaFilters');
  if(!tagRoot||!mediaRoot)return;
  tagRoot.innerHTML=`<button class="mobile-filter-chip ${state.tags.size===0?'active':''}" data-tag="all">전체</button>`+TAGS.map(t=>`<button class="mobile-filter-chip ${state.tags.has(t)?'active':''}" data-tag="${esc(t)}">${esc(t)}</button>`).join('');
- mediaRoot.innerHTML=[['image','이미지 기법'],['video','영상 기법']].map(([v,n])=>`<button class="mobile-filter-chip ${state.types.has(v)?'active':''}" aria-pressed="${state.types.has(v)}" data-type="${v}">${n}</button>`).join('')+'<small>선택 없음 = 전체 유형 · 두 유형 동시 선택 가능</small>';
+ mediaRoot.innerHTML=[['image','이미지 기법'],['video','영상 기법']].map(([v,n])=>`<button class="mobile-filter-chip ${state.types.has(v)?'active':''}" aria-pressed="${state.types.has(v)}" data-type="${v}">${n}</button>`).join('');
 }
 function renderTags(){if(!state.admin)state.media='all';const mediaSort=$('#sortSelect option[value=media]');mediaSort.hidden=!state.admin;mediaSort.disabled=!state.admin;if(!state.admin&&state.sort==='media'){state.sort='number';$('#sortSelect').value='number';}document.querySelectorAll('[data-type]').forEach(b=>{b.classList.toggle('active',state.types.has(b.dataset.type));b.setAttribute('aria-pressed',String(state.types.has(b.dataset.type)));});document.querySelectorAll('[data-registration-group]').forEach(el=>el.hidden=!state.admin);$('#tagFilters').innerHTML=`<button class="chip ${state.tags.size===0?'active':''}" data-tag="all">전체</button>`+TAGS.map(t=>`<button class="chip ${state.tags.has(t)?'active':''}" data-tag="${esc(t)}">${esc(t)}</button>`).join('');document.querySelectorAll('[data-media]').forEach(b=>b.classList.toggle('active',b.dataset.media===state.media));document.querySelectorAll('.admin-media-filter').forEach(b=>b.hidden=!state.admin);renderMobileFilters()}
 function filtered(){const q=state.search.toLocaleLowerCase().trim();let a=ITEMS.filter(i=>{if(state.major!=='all'&&i.major!==state.major)return false;if(state.section&&i.sectionNo!==state.section)return false;if(state.tags.size&&![...state.tags].some(t=>i.tags.includes(t)))return false;const has=state.mediaMap.has(i.id);if(state.admin&&(state.media==='ready'&&!has||state.media==='missing'&&has))return false;if(!window.CINELIQ_CONTENT_TYPES.matches(i,state.types))return false;return !q||(practice?practice.matches(i,q):[i.ko,i.en,i.description,i.section,...i.tags].join(' ').toLocaleLowerCase().includes(q))});const sort=state.sort;if(sort==='az')a.sort((a,b)=>a.en.localeCompare(b.en,'en'));else if(sort==='za')a.sort((a,b)=>b.en.localeCompare(a.en,'en'));else if(sort==='ko')a.sort((a,b)=>a.ko.localeCompare(b.ko,'ko'));else if(sort==='media')a.sort((a,b)=>Number(state.mediaMap.has(b.id))-Number(state.mediaMap.has(a.id))||a.number-b.number);return a}
@@ -436,16 +436,14 @@ function setupHeroVideo() {
   const video = document.querySelector('.hero-background-video');
   const mobile = matchMedia('(max-width:760px)');
   const reducedMotion = matchMedia('(prefers-reduced-motion:reduce)');
-  const toggle=$('#heroVideoToggle');let userPaused=false;
-  toggle.addEventListener('click',()=>{userPaused=!userPaused;updateVideo();});
-  video.addEventListener('play',()=>{if(userPaused||reducedMotion.matches||window.CINELIQ_A11Y?.reducedMotion())video.pause();});
+  video.addEventListener('play',()=>{if(reducedMotion.matches||window.CINELIQ_A11Y?.reducedMotion())video.pause();});
 
   function updateVideo() {
     const device = mobile.matches ? 'mobile' : 'pc';
     const revision = mobile.matches ? '?v=mobile-v02' : '';
     const source = `assets/cineliq-hero-${device}.mp4${revision}`;
     video.poster = `assets/cineliq-hero-${device}-poster.jpg${revision}`;
-    const reduced=reducedMotion.matches||window.CINELIQ_A11Y?.reducedMotion();toggle.disabled=Boolean(reduced);toggle.setAttribute('aria-pressed',String(Boolean(reduced||userPaused)));toggle.textContent=reduced?'움직임 줄이기 적용':userPaused?'배경 영상 재생':'배경 영상 멈춤';toggle.setAttribute('aria-label',reduced?'움직임 줄이기로 배경 영상이 정지됨':userPaused?'배경 영상 재생':'배경 영상 일시정지');
+    const reduced=reducedMotion.matches||window.CINELIQ_A11Y?.reducedMotion();
     if (reduced) {
       if (video.hasAttribute('src')) {
         video.pause();
@@ -455,7 +453,7 @@ function setupHeroVideo() {
       return;
     }
     const view = $('.main-content').dataset.mobileView;
-    if (userPaused || view === 'my' || view === 'glossary' || (mobile.matches && view === 'library')) {
+    if (view === 'my' || view === 'glossary' || (mobile.matches && view === 'library')) {
       video.pause();
       return;
     }

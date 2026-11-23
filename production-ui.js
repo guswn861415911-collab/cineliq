@@ -9,7 +9,7 @@
     const termText=new Map(catalog.terms.map(term=>[term.id,labels(term).map(normalize)]));
     const shortAliases=new Set(catalog.terms.flatMap(term=>[term.abbreviation,...term.aliases].filter(value=>value&&/^[a-z.\-\d]{1,4}$/i.test(value)).map(normalize)));
     const techniqueTerms=new Map([...items.keys()].map(id=>[id,catalog.terms.filter(term=>term.techniqueIds.includes(id)||data.profiles[id]?.relatedTerms.includes(term.id))]));
-    const originalIndex=new Map([...items].map(([id,item])=>[id,normalize([item.ko,item.en,item.description,item.section,...item.tags].join(' '))]));
+    const originalIndex=new Map([...items].map(([id,item])=>[id,normalize([item.ko,item.originalKo,item.en,item.description,item.section,...item.tags].join(' '))]));
     const termMatch=(term,q)=>termText.get(term.id).some(label=>shortAliases.has(q)?label===q:label.includes(q));
     const sourceLinks=ids=>ids.filter(id=>catalog.sources[id]).map(id=>`<a href="${esc(catalog.sources[id].url)}" target="_blank" rel="noopener noreferrer">${esc(catalog.sources[id].title)}</a>`).join(' · ');
     const techniqueLinks=(ids,detail=false)=>ids.filter(id=>items.has(id)).map(id=>`<button type="button" class="btn outline small" ${detail?'data-related-technique':'data-open'}="${id}">${esc(items.get(id).ko)}</button>`).join('');

@@ -141,14 +141,14 @@
       const query = find('#memberCollectionSearch').value.trim().toLocaleLowerCase();
       const all = collectionRows();
       const shown = all.map(key => items.get(key)).filter(item => item
-        && `${item.ko} ${item.en} ${item.description}`.toLocaleLowerCase().includes(query));
+        && `${item.ko} ${item.originalKo||''} ${item.en} ${item.description}`.toLocaleLowerCase().includes(query));
       shown.sort(find('#memberCollectionSort').value === 'name'
         ? (a,b) => a.ko.localeCompare(b.ko,'ko')
         : (a,b) => (favorites.get(b.id) || '').localeCompare(favorites.get(a.id) || ''));
       find('#memberViewTitle').textContent = folder?.name || category.name;
       find('#memberViewDescription').textContent = `저장된 기법 ${all.length}개`;
       if (folder) actions.innerHTML = `<button class="member-action member-primary" data-folder-add="${id}">기법 추가</button><button class="member-action" data-folder-edit="${id}">이름 수정</button><button class="member-action" data-folder-delete="${id}">폴더 삭제</button>`;
-      list.innerHTML = shown.length ? shown.map(item => `<article class="member-technique"><button class="member-technique-open" data-open="${item.id}"><span class="member-thumbnail">${thumbnail(item)}</span><span><strong>${escape(item.ko)}</strong><small>${escape(item.en)}</small><span class="member-technique-description">${escape(item.description)}</span></span></button><div class="member-technique-actions">${favoriteButton(item.id)}${folder ? `<button class="member-action" data-folder-remove="${id}" data-technique="${item.id}" aria-label="${escape(item.ko)} 폴더에서 제거">폴더에서 제거</button>` : ''}</div></article>`).join('')
+      list.innerHTML = shown.length ? shown.map(item => `<article class="member-technique"><button class="member-technique-open" data-open="${item.id}"><span class="member-thumbnail">${thumbnail(item)}</span><span><strong>${escape(item.ko)}</strong><small>${escape(item.displaySubtitle||item.en)}</small><span class="member-technique-description">${escape(item.description)}</span></span></button><div class="member-technique-actions">${favoriteButton(item.id)}${folder ? `<button class="member-action" data-folder-remove="${id}" data-technique="${item.id}" aria-label="${escape(item.ko)} 폴더에서 제거">폴더에서 제거</button>` : ''}</div></article>`).join('')
         : empty(query ? '검색 결과가 없어요' : '저장된 기법이 없어요',folder ? '기법 추가를 눌러 즐겨찾기에서 선택해 주세요.' : '관심 있는 기법을 즐겨찾기에 추가해 보세요.',!folder);
     }
     function renderRoute() {
@@ -216,7 +216,7 @@
       if (type === 'add') {
         const alreadyAdded = new Set(entries.filter(entry => entry.folder_id === id).map(entry => entry.technique_id));
         choices.innerHTML = [...favorites.keys()].map(key => items.get(key)).filter(item => item && !alreadyAdded.has(item.id))
-          .map(item => `<label data-choice-row><input data-library-choice type="checkbox" value="${item.id}"><span>${escape(item.ko)}<small>${escape(item.en)}</small></span></label>`).join('')
+          .map(item => `<label data-choice-row><input data-library-choice type="checkbox" value="${item.id}"><span>${escape(item.ko)}<small>${escape(item.displaySubtitle||item.en)}</small></span></label>`).join('')
           || '<p>추가할 즐겨찾기가 없습니다.</p>';
         window.CINELIQ_BULK_SELECTION(choices);
       }

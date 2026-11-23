@@ -236,11 +236,11 @@
     function renderFavorites() {
       const query = search.value.trim().toLocaleLowerCase();
       const saved = [...favorites].map(([id,date]) => ({item:items.get(id),date}))
-        .filter(({item}) => item && `${item.ko} ${item.en} ${item.description}`.toLocaleLowerCase().includes(query));
+        .filter(({item}) => item && `${item.ko} ${item.originalKo||''} ${item.en} ${item.description}`.toLocaleLowerCase().includes(query));
       saved.sort(sort.value === 'name'
         ? (a,b) => a.item.ko.localeCompare(b.item.ko,'ko')
         : (a,b) => b.date.localeCompare(a.date));
-      list.innerHTML = saved.map(({item}) => `<li><button class="member-saved-item" type="button" data-open="${escape(item.id)}"><span class="member-thumbnail">${thumbnail(item)}</span><span><strong>${escape(item.ko)}</strong><small>${escape(item.en)}</small></span></button>${favoriteButton(item.id)}</li>`).join('');
+      list.innerHTML = saved.map(({item}) => `<li><button class="member-saved-item" type="button" data-open="${escape(item.id)}"><span class="member-thumbnail">${thumbnail(item)}</span><span><strong>${escape(item.ko)}</strong><small>${escape(item.displaySubtitle||item.en)}</small></span></button>${favoriteButton(item.id)}</li>`).join('');
       document.querySelector('#favoriteEmpty').hidden = Boolean(saved.length);
       document.querySelector('#favoriteEmpty').textContent = query ? '검색 결과가 없습니다.' : '저장한 기법이 없습니다.';
       document.querySelectorAll('[data-favorite]').forEach(paintButton);

@@ -31,3 +31,8 @@ html[data-theme] .catalog #searchInput:focus::placeholder{color:transparent!impo
 html[data-theme] .catalog #sortSelect:is(:hover,:focus){background:var(--ui-panel)!important;border-color:var(--ui-line)!important;box-shadow:none!important}
 html[data-theme][data-pointer-input=true] .catalog #sortSelect:focus-visible{outline:none!important}
 html[data-theme]:not([data-pointer-input=true]) .catalog .search-field:focus-within{outline:2px solid var(--ui-text);outline-offset:3px}
+
+/* No white focus rings on the requested close/search controls, including touch. */
+html[data-theme] #closeDetail:is(:focus,:focus-visible),html[data-theme] .catalog #searchInput:is(:focus,:focus-visible){outline:none!important;box-shadow:none!important}
+html[data-theme] .catalog .search-field:focus-within{outline:none!important;box-shadow:none!important}
+html[data-theme] #closeDetail:focus-visible{background:var(--ui-hover)!important}

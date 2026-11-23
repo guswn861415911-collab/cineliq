@@ -17,3 +17,13 @@
   #detailPosition{position:static;width:auto;height:44px;flex:1;border:0}
 }
 @media(prefers-reduced-motion:reduce){.detail-step{transition:none}}
+
+/* Keep the position available to assistive technology without a visible footer. */
+#detailPosition{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important;pointer-events:none}
+#detailModal .detail-panel{height:100%}
+@media(max-width:900px){
+ #detailModal .detail-panel{height:calc(100% - 64px - env(safe-area-inset-bottom))}
+ .detail-navigation{background:var(--ui-panel,#151515);border-color:var(--ui-line,#333)}
+ .detail-step{background:var(--ui-panel,#151515);color:var(--ui-text,#fff);border-color:var(--ui-line,#555)}
+ .detail-step:hover:not(:disabled){background:var(--ui-hover,#303030)}
+}

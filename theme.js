@@ -3,9 +3,9 @@
  const root=document.documentElement,system=matchMedia('(prefers-color-scheme: dark)'),valid=value=>['dark','light','system'].includes(value);
  const read=key=>{try{return localStorage.getItem(key);}catch{return null;}};
  const write=(key,value)=>{try{localStorage.setItem(key,value);}catch{}};
- let user=null,version=0,busy=false,mode=read('cineliq.theme.guest')||'dark';if(!valid(mode))mode='dark';
+ let user=null,version=0,busy=false,mode=read('cineliq.theme.last')||read('cineliq.theme.guest')||'dark';if(!valid(mode))mode='dark';
  const key=()=>user?'cineliq.theme.'+user.id:'cineliq.theme.guest';
- function apply(){root.dataset.theme=mode==='system'?(system.matches?'dark':'light'):mode;root.dataset.themePreference=mode;
+ function apply(){write('cineliq.theme.last',mode);root.dataset.theme=mode==='system'?(system.matches?'dark':'light'):mode;root.dataset.themePreference=mode;
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content',root.dataset.theme==='dark'?'#0b0b0b':'#fafafa');
   document.querySelectorAll('[data-theme-control]').forEach(control=>{control.value=mode;control.disabled=busy;});
  }

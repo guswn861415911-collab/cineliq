@@ -17,3 +17,16 @@ html[data-theme] :is(.modal-close,.member-auth-close){background:var(--ui-surfac
 html[data-theme] .member-setting-row select,.menu-theme select{min-height:44px;background:var(--ui-panel);color:var(--ui-text);border:1px solid var(--ui-line);padding:8px;border-radius:6px;max-width:100%}
 .menu-theme{display:grid;gap:8px;margin:18px 12px;font-size:12px}.theme-setting{flex-wrap:wrap}.theme-setting>div{min-width:110px}.theme-setting select{margin-left:auto}.member-language-note{display:block;font-size:12px;font-weight:400;margin-top:8px;color:var(--ui-secondary)}
 html[data-theme] #memberPage .member-technique-open{color:var(--ui-text)}
+/* Override legacy mobile !important colors; hidden admin groups must stay hidden. */
+html[data-theme] .catalog [data-registration-group][hidden]{display:none!important}
+html[data-theme] :is(.site-header,.sidebar,.detail-panel,.admin-dialog,.member-library-dialog,#memberPage,.folder-save-dialog){background:var(--ui-bg)!important;color:var(--ui-text)!important;border-color:var(--ui-line)!important}
+html[data-theme] .catalog .tech-card,html[data-theme] .catalog :is(.search-field,.toolbar select,.chip:not(.active),.copy-icon-btn,.btn.outline){background:var(--ui-panel)!important;color:var(--ui-text)!important;border-color:var(--ui-line)!important}
+html[data-theme] .catalog :is(.card-title,.card-en,.card-description,.card-section){color:var(--ui-text)!important}
+html[data-theme] .catalog .card-media{background:var(--ui-surface)!important;border-color:var(--ui-line)!important}
+html[data-theme] .catalog .tech-card::after{border-color:var(--ui-line)}
+html[data-theme] .catalog :is(.eyebrow.dark,.count-label,.section-head-note,.filter-label,.result-summary){color:var(--ui-secondary)!important}
+html[data-theme] .catalog :is(.media-indicator,.media-placeholder-label){color:var(--ui-secondary)!important}
+html[data-theme] .member-dialog :is(.member-email-divider,.member-auth-links button,.member-legal a){color:var(--ui-text)!important}
+html[data-theme] .member-dialog [data-auth-mode]{color:var(--ui-text)!important}
+html[data-theme] .member-dialog a[href$="privacy.html"],html[data-theme] .member-dialog a[href$="terms.html"]{color:var(--ui-text)!important}
+html[data-theme] .legal-page{--legal-text:var(--ui-text);--legal-muted:var(--ui-secondary);--dark-line:var(--ui-line);--focus:var(--ui-text)}html[data-theme] .legal-page :is(h1,h2,.legal-home-link,.legal-top-link){color:var(--ui-text)}

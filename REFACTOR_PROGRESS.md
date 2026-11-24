@@ -72,7 +72,7 @@ CODE_GUIDE.md에 수정 목적별 파일 위치, app.js와 캐러셀을 읽는 �
 | scripts/·tests/ | 포맷·주석 제거, 데이터 감사 도구 및 소스/구조 보존 검사 추가 |
 | CODE_GUIDE.md·README.md | 파일 찾기·수정·검사·보안·복구 안내 |
 
-## 아직 하지 않은 리팩터링과 다음 순서
+## 1차 종료 당시의 미완료 목록
 1. sort-menu.js, theme.js, accessibility.js, folder-save.js의 짧은 변수명을 기능별로 검토하고 각각 테스트 후 커밋.
 2. learning-ui.js/full-learning-ui.js/production-ui.js의 긴 HTML 템플릿을 읽기 쉽게 정리. 모든 학습 문구 값은 그대로 비교할 것.
 3. member-library.js의 폴더/회원 화면 처리를 단계별로 정리. 회원 UUID·요청 버전 검사와 실패 처리를 보존할 것.
@@ -107,3 +107,23 @@ CODE_GUIDE.md에 수정 목적별 파일 위치, app.js와 캐러셀을 읽는 �
 styles.css에서 같은 스타일시트/동일 media 컨테이너, 같은 선택자·속성·값·important의 앞쪽 반복 선언12개를 제거했습니다. 빈 규칙1개도 해당 선언 제거에 따라 없어졌습니다. 다른 값·다른 선택자·다른 미디어 경계·fallback 선언은 유지했습니다. 제거/유지 위치와 값은 reports/refactor-css-cleanup.json에 있습니다.
 
 CSS 정리 규칙의 단위 테스트2개 통과. 실제 Edge에서1440/768/390/320px × 다크/라이트 × 라이브러리/상세/마이페이지24조합의 계산 스타일과 요소 크기를037716d의 CSS와 비교해 동일함을 확인했습니다. 기존 구조 검사는 이12개로 증명한 반복 선언만 정규화한 기준 CSS와 비교하며, 그 외 HTML/CSS 구조 보존 검사는 그대로 통과했습니다.
+
+## 2차 최종 검증과 저장 상태
+- 자동 단위·모의 Auth/서버·로컬SQL/RLS·콘텐츠/주석 보존 검사31개 전부 통과.
+- 실제 Edge 브라우저 자동화8개 검사군(usability, menu, sort-menu, image-carousel, member-editor, accessibility, refactor-structure, css-preservation) 전부 통과.
+- CSS 계산 스타일·요소 크기24조합 동일. 구조 검사는 승인된 반복12개만 정규화하고 나머지 HTML/CSS 차이를 허용하지 않습니다.
+- 접근성28조합의 확정 위반0건. 대비 판정 보류12개 조합은 reports/refactor-round-two-accessibility.json에 기록했으며 통과/완전한 WCAG 준수로 간주하지 않습니다.
+- 모든 소스에 주석을 추가하지 않았으며 파서 검사0개 유지. 기존414개 데이터·이미지/영상 assets·공개 연결 값·Google 인증 HTML 보존 검사 통과.
+- CODE_GUIDE.md에 자주 수정하는23개 화면/동작의 파일·함수·시작 행, 회원/설정 상태 이름과 보안 주의사항, CSS 정리 원칙·추가 테스트 방법을 보완했습니다.
+- 실제 브라우저 검사도 자동화입니다. 실제 iOS/Android 기기·스크린 리더 수동 검사·외부 Google/Kakao OAuth·운영 회원 데이터 쓰기는 실행하지 않았습니다.
+- 기존 codex/beginner-refactor 브랜치에만 커밋·push합니다. 운영 main·사이트·Supabase·OAuth 설정·별도 계정 통합 테스트 프로젝트는 변경하지 않습니다.
+- 실제 코덱스 잔여 사용량·초기화 시각은 확인하지 못했으며 추정하지 않았습니다.
+
+## 현재 남은 작업과 다음 순서 (2차 이후)
+1. member-library.js의 긴 renderCollection/renderFolders HTML과 folder-save.js의 긴 저장창 HTML을 읽기 쉬운 템플릿으로 정리. 사용자/작업 버전 검사는 유지하고 실제 UI 회귀를 먼저 보강합니다.
+2. learning-ui.js/full-learning-ui.js/production-ui.js의 긴 템플릿. 학습 데이터 내용·순서를 그대로 비교합니다.
+3. member.js의 계정 연결/세션 검증·media-cloud.js·media-admin.js의 보안 로직은 이번에 기능을 바꾸지 않았습니다. 필요하면 별도 설계·검증 후 진행하며 검증을 줄이지 않습니다.
+4. 서로 값이 다른 과거 CSS 덮어쓰기는 그대로 남겼습니다. 영역별 화면·상태별 실측 비교 없이 일괄 삭제하지 않습니다.
+5. 격리된 실제 OAuth 및 실제 모바일·스크린 리더 검증. 운영 계정으로 삭제·통합을 시험하지 않습니다.
+
+2차 기능 커밋:20ce0c1(회원/설정 이름),3f64ec9(조건 분리),0f3ea0b(CSS12개 정리). 최종 문서 커밋은 git log -1로 확인합니다. 각 단계는 개별 revert 가능하며 운영 DB 복구와 무관합니다.

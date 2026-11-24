@@ -1,0 +1,52 @@
+{
+  "baseline": "037716d",
+  "branch": "codex/beginner-refactor",
+  "productionDeployed": false,
+  "productionDatabaseChanged": false,
+  "changedRuntimeFiles": [
+    "theme.js",
+    "accessibility.js",
+    "folder-save.js",
+    "member-library.js",
+    "member.js",
+    "sort-menu.js",
+    "styles.css"
+  ],
+  "behaviorPreservation": {
+    "memberAndFolderSave": "Alpha-equivalent executable structure, public property names retained",
+    "preferences": "Compared with 037716d for guest, invalid values, account success, duplicate request, failed save, session change and OS settings",
+    "css": "12 earlier identical declarations removed; computed styles and rectangles identical in 24 viewport/theme/view combinations",
+    "learningDataAndMedia": "Existing preservation tests passed",
+    "sourceComments": 0
+  },
+  "tests": {
+    "unitMockServerLocalSql": 31,
+    "browserSuites": [
+      "usability",
+      "menu",
+      "sort-menu",
+      "image-carousel",
+      "member-editor",
+      "accessibility",
+      "refactor-structure",
+      "css-preservation"
+    ],
+    "cssComputedStyleCombinations": 24,
+    "axeScenarios": 28,
+    "axeConfirmedViolations": 0,
+    "axeIncompleteScenarios": 12,
+    "manualPhysicalDeviceOrExternalOAuth": false
+  },
+  "featureCommits": [
+    "20ce0c1",
+    "3f64ec9",
+    "0f3ea0b"
+  ],
+  "remaining": [
+    "Long member-library rendering templates and folder-save dialog markup",
+    "Security-sensitive authentication/identity functions intentionally unchanged except local names",
+    "Different-value legacy CSS overrides need focused visual verification",
+    "Learning UI long templates",
+    "Physical mobile, screen reader and isolated real OAuth verification"
+  ]
+}

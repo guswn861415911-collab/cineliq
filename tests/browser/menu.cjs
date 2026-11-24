@@ -11,6 +11,7 @@ await cdp('Runtime.enable');await cdp('Page.enable');await cdp('Emulation.setFoc
 
 
 await check("document.querySelectorAll('.tech-card').length>0",'catalog ready');
+await check("document.querySelector('.member-toggle-label').textContent==='마이페이지'",'member session ready');
 assert.equal(await evaluate("document.querySelectorAll('.site-menu-links a').length"),1);
 assert.equal(await evaluate("document.querySelector('.site-menu-links a').textContent"),'실무 용어집');
 assert.equal(await evaluate("document.querySelector('.sidebar-footer')"),null);

@@ -28,3 +28,6 @@ HTML4개와 CSS14개를 읽기 좋은 들여쓰기·줄바꿈으로 정리하고
 대용량3개 데이터 파일을 제외한 JavaScript와 서버 TypeScript를 들여쓰기·줄바꿈으로 정리하고 파서에서 식별한 주석을 제거했습니다. 각 파일의 변경 전후 실행 구문 트리를 비교했습니다(동일한 &&/||의 괄호 결합만 정규화). 보안 검증·OAuth·RLS 호출의 로직 변경은 하지 않았습니다. 단위/인증 모의/로컬SQL16개와 캐러셀 브라우저 검사 통과. 사용자 UI 검사는 초기화 시점의 관리자 노출 검사에서1회 실패했으나 재실행에서 전 항목 통과했습니다. 후속 검증에서도 확인합니다.
 
 대용량 포맷을 한 프로세스에서 처리하다 Array buffer allocation failed가 발생해 파일별 독립 프로세스로 전환했습니다. 코덱스 사용 한도 문제로 판단하지 않습니다. 대용량 콘텐츠는 별도 처리 예정입니다.
+
+## 3단계 완료: 라이브러리 이벤트 정리
+app.js의 이벤트 등록과 실제 처리 함수를 분리했습니다. selectMainCategory/selectSubcategory/toggleSceneTag/selectContentType/selectRegistrationStatus/openTechniqueFromCard로 역할을 표시하고 refreshFilteredCards로 반복한 화면 갱신만 공유합니다. findElement/escapeHtml/techniques/libraryState 등 이름을 명확히 하고 기존 API의 state/items/escape 키는 보존했습니다. 사용자 UI·메뉴·캐러셀 검사 통과. 메뉴 테스트는 회원 세션 준비를 기다린 후 검사하도록 타이밍 의존성을 보완했습니다. 인증/관리자 권한 분기 및 미디어 데이터 구조는 변경하지 않았습니다.

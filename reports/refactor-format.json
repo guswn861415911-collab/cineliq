@@ -1,0 +1,128 @@
+[
+  {
+    "filename": "accessibility.css",
+    "commentsRemoved": 2,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 39,
+    "linesAfter": 268
+  },
+  {
+    "filename": "contact.html",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 39,
+    "linesAfter": 62
+  },
+  {
+    "filename": "detail-navigation.css",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 30,
+    "linesAfter": 141
+  },
+  {
+    "filename": "image-carousel.css",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 17,
+    "linesAfter": 102
+  },
+  {
+    "filename": "index.html",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 187,
+    "linesAfter": 926
+  },
+  {
+    "filename": "learning.css",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 43,
+    "linesAfter": 225
+  },
+  {
+    "filename": "legal.css",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 72,
+    "linesAfter": 156
+  },
+  {
+    "filename": "member-deletion.css",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 18,
+    "linesAfter": 90
+  },
+  {
+    "filename": "member-library.css",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 164,
+    "linesAfter": 668
+  },
+  {
+    "filename": "member-merge.css",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 13,
+    "linesAfter": 67
+  },
+  {
+    "filename": "privacy.html",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 147,
+    "linesAfter": 313
+  },
+  {
+    "filename": "production.css",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 34,
+    "linesAfter": 154
+  },
+  {
+    "filename": "service-info.css",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 41,
+    "linesAfter": 181
+  },
+  {
+    "filename": "sort-menu.css",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 10,
+    "linesAfter": 73
+  },
+  {
+    "filename": "styles.css",
+    "commentsRemoved": 16,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 740,
+    "linesAfter": 3558
+  },
+  {
+    "filename": "terms.html",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 112,
+    "linesAfter": 185
+  },
+  {
+    "filename": "theme.css",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 39,
+    "linesAfter": 271
+  },
+  {
+    "filename": "usability.css",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": false,
+    "linesBefore": 6,
+    "linesAfter": 192
+  }
+]

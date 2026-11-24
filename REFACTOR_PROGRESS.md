@@ -97,3 +97,8 @@ CODE_GUIDE.md에 수정 목적별 파일 위치, app.js와 캐러셀을 읽는 �
 - sort-menu.js: menuButton/optionsList/openSortMenu/selectSortOption 등으로 역할을 명시했습니다.
 
 기준 테스트26개 통과. 이름 변경 후 기존 단위/로컬SQL26개 및 사용자 UI·메뉴·정렬 브라우저 검사 통과. 새 검사에서 회원/폴더 저장의 실행 구문 구조가 지역 변수 이름 외에는 동일함을 확인했고, 설정은 게스트/계정 저장·중복 요청 차단·실패 복구·세션 변경·시스템 설정6가지 시나리오를 기준 코드와 비교해 통과했습니다.
+
+## 2차 2단계: 복잡한 UI 조건 분리
+화면 모드의 시스템 테마 해석을 순서대로 읽는 if 처리로 바꾸고, 자막 선택은 꺼짐/트랙 없음/기존 표시 중/새로 표시 순서로 정리했습니다. sort-menu.js에 getNextOptionIndex와 handleSortMenuKeydown, member-library.js에 getEditorInitialName과 getLibraryErrorMessage를 추가해 중첩 삼항식을 제거했습니다. 저장·세션·권한 검증은 변경하지 않았습니다.
+
+설정 기준 비교 검사와 회원/폴더 구문 구조 검사3개 통과. 새 member-editor 브라우저 검사에서 폴더 수정 초기값·새 폴더 빈 값·중복명/외래키/일반 오류 안내·선택적 회원 이름·실패 시 기존 북마크/폴더 수 보존을 확인했습니다. 메뉴 양방향 설정 동기화와 정렬 검사도 통과했습니다.

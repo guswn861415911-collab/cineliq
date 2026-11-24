@@ -703,5 +703,45 @@
     "verification": "normalized syntax tree equality",
     "linesBefore": 78,
     "linesAfter": 191
+  },
+  {
+    "filename": "theme.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 120,
+    "linesAfter": 123
+  },
+  {
+    "filename": "accessibility.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 167,
+    "linesAfter": 168
+  },
+  {
+    "filename": "sort-menu.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 132,
+    "linesAfter": 136
+  },
+  {
+    "filename": "member-library.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 649,
+    "linesAfter": 651
+  },
+  {
+    "filename": "tests/browser/member-editor.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 143,
+    "linesAfter": 196
   }
 ]

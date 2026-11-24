@@ -70,9 +70,10 @@
     closeSortMenu(true);
     renderSortMenu();
   }
-  menuButton.addEventListener('click', () =>
-    optionsList.hidden ? openSortMenu() : closeSortMenu(),
-  );
+  menuButton.addEventListener('click', () => {
+    if (optionsList.hidden) openSortMenu();
+    else closeSortMenu();
+  });
   menuButton.addEventListener('keydown', (event) => {
     if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
       event.preventDefault();
@@ -82,30 +83,39 @@
   optionsList.addEventListener('click', (event) =>
     selectSortOption(event.target.closest('[role=option]')),
   );
-  optionsList.addEventListener('keydown', (event) => {
-    const optionElements = [...optionsList.children],
-      focusedOptionIndex = optionElements.indexOf(document.activeElement);
+  function getNextOptionIndex(key, currentIndex, optionCount) {
+    if (key === 'Home') return 0;
+    if (key === 'End') return optionCount - 1;
+    const direction = key === 'ArrowDown' ? 1 : -1;
+    return (currentIndex + direction + optionCount) % optionCount;
+  }
+  function handleSortMenuKeydown(event) {
     if (event.key === 'Escape') {
       event.preventDefault();
       closeSortMenu(true);
-    } else if (event.key === 'Tab') closeSortMenu();
-    else if (['Enter', ' '].includes(event.key)) {
+      return;
+    }
+    if (event.key === 'Tab') {
+      closeSortMenu();
+      return;
+    }
+    if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       selectSortOption(document.activeElement);
-    } else if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
-      event.preventDefault();
-      const nextOptionIndex =
-        event.key === 'Home'
-          ? 0
-          : event.key === 'End'
-            ? optionElements.length - 1
-            : (focusedOptionIndex +
-                (event.key === 'ArrowDown' ? 1 : -1) +
-                optionElements.length) %
-              optionElements.length;
-      optionElements[nextOptionIndex]?.focus();
+      return;
     }
-  });
+    if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const optionElements = Array.from(optionsList.children);
+    const focusedOptionIndex = optionElements.indexOf(document.activeElement);
+    const nextOptionIndex = getNextOptionIndex(
+      event.key,
+      focusedOptionIndex,
+      optionElements.length,
+    );
+    optionElements[nextOptionIndex]?.focus();
+  }
+  optionsList.addEventListener('keydown', handleSortMenuKeydown);
   document.addEventListener('pointerdown', (event) => {
     if (!sortMenu.contains(event.target)) closeSortMenu();
   });

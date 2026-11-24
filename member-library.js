@@ -360,6 +360,21 @@
         }
       }
     }
+    function getEditorInitialName(editorType, folderId) {
+      if (editorType === 'rename') {
+        const folder = personalFolders.find((folder) => folder.id === folderId);
+        return folder?.name || '';
+      }
+      if (editorType === 'name') return currentUser.user_metadata?.display_name || '';
+      return '';
+    }
+    function getLibraryErrorMessage(error) {
+      if (error.code === '23505')
+        return '같은 이름의 폴더가 있어요. 다른 이름을 입력해 주세요.';
+      if (error.code === '23503')
+        return '즐겨찾기 또는 폴더가 변경됐어요. 목록을 새로 불러와 주세요.';
+      return '저장하지 못했어요. 잠시 후 다시 시도해 주세요.';
+    }
     function openLibraryEditor(type, id = '') {
       if (!currentUser || isSaving) return;
       currentOperation = {
@@ -372,12 +387,7 @@
       findMemberElement('#memberLibraryNameLabel').hidden = !nameMode;
       folderNameInput.required = nameMode;
       folderNameInput.maxLength = 60;
-      folderNameInput.value =
-        type === 'rename'
-          ? personalFolders.find((folder) => folder.id === id)?.name || ''
-          : type === 'name'
-            ? currentUser.user_metadata?.display_name || ''
-            : '';
+      folderNameInput.value = getEditorInitialName(type, id);
       findMemberElement('#memberLibraryDialogTitle').textContent = {
         create: '새 폴더 만들기',
         rename: '폴더 이름 수정',
@@ -429,12 +439,7 @@
         return true;
       } catch (error) {
         if (requestVersion !== sessionVersion) return false;
-        const message =
-          error.code === '23505'
-            ? '같은 이름의 폴더가 있어요. 다른 이름을 입력해 주세요.'
-            : error.code === '23503'
-              ? '즐겨찾기 또는 폴더가 변경됐어요. 목록을 새로 불러와 주세요.'
-              : '저장하지 못했어요. 잠시 후 다시 시도해 주세요.';
+        const message = getLibraryErrorMessage(error);
         if (folderEditorDialog.open) folderEditorStatus.textContent = message;
         else libraryStatus.textContent = message;
         return false;

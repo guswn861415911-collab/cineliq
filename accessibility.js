@@ -47,18 +47,19 @@
     const tracks = [...video.textTracks].filter((track) =>
       ['captions', 'subtitles'].includes(track.kind),
     );
-    if (preferences.captions && tracks.length) {
-      const preferredTrack =
-        tracks.find((track) => track.language?.startsWith('ko')) || tracks[0];
-      if (!tracks.some((track) => track.mode === 'showing')) {
-        preferredTrack.mode = 'showing';
-        automaticallyEnabledCaptions.set(video, preferredTrack);
-      }
-    } else if (!preferences.captions) {
+    if (!preferences.captions) {
       const previousTrack = automaticallyEnabledCaptions.get(video);
       if (previousTrack?.mode === 'showing') previousTrack.mode = 'disabled';
       automaticallyEnabledCaptions.delete(video);
+      return;
     }
+    if (tracks.length === 0) return;
+    const preferredTrack =
+      tracks.find((track) => track.language?.startsWith('ko')) || tracks[0];
+    const captionsAlreadyShowing = tracks.some((track) => track.mode === 'showing');
+    if (captionsAlreadyShowing) return;
+    preferredTrack.mode = 'showing';
+    automaticallyEnabledCaptions.set(video, preferredTrack);
   }
   function updateVideoCaptions() {
     document.querySelectorAll('video').forEach((video) => {

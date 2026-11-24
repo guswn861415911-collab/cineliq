@@ -28,12 +28,11 @@
     currentUser ? 'cineliq.theme.' + currentUser.id : 'cineliq.theme.guest';
   function applyTheme() {
     storeTheme('cineliq.theme.last', selectedTheme);
-    documentRoot.dataset.theme =
-      selectedTheme === 'system'
-        ? systemColorScheme.matches
-          ? 'dark'
-          : 'light'
-        : selectedTheme;
+    let resolvedTheme = selectedTheme;
+    if (selectedTheme === 'system') {
+      resolvedTheme = systemColorScheme.matches ? 'dark' : 'light';
+    }
+    documentRoot.dataset.theme = resolvedTheme;
     documentRoot.dataset.themePreference = selectedTheme;
     document
       .querySelector('meta[name="theme-color"]')
@@ -95,11 +94,14 @@
       }
       currentUser = nextUser;
       const accountTheme = currentUser?.user_metadata?.cineliq_preferences?.theme;
-      selectedTheme = isSupportedTheme(accountTheme)
-        ? accountTheme
-        : readStoredTheme(getStorageKey()) ||
+      if (isSupportedTheme(accountTheme)) {
+        selectedTheme = accountTheme;
+      } else {
+        selectedTheme =
+          readStoredTheme(getStorageKey()) ||
           readStoredTheme('cineliq.theme.guest') ||
           'dark';
+      }
       if (!isSupportedTheme(selectedTheme)) selectedTheme = 'dark';
       applyTheme();
     },

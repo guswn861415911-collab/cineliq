@@ -1,0 +1,103 @@
+{
+  "filename": "styles.css",
+  "baseline": "037716d",
+  "rule": "Earlier identical selector/property/value/priority in the same stylesheet or media container only",
+  "removals": [
+    {
+      "selector": ".card-description",
+      "property": "display",
+      "value": "-webkit-box",
+      "important": false,
+      "removedLine": 1509,
+      "keptLine": 1519
+    },
+    {
+      "selector": ".card-description",
+      "property": "-webkit-box-orient",
+      "value": "vertical",
+      "important": false,
+      "removedLine": 1510,
+      "keptLine": 1520
+    },
+    {
+      "selector": ".card-description",
+      "property": "overflow",
+      "value": "hidden",
+      "important": false,
+      "removedLine": 1512,
+      "keptLine": 1523
+    },
+    {
+      "selector": ".card-description",
+      "property": "line-height",
+      "value": "1.7",
+      "important": false,
+      "removedLine": 737,
+      "keptLine": 1525
+    },
+    {
+      "selector": ".detail-description",
+      "property": "white-space",
+      "value": "pre-line",
+      "important": false,
+      "removedLine": 1516,
+      "keptLine": 1530
+    },
+    {
+      "selector": ".hero h1",
+      "property": "font-weight",
+      "value": "800",
+      "important": false,
+      "removedLine": 372,
+      "keptLine": 1947
+    },
+    {
+      "selector": ".section-head-note",
+      "property": "font-size",
+      "value": "11px",
+      "important": false,
+      "removedLine": 510,
+      "keptLine": 2011
+    },
+    {
+      "selector": ".toolbar",
+      "property": "grid-template-columns",
+      "value": "minmax(0, 1fr) auto auto",
+      "important": false,
+      "removedLine": 515,
+      "keptLine": 2014
+    },
+    {
+      "selector": ".filter-row",
+      "property": "align-items",
+      "value": "center",
+      "important": false,
+      "removedLine": 575,
+      "keptLine": 2041
+    },
+    {
+      "selector": ".filter-label",
+      "property": "font-size",
+      "value": "9px",
+      "important": false,
+      "removedLine": 584,
+      "keptLine": 2050
+    },
+    {
+      "selector": ".card-grid",
+      "property": "grid-template-columns",
+      "value": "repeat(3, minmax(0, 1fr))",
+      "important": false,
+      "removedLine": 621,
+      "keptLine": 2086
+    },
+    {
+      "selector": ".catalog .card-actions .open-link",
+      "property": "font-weight",
+      "value": "600",
+      "important": false,
+      "removedLine": 2128,
+      "keptLine": 2464
+    }
+  ]
+}

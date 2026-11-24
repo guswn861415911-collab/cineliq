@@ -743,5 +743,45 @@
     "verification": "normalized syntax tree equality",
     "linesBefore": 143,
     "linesAfter": 196
+  },
+  {
+    "filename": "scripts/clean-duplicate-styles.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 40,
+    "linesAfter": 64
+  },
+  {
+    "filename": "tests/refactor-css.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 20,
+    "linesAfter": 28
+  },
+  {
+    "filename": "tests/browser/css-preservation.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 152,
+    "linesAfter": 243
+  },
+  {
+    "filename": "tests/browser/refactor-structure.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 220,
+    "linesAfter": 222
+  },
+  {
+    "filename": "tests/browser/css-preservation.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 248,
+    "linesAfter": 254
   }
 ]

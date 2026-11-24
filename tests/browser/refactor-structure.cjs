@@ -133,10 +133,15 @@ const fs = require('node:fs/promises'),
       .trim()
       .split(/\r?\n/);
     for (const filename of sourceFiles) {
-      const before = childProcess.execFileSync('git', ['show', 'c850913:' + filename], {
+      let before = childProcess.execFileSync('git', ['show', 'c850913:' + filename], {
         encoding: 'utf8',
         maxBuffer: 32 * 1024 * 1024,
       });
+      if (filename === 'styles.css') {
+        before = require('../../scripts/clean-duplicate-styles.cjs').cleanDuplicateStyles(
+          before,
+        ).css;
+      }
       const after = await fs.readFile(path.join(root, filename), 'utf8');
       if (filename.endsWith('.css')) {
         const signatures = await evaluate(

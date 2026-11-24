@@ -369,7 +369,6 @@ a {
   letter-spacing: -2.7px;
   line-height: 1.35;
   margin: 0 0 16px;
-  font-weight: 800;
 }
 .hero h1 em {
   font-style: normal;
@@ -507,12 +506,10 @@ a {
   font-weight: 600;
 }
 .section-head-note {
-  font-size: 11px;
   color: var(--muted);
 }
 .toolbar {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
   column-gap: 10px;
 }
 .filter-controls,
@@ -572,7 +569,6 @@ kbd {
 }
 .filter-row {
   display: flex;
-  align-items: center;
   gap: 16px;
   margin-top: 21px;
   flex-wrap: wrap;
@@ -581,7 +577,6 @@ kbd {
   margin-top: 11px;
 }
 .filter-label {
-  font-size: 9px;
   font-weight: 800;
   letter-spacing: 1px;
   color: var(--muted);
@@ -618,7 +613,6 @@ kbd {
 }
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 .tech-card {
@@ -734,7 +728,6 @@ kbd {
 }
 .card-description {
   font-size: 12px;
-  line-height: 1.7;
   color: var(--secondary);
   margin: 0;
   min-height: 38px;
@@ -1506,14 +1499,8 @@ label.btn {
   font-weight: 800;
 }
 .card-description {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  overflow: hidden;
   min-height: 3.6em;
-}
-.detail-description {
-  white-space: pre-line;
 }
 .card-description {
   display: -webkit-box;
@@ -2125,7 +2112,6 @@ body.menu-open {
 }
 .catalog .card-actions .open-link {
   color: #e8e9ec;
-  font-weight: 600;
 }
 .scroll-sentinel {
   min-height: 78px;

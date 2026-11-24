@@ -124,5 +124,187 @@
     "executableSyntaxUnchanged": false,
     "linesBefore": 6,
     "linesAfter": 192
+  },
+  {
+    "filename": "accessibility.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 160,
+    "linesAfter": 160
+  },
+  {
+    "filename": "app.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 1158,
+    "linesAfter": 1158
+  },
+  {
+    "filename": "bulk-selection.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 41,
+    "linesAfter": 41
+  },
+  {
+    "filename": "content-types.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 15,
+    "linesAfter": 15
+  },
+  {
+    "filename": "folder-save.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 54,
+    "linesAfter": 179
+  },
+  {
+    "filename": "full-learning-ui.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 25,
+    "linesAfter": 132
+  },
+  {
+    "filename": "glossary.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 12,
+    "linesAfter": 28
+  },
+  {
+    "filename": "image-carousel.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 19,
+    "linesAfter": 110
+  },
+  {
+    "filename": "learning-ui.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 28,
+    "linesAfter": 55
+  },
+  {
+    "filename": "media-admin.js",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 408,
+    "linesAfter": 498
+  },
+  {
+    "filename": "media-cloud.js",
+    "commentsRemoved": 2,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 388,
+    "linesAfter": 622
+  },
+  {
+    "filename": "media-config.js",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 7,
+    "linesAfter": 6
+  },
+  {
+    "filename": "member-deletion.js",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 99,
+    "linesAfter": 232
+  },
+  {
+    "filename": "member-library.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 371,
+    "linesAfter": 577
+  },
+  {
+    "filename": "member-merge.js",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 52,
+    "linesAfter": 83
+  },
+  {
+    "filename": "member.js",
+    "commentsRemoved": 3,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 529,
+    "linesAfter": 715
+  },
+  {
+    "filename": "production-data.js",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 73,
+    "linesAfter": 398
+  },
+  {
+    "filename": "production-ui.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 58,
+    "linesAfter": 224
+  },
+  {
+    "filename": "service-info.js",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 32,
+    "linesAfter": 49
+  },
+  {
+    "filename": "sort-menu.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 23,
+    "linesAfter": 109
+  },
+  {
+    "filename": "supabase/functions/account-merge-test/index.ts",
+    "commentsRemoved": 2,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 69,
+    "linesAfter": 185
+  },
+  {
+    "filename": "supabase/functions/delete-account/index.ts",
+    "commentsRemoved": 6,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 71,
+    "linesAfter": 113
+  },
+  {
+    "filename": "technique-names.js",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 12,
+    "linesAfter": 18
+  },
+  {
+    "filename": "terminology-data.js",
+    "commentsRemoved": 2,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 62,
+    "linesAfter": 551
+  },
+  {
+    "filename": "theme.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 21,
+    "linesAfter": 103
+  },
+  {
+    "filename": "video-models.js",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 27,
+    "linesAfter": 74
   }
 ]

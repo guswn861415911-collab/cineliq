@@ -1,10 +1,10 @@
 (() => {
   'use strict';
-  // Informational gate only. No identity, account or member-data mutations.
-  window.CINELIQ_MERGE_NOTICE = ({members}) => {
+
+  window.CINELIQ_MERGE_NOTICE = ({ members }) => {
     const dialog = document.createElement('dialog');
     dialog.className = 'merge-notice';
-    dialog.setAttribute('aria-labelledby','mergeNoticeTitle');
+    dialog.setAttribute('aria-labelledby', 'mergeNoticeTitle');
     dialog.innerHTML = `<button type="button" class="merge-close" aria-label="계정 통합 안내 닫기">×</button>
       <h2 id="mergeNoticeTitle">계정 통합 안내</h2>
       <p>이미 다른 CINELIQ 계정에 연결된 로그인 방법입니다.</p>
@@ -19,33 +19,64 @@
     document.body.append(dialog);
     const details = dialog.querySelector('.merge-details');
     const summary = dialog.querySelector('.merge-summary');
-    let owner = null, revision = 0;
-    function close() { revision++; owner = null; dialog.close(); }
+    let owner = null,
+      revision = 0;
+    function close() {
+      revision++;
+      owner = null;
+      dialog.close();
+    }
     dialog.querySelector('.merge-close').onclick = close;
     dialog.querySelector('.merge-cancel').onclick = close;
-    dialog.addEventListener('close',()=>{ revision++; owner=null; summary.textContent=''; });
-    dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();}});
+    dialog.addEventListener('close', () => {
+      revision++;
+      owner = null;
+      summary.textContent = '';
+    });
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) {
+        const r = dialog.getBoundingClientRect();
+        if (
+          event.clientX < r.left ||
+          event.clientX > r.right ||
+          event.clientY < r.top ||
+          event.clientY > r.bottom
+        )
+          close();
+      }
+    });
     dialog.querySelector('.merge-review').onclick = async () => {
-      const current = ++revision, expected = owner;
+      const current = ++revision,
+        expected = owner;
       details.hidden = false;
       summary.textContent = '현재 계정의 저장 데이터를 확인하고 있어요…';
       try {
         await members.identityState(expected);
-        const [favorites,library] = await Promise.all([members.favorites(expected),members.library(expected)]);
+        const [favorites, library] = await Promise.all([
+          members.favorites(expected),
+          members.library(expected),
+        ]);
         await members.identityState(expected);
-        if(current!==revision || owner!==expected || !dialog.open) return;
+        if (current !== revision || owner !== expected || !dialog.open) return;
         summary.textContent = `즐겨찾기 ${favorites.length}개 · 개인 폴더 ${library.folders.length}개 · 폴더에 저장한 기법 연결 ${library.entries.length}개. 현재 계정에서 확인한 수치이며 통합 결과가 아닙니다.`;
       } catch {
-        if(current===revision && dialog.open) summary.textContent='현재 계정의 데이터를 확인하지 못했어요. 계정과 데이터는 변경하지 않았습니다.';
+        if (current === revision && dialog.open)
+          summary.textContent =
+            '현재 계정의 데이터를 확인하지 못했어요. 계정과 데이터는 변경하지 않았습니다.';
       }
     };
     return {
       show(userId) {
-        if(!userId) return;
-        revision++; owner=userId; details.hidden=true; summary.textContent='';
-        if(!dialog.open) dialog.showModal();
+        if (!userId) return;
+        revision++;
+        owner = userId;
+        details.hidden = true;
+        summary.textContent = '';
+        if (!dialog.open) dialog.showModal();
       },
-      sync(userId) { if(dialog.open && owner!==userId) close(); },
+      sync(userId) {
+        if (dialog.open && owner !== userId) close();
+      },
     };
   };
 })();

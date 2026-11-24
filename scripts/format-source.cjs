@@ -10,6 +10,17 @@ const excludedProperties = new Set(['start','end','loc','extra','comments','lead
 function normalizeSyntax(value) {
   if (Array.isArray(value)) return value.map(normalizeSyntax);
   if (value && typeof value === 'object') {
+    if (value.type === 'LogicalExpression') {
+      const operands = [];
+      function collect(expression) {
+        if (expression.type === 'LogicalExpression' && expression.operator === value.operator) {
+          collect(expression.left);
+          collect(expression.right);
+        } else operands.push(normalizeSyntax(expression));
+      }
+      collect(value);
+      return {type:value.type, operator:value.operator, operands};
+    }
     const result = {};
     for (const property of Object.keys(value)) {
       if (!excludedProperties.has(property)) result[property] = normalizeSyntax(value[property]);
@@ -67,7 +78,7 @@ function removeRanges(source, ranges) {
       cleaned = removeRanges(source,ranges);
       format = 'html';
     } else continue;
-    const formatted = await prettier.format(cleaned,{parser:format,singleQuote:true,printWidth:90,tabWidth:2,embeddedLanguageFormatting:'off'});
+    const formatted = await prettier.format(cleaned,{parser:format,singleQuote:true,quoteProps:'preserve',printWidth:90,tabWidth:2,embeddedLanguageFormatting:'off'});
     if (syntax) assert.deepEqual(normalizeSyntax(parseJavaScript(formatted,filename)),normalizeSyntax(syntax),filename+' executable syntax changed');
     fs.writeFileSync(path.join(root,filename),formatted);
     report.push({filename,commentsRemoved:comments,executableSyntaxUnchanged:Boolean(syntax),linesBefore:source.split('\n').length,linesAfter:formatted.split('\n').length});

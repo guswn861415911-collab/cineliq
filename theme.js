@@ -1,62 +1,78 @@
 (() => {
   'use strict';
-  const root = document.documentElement,
-    system = matchMedia('(prefers-color-scheme: dark)'),
-    valid = (value) => ['dark', 'light', 'system'].includes(value);
-  const read = (key) => {
+
+  const documentRoot = document.documentElement,
+    systemColorScheme = matchMedia('(prefers-color-scheme: dark)'),
+    isSupportedTheme = (value) => ['dark', 'light', 'system'].includes(value);
+  const readStoredTheme = (storageKey) => {
     try {
-      return localStorage.getItem(key);
+      return localStorage.getItem(storageKey);
     } catch {
       return null;
     }
   };
-  const write = (key, value) => {
+  const storeTheme = (storageKey, value) => {
     try {
-      localStorage.setItem(key, value);
+      localStorage.setItem(storageKey, value);
     } catch {}
   };
-  let user = null,
-    version = 0,
-    busy = false,
-    mode = read('cineliq.theme.last') || read('cineliq.theme.guest') || 'dark';
-  if (!valid(mode)) mode = 'dark';
-  const key = () => (user ? 'cineliq.theme.' + user.id : 'cineliq.theme.guest');
-  function apply() {
-    write('cineliq.theme.last', mode);
-    root.dataset.theme = mode === 'system' ? (system.matches ? 'dark' : 'light') : mode;
-    root.dataset.themePreference = mode;
+  let currentUser = null,
+    sessionVersion = 0,
+    isSaving = false,
+    selectedTheme =
+      readStoredTheme('cineliq.theme.last') ||
+      readStoredTheme('cineliq.theme.guest') ||
+      'dark';
+  if (!isSupportedTheme(selectedTheme)) selectedTheme = 'dark';
+  const getStorageKey = () =>
+    currentUser ? 'cineliq.theme.' + currentUser.id : 'cineliq.theme.guest';
+  function applyTheme() {
+    storeTheme('cineliq.theme.last', selectedTheme);
+    documentRoot.dataset.theme =
+      selectedTheme === 'system'
+        ? systemColorScheme.matches
+          ? 'dark'
+          : 'light'
+        : selectedTheme;
+    documentRoot.dataset.themePreference = selectedTheme;
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', root.dataset.theme === 'dark' ? '#0b0b0b' : '#fafafa');
+      ?.setAttribute(
+        'content',
+        documentRoot.dataset.theme === 'dark' ? '#0b0b0b' : '#fafafa',
+      );
     document.querySelectorAll('[data-theme-control]').forEach((control) => {
-      control.value = mode;
-      control.disabled = busy;
+      control.value = selectedTheme;
+      control.disabled = isSaving;
     });
   }
-  async function change(next) {
-    if (!valid(next) || busy) return;
-    const current = version,
-      id = user?.id,
-      old = mode,
-      storageKey = key();
-    mode = next;
-    busy = true;
-    apply();
+  async function changeTheme(nextTheme) {
+    if (!isSupportedTheme(nextTheme) || isSaving) return;
+    const requestVersion = sessionVersion,
+      userId = currentUser?.id,
+      previousTheme = selectedTheme,
+      storageKey = getStorageKey();
+    selectedTheme = nextTheme;
+    isSaving = true;
+    applyTheme();
     try {
-      if (id) {
-        const updated = await window.CINELIQ_CLOUD.members.updateTheme(next, id);
-        if (current !== version) return;
-        user = updated;
+      if (userId) {
+        const updatedUser = await window.CINELIQ_CLOUD.members.updateTheme(
+          nextTheme,
+          userId,
+        );
+        if (requestVersion !== sessionVersion) return;
+        currentUser = updatedUser;
       }
-      if (current === version) {
-        write(storageKey, next);
+      if (requestVersion === sessionVersion) {
+        storeTheme(storageKey, nextTheme);
         document
           .querySelector('#themeStatus')
           ?.replaceChildren(document.createTextNode('화면 모드를 저장했어요.'));
       }
     } catch {
-      if (current === version) {
-        mode = old;
+      if (requestVersion === sessionVersion) {
+        selectedTheme = previousTheme;
         document
           .querySelector('#themeStatus')
           ?.replaceChildren(
@@ -64,39 +80,41 @@
           );
       }
     } finally {
-      if (current === version) {
-        busy = false;
-        apply();
+      if (requestVersion === sessionVersion) {
+        isSaving = false;
+        applyTheme();
       }
     }
   }
   window.CINELIQ_THEME = {
-    sync(next) {
-      const changed = user?.id !== next?.id;
-      if (changed) {
-        version++;
-        busy = false;
+    sync(nextUser) {
+      const userChanged = currentUser?.id !== nextUser?.id;
+      if (userChanged) {
+        sessionVersion++;
+        isSaving = false;
       }
-      user = next;
-      const preferred = user?.user_metadata?.cineliq_preferences?.theme;
-      mode = valid(preferred)
-        ? preferred
-        : read(key()) || read('cineliq.theme.guest') || 'dark';
-      if (!valid(mode)) mode = 'dark';
-      apply();
+      currentUser = nextUser;
+      const accountTheme = currentUser?.user_metadata?.cineliq_preferences?.theme;
+      selectedTheme = isSupportedTheme(accountTheme)
+        ? accountTheme
+        : readStoredTheme(getStorageKey()) ||
+          readStoredTheme('cineliq.theme.guest') ||
+          'dark';
+      if (!isSupportedTheme(selectedTheme)) selectedTheme = 'dark';
+      applyTheme();
     },
-    change,
+    change: changeTheme,
   };
-  system.addEventListener('change', () => {
-    if (mode === 'system') apply();
+  systemColorScheme.addEventListener('change', () => {
+    if (selectedTheme === 'system') applyTheme();
   });
   document.addEventListener('DOMContentLoaded', () => {
     document
       .querySelectorAll('[data-theme-control]')
       .forEach((control) =>
-        control.addEventListener('change', () => void change(control.value)),
+        control.addEventListener('change', () => void changeTheme(control.value)),
       );
-    apply();
+    applyTheme();
   });
-  apply();
+  applyTheme();
 })();

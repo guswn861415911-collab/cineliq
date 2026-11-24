@@ -1,66 +1,73 @@
 (() => {
   'use strict';
-  const cloud = window.CINELIQ_CLOUD;
-  const identityNames = { google: 'Google', kakao: '카카오' };
+
+  const mediaCloud = window.CINELIQ_CLOUD;
+  const identityNames = {
+    google: 'Google',
+    kakao: '카카오',
+  };
   const linkAttemptKey = 'cineliq.identity-link';
-  const modes = {
+  const authModeTitles = {
     login: ['로그인', '로그인'],
     signup: ['회원가입', '가입하기'],
     reset: ['비밀번호 찾기', '재설정 링크 보내기'],
     recovery: ['새 비밀번호 설정', '비밀번호 저장'],
   };
-
   function setup({ items, navigate, notify, escape, thumbnail }) {
-    const root = document.querySelector('#memberPage');
-    const header = document.querySelector('#memberToggle');
-    const dialog = document.querySelector('#memberDialog');
-    const form = document.querySelector('#memberForm');
-    const status = document.querySelector('#memberAuthStatus');
-    const pageStatus = document.querySelector('#favoriteStatus');
-    const list = document.querySelector('#favoriteList');
-    const search = document.querySelector('#favoriteSearch');
-    const sort = document.querySelector('#favoriteSort');
-    const logout = document.querySelector('#memberLogout');
-    const google = document.querySelector('#memberGoogle');
-    const kakao = document.querySelector('#memberKakao');
-    const identityPanel = root.querySelector('#memberIdentities');
-    const identityStatus = root.querySelector('#memberIdentityStatus');
+    const memberPage = document.querySelector('#memberPage');
+    const memberHeaderButton = document.querySelector('#memberToggle');
+    const authDialog = document.querySelector('#memberDialog');
+    const authForm = document.querySelector('#memberForm');
+    const authStatus = document.querySelector('#memberAuthStatus');
+    const favoritesStatus = document.querySelector('#favoriteStatus');
+    const favoritesList = document.querySelector('#favoriteList');
+    const favoritesSearch = document.querySelector('#favoriteSearch');
+    const favoritesSort = document.querySelector('#favoriteSort');
+    const logoutButton = document.querySelector('#memberLogout');
+    const googleLoginButton = document.querySelector('#memberGoogle');
+    const kakaoLoginButton = document.querySelector('#memberKakao');
+    const identityPanel = memberPage.querySelector('#memberIdentities');
+    const identityStatus = memberPage.querySelector('#memberIdentityStatus');
     const authCallback = new URL(location.href);
-    let session = null;
-    let mode = 'login';
+    let currentSession = null;
+    let authMode = 'login';
     let lookupVersion = 0;
-    let loadingFavorites = false;
-    let favorites = new Map();
-    const pending = new Set();
+    let areFavoritesLoading = false;
+    let savedTechniques = new Map();
+    const pendingBookmarkIds = new Set();
     let identities = null;
     let identityBusy = false;
     let identityReadVersion = 0;
     let expectedLinkUserId = null;
-    const library = window.CINELIQ_LIBRARY({
+    const memberLibrary = window.CINELIQ_LIBRARY({
       items,
       escape,
-      favoriteButton,
+      favoriteButton: renderBookmarkButton,
       thumbnail,
       notify,
-      resetPassword: cloud.members.reset,
+      resetPassword: mediaCloud.members.reset,
     });
-    const deletion = window.CINELIQ_DELETION({ navigate, notify });
-    const mergeNotice = window.CINELIQ_MERGE_NOTICE?.({ members: cloud.members });
-    const folderSave = window.CINELIQ_FOLDER_SAVE({
-      members: cloud.members,
+    const accountDeletion = window.CINELIQ_DELETION({
+      navigate,
+      notify,
+    });
+    const mergeNotice = window.CINELIQ_MERGE_NOTICE?.({
+      members: mediaCloud.members,
+    });
+    const folderSaveDialog = window.CINELIQ_FOLDER_SAVE({
+      members: mediaCloud.members,
       escape,
       notify,
-      isBookmarked: (id) => favorites.has(id),
+      isBookmarked: (id) => savedTechniques.has(id),
       setBookmarked: async (id, wanted) => {
-        if (favorites.has(id) === wanted) return;
+        if (savedTechniques.has(id) === wanted) return;
         const button = document.querySelector(`[data-favorite="${CSS.escape(id)}"]`);
-        if (!button || !(await toggleFavorite(button))) throw Error('bookmark_failed');
+        if (!button || !(await toggleBookmark(button))) throw Error('bookmark_failed');
       },
       openAuth: () =>
         openAuth('login', '로그인하면 개인 폴더에 기법을 저장할 수 있어요.'),
     });
-
-    function paintIdentities() {
+    function renderLinkedAccounts() {
       for (const row of identityPanel.querySelectorAll('[data-identity-provider]')) {
         const provider = row.dataset.identityProvider;
         const linked = identities?.some((identity) => identity.provider === provider);
@@ -83,30 +90,28 @@
         button.disabled = identityBusy || !identities || Boolean(linked && !hasBackup);
       }
     }
-
     async function refreshIdentities(version) {
       const readVersion = ++identityReadVersion;
-      root.querySelector('#retryMemberIdentities').hidden = true;
+      memberPage.querySelector('#retryMemberIdentities').hidden = true;
       try {
-        const rows = await verifiedIdentities(session?.user.id);
+        const rows = await verifiedIdentities(currentSession?.user.id);
         if (version !== lookupVersion || readVersion !== identityReadVersion) return null;
         identities = rows;
-        library.setIdentities(rows);
+        memberLibrary.setIdentities(rows);
         return rows;
       } catch {
         if (version === lookupVersion && readVersion === identityReadVersion) {
           identities = null;
           identityStatus.textContent =
             '연결된 계정을 불러오지 못했어요. 다시 시도해 주세요.';
-          root.querySelector('#retryMemberIdentities').hidden = false;
+          memberPage.querySelector('#retryMemberIdentities').hidden = false;
         }
         return null;
       } finally {
         if (version === lookupVersion && readVersion === identityReadVersion)
-          paintIdentities();
+          renderLinkedAccounts();
       }
     }
-
     function identityError(code, description = '') {
       if (code === 'identity_already_exists')
         return '이미 다른 CINELIQ 계정에 연결된 로그인 방법입니다. 별도로 가입한 계정일 수 있어요. 현재 계정은 유지되며 자동 병합·삭제하지 않습니다. 다른 소셜 계정을 선택하거나 두 계정의 소유권 확인 후 별도 통합 절차가 필요합니다.';
@@ -140,7 +145,6 @@
       }
       return '계정 연결을 완료하지 못했어요. 잠시 후 다시 시도해 주세요.';
     }
-
     function readLinkAttempt() {
       try {
         const attempt = JSON.parse(sessionStorage.getItem(linkAttemptKey) ?? 'null');
@@ -157,32 +161,28 @@
         return null;
       }
     }
-
     function clearLinkAttempt() {
       expectedLinkUserId = null;
       try {
         sessionStorage.removeItem(linkAttemptKey);
       } catch {}
     }
-
     async function hasSameSession(version, userId) {
-      const latest = await cloud.members.session();
+      const latest = await mediaCloud.members.session();
       const same = version === lookupVersion && latest?.user.id === userId;
       if (!same && version === lookupVersion)
         identityStatus.textContent = identityError('identity_session_changed');
       return same;
     }
-
     async function verifiedIdentities(userId) {
       if (!userId)
         throw Object.assign(Error('No current user'), {
           code: 'identity_session_changed',
         });
-      if (cloud.members.identityState)
-        return (await cloud.members.identityState(userId)).identities;
-
-      const rows = await cloud.members.identities();
-      const latest = await cloud.members.session();
+      if (mediaCloud.members.identityState)
+        return (await mediaCloud.members.identityState(userId)).identities;
+      const rows = await mediaCloud.members.identities();
+      const latest = await mediaCloud.members.session();
       if (
         latest?.user.id !== userId ||
         rows.some((row) => row.user_id && row.user_id !== userId)
@@ -193,15 +193,14 @@
       }
       return rows;
     }
-
     async function changeIdentity(provider) {
-      if (!session || !identities || identityBusy) return;
+      if (!currentSession || !identities || identityBusy) return;
       const current = lookupVersion;
-      const userId = session.user.id;
+      const userId = currentSession.user.id;
       const linked = identities.some((identity) => identity.provider === provider);
       identityBusy = true;
       delete identityStatus.dataset.authErrorCode;
-      paintIdentities();
+      renderLinkedAccounts();
       identityStatus.textContent = linked
         ? '연결을 확인하고 있어요…'
         : '계정 연결을 시작하고 있어요…';
@@ -216,7 +215,7 @@
           return;
         }
         if (linked) {
-          const enabled = await cloud.members.enabledProviders();
+          const enabled = await mediaCloud.members.enabledProviders();
           const backup = rows.find(
             (item) =>
               item.provider !== provider &&
@@ -237,7 +236,7 @@
             return;
           }
           if (!(await hasSameSession(current, userId))) return;
-          await cloud.members.unlinkIdentity(identity, userId);
+          await mediaCloud.members.unlinkIdentity(identity, userId);
           const updated = await refreshIdentities(current);
           if (updated && (await hasSameSession(current, userId)))
             identityStatus.textContent = updated.some((row) => row.provider === provider)
@@ -245,19 +244,22 @@
               : '로그인 수단 연결을 해제했어요. 기존 계정과 저장 데이터는 유지됩니다.';
           return;
         }
-        const url = await cloud.members.linkIdentity(provider, userId);
+        const url = await mediaCloud.members.linkIdentity(provider, userId);
         if (!(await hasSameSession(current, userId))) return;
         if (!url) throw Error('No identity authorization URL');
         sessionStorage.setItem(
           linkAttemptKey,
-          JSON.stringify({ provider, userId, startedAt: Date.now() }),
+          JSON.stringify({
+            provider,
+            userId,
+            startedAt: Date.now(),
+          }),
         );
         location.assign(url);
         leaving = true;
       } catch (error) {
         if (current === lookupVersion) {
           identityStatus.dataset.authErrorCode = error.code || 'unknown';
-
           const updated = await refreshIdentities(current);
           if (!(await hasSameSession(current, userId))) return;
           identityStatus.textContent =
@@ -277,58 +279,61 @@
       } finally {
         if (!leaving && current === lookupVersion) {
           identityBusy = false;
-          paintIdentities();
+          renderLinkedAccounts();
         }
       }
     }
-
-    function setMode(next) {
-      mode = next;
-      form.elements.password.value = '';
-      const password = form.elements.password;
-      const email = form.elements.email;
+    function setAuthMode(next) {
+      authMode = next;
+      authForm.elements.password.value = '';
+      const password = authForm.elements.password;
+      const email = authForm.elements.email;
       email.closest('label').hidden = next === 'recovery';
       email.required = next !== 'recovery';
       password.closest('label').hidden = next === 'reset';
       password.required = next !== 'reset';
       password.minLength = ['signup', 'recovery'].includes(next) ? 6 : 0;
       password.autocomplete = next === 'login' ? 'current-password' : 'new-password';
-      document.querySelector('#memberAuthTitle').textContent = modes[next][0];
-      document.querySelector('#memberSubmit').textContent = modes[next][1];
+      document.querySelector('#memberAuthTitle').textContent = authModeTitles[next][0];
+      document.querySelector('#memberSubmit').textContent = authModeTitles[next][1];
       document.querySelector('.member-auth-links').hidden = next === 'recovery';
-      google.hidden = kakao.hidden = next !== 'login';
-      for (const button of dialog.querySelectorAll('[data-auth-mode]'))
+      googleLoginButton.hidden = kakaoLoginButton.hidden = next !== 'login';
+      for (const button of authDialog.querySelectorAll('[data-auth-mode]'))
         button.hidden = button.dataset.authMode === next;
-      status.textContent = '';
+      authStatus.textContent = '';
     }
-
     function openAuth(next = 'login', message = '') {
-      setMode(next);
-      status.textContent = message;
-      if (!dialog.open) dialog.showModal();
-      (next === 'recovery' ? form.elements.password : form.elements.email).focus();
+      setAuthMode(next);
+      authStatus.textContent = message;
+      if (!authDialog.open) authDialog.showModal();
+      (next === 'recovery'
+        ? authForm.elements.password
+        : authForm.elements.email
+      ).focus();
     }
-
-    function favoriteButton(id) {
+    function renderBookmarkButton(id) {
       const saved = isBookmarked(id);
-      const unavailable = loadingFavorites || pending.has(id);
+      const unavailable = areFavoritesLoading || pendingBookmarkIds.has(id);
       return `<button type="button" class="favorite-toggle" data-favorite="${escape(id)}" aria-label="즐겨찾기" aria-pressed="${saved}" aria-disabled="${unavailable}"><svg class="bookmark-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M6 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17l-6-4-6 4z"/></svg></button>`;
     }
-
     function isBookmarked(id) {
-      return favorites.has(id) !== pending.has(id);
+      return savedTechniques.has(id) !== pendingBookmarkIds.has(id);
     }
-
-    function paintButton(button) {
+    function updateBookmarkButton(button) {
       const id = button.dataset.favorite;
       button.setAttribute('aria-pressed', String(isBookmarked(id)));
-      button.setAttribute('aria-disabled', String(loadingFavorites || pending.has(id)));
+      button.setAttribute(
+        'aria-disabled',
+        String(areFavoritesLoading || pendingBookmarkIds.has(id)),
+      );
     }
-
     function renderFavorites() {
-      const query = search.value.trim().toLocaleLowerCase();
-      const saved = [...favorites]
-        .map(([id, date]) => ({ item: items.get(id), date }))
+      const query = favoritesSearch.value.trim().toLocaleLowerCase();
+      const saved = [...savedTechniques]
+        .map(([id, date]) => ({
+          item: items.get(id),
+          date,
+        }))
         .filter(
           ({ item }) =>
             item &&
@@ -337,130 +342,134 @@
               .includes(query),
         );
       saved.sort(
-        sort.value === 'name'
+        favoritesSort.value === 'name'
           ? (a, b) => a.item.ko.localeCompare(b.item.ko, 'ko')
           : (a, b) => b.date.localeCompare(a.date),
       );
-      list.innerHTML = saved
+      favoritesList.innerHTML = saved
         .map(
           ({ item }) =>
-            `<li><button class="member-saved-item" type="button" data-open="${escape(item.id)}"><span class="member-thumbnail">${thumbnail(item)}</span><span><strong>${escape(item.ko)}</strong><small>${escape(item.displaySubtitle || item.en)}</small></span></button>${favoriteButton(item.id)}</li>`,
+            `<li><button class="member-saved-item" type="button" data-open="${escape(item.id)}"><span class="member-thumbnail">${thumbnail(item)}</span><span><strong>${escape(item.ko)}</strong><small>${escape(item.displaySubtitle || item.en)}</small></span></button>${renderBookmarkButton(item.id)}</li>`,
         )
         .join('');
       document.querySelector('#favoriteEmpty').hidden = Boolean(saved.length);
       document.querySelector('#favoriteEmpty').textContent = query
         ? '검색 결과가 없습니다.'
         : '저장한 기법이 없습니다.';
-      document.querySelectorAll('[data-favorite]').forEach(paintButton);
-      library.setFavorites(favorites, !loadingFavorites);
+      document.querySelectorAll('[data-favorite]').forEach(updateBookmarkButton);
+      memberLibrary.setFavorites(savedTechniques, !areFavoritesLoading);
     }
-
     async function sync(next) {
       const user = next?.user;
-      const changed = session?.user.id !== user?.id;
-      session = next;
+      const changed = currentSession?.user.id !== user?.id;
+      currentSession = next;
       window.CINELIQ_THEME?.sync(user || null);
       window.CINELIQ_A11Y?.sync(user || null);
-      library.sync(next);
-      folderSave.sync(next);
-      deletion.sync(next);
+      memberLibrary.sync(next);
+      folderSaveDialog.sync(next);
+      accountDeletion.sync(next);
       mergeNotice?.sync(user?.id);
-      header.querySelector('.member-toggle-label').textContent = user
+      memberHeaderButton.querySelector('.member-toggle-label').textContent = user
         ? '마이페이지'
         : '로그인';
-      root.querySelector('#memberEmail').textContent = user
+      memberPage.querySelector('#memberEmail').textContent = user
         ? user.email || '등록된 이메일 없음'
         : '';
-      root.querySelector('#memberSignedIn').hidden = !user;
-      root.querySelector('#memberGuest').hidden = Boolean(user);
+      memberPage.querySelector('#memberSignedIn').hidden = !user;
+      memberPage.querySelector('#memberGuest').hidden = Boolean(user);
       if (!changed) return;
       const current = ++lookupVersion;
       identities = null;
       identityBusy = false;
       identityStatus.textContent = '';
-      paintIdentities();
+      renderLinkedAccounts();
       if (user) void refreshIdentities(current);
-      favorites = new Map();
-      pending.clear();
-      search.value = '';
-      loadingFavorites = Boolean(user);
-      pageStatus.textContent = user ? '즐겨찾기를 불러오는 중입니다.' : '';
+      savedTechniques = new Map();
+      pendingBookmarkIds.clear();
+      favoritesSearch.value = '';
+      areFavoritesLoading = Boolean(user);
+      favoritesStatus.textContent = user ? '즐겨찾기를 불러오는 중입니다.' : '';
       renderFavorites();
       if (!user) return;
       await loadFavorites(user.id, current);
     }
-
     async function loadFavorites(userId, current) {
-      loadingFavorites = true;
-      root.querySelector('#retryMemberFavorites').hidden = true;
-      pageStatus.textContent = '즐겨찾기를 불러오는 중입니다.';
+      areFavoritesLoading = true;
+      memberPage.querySelector('#retryMemberFavorites').hidden = true;
+      favoritesStatus.textContent = '즐겨찾기를 불러오는 중입니다.';
       try {
-        const rows = await cloud.members.favorites(userId);
+        const rows = await mediaCloud.members.favorites(userId);
         if (current !== lookupVersion) return;
-        favorites = new Map(rows.map((row) => [row.technique_id, row.created_at]));
-        pageStatus.textContent = '';
+        savedTechniques = new Map(rows.map((row) => [row.technique_id, row.created_at]));
+        favoritesStatus.textContent = '';
       } catch (error) {
         if (current === lookupVersion) {
-          pageStatus.textContent = '즐겨찾기를 불러오지 못했습니다.';
-          root.querySelector('#retryMemberFavorites').hidden = false;
+          favoritesStatus.textContent = '즐겨찾기를 불러오지 못했습니다.';
+          memberPage.querySelector('#retryMemberFavorites').hidden = false;
         }
         console.warn('CINELIQ favorites:', error);
       } finally {
         if (current === lookupVersion) {
-          loadingFavorites = false;
+          areFavoritesLoading = false;
           renderFavorites();
         }
       }
     }
-
-    async function toggleFavorite(button) {
-      if (!session) {
+    async function toggleBookmark(button) {
+      if (!currentSession) {
         openAuth('login', '로그인하면 이 기법을 즐겨찾기에 저장할 수 있습니다.');
         return;
       }
       const id = button.dataset.favorite;
-      if (loadingFavorites || !items.has(id) || pending.has(id)) return;
-      const userId = session.user.id;
+      if (areFavoritesLoading || !items.has(id) || pendingBookmarkIds.has(id)) return;
+      const userId = currentSession.user.id;
       const version = lookupVersion;
-      const saved = favorites.has(id);
-      pending.add(id);
+      const saved = savedTechniques.has(id);
+      pendingBookmarkIds.add(id);
       const selector = `[data-favorite="${CSS.escape(id)}"]`;
-      document.querySelectorAll(selector).forEach(paintButton);
+      document.querySelectorAll(selector).forEach(updateBookmarkButton);
       if (
         !saved &&
         !window.CINELIQ_A11Y?.reducedMotion() &&
         !matchMedia('(prefers-reduced-motion: reduce)').matches
       ) {
-        button
-          .querySelector('.bookmark-icon')
-          .animate(
-            [
-              { transform: 'scale(1)' },
-              { transform: 'scale(1.14)', offset: 0.45 },
-              { transform: 'scale(1)' },
-            ],
-            { duration: 210, easing: 'ease-in-out' },
-          );
+        button.querySelector('.bookmark-icon').animate(
+          [
+            {
+              transform: 'scale(1)',
+            },
+            {
+              transform: 'scale(1.14)',
+              offset: 0.45,
+            },
+            {
+              transform: 'scale(1)',
+            },
+          ],
+          {
+            duration: 210,
+            easing: 'ease-in-out',
+          },
+        );
       }
       try {
-        await cloud.members[saved ? 'remove' : 'save'](userId, id);
+        await mediaCloud.members[saved ? 'remove' : 'save'](userId, id);
         if (version !== lookupVersion) return;
-        pending.delete(id);
-        if (saved) favorites.delete(id);
-        else favorites.set(id, new Date().toISOString());
+        pendingBookmarkIds.delete(id);
+        if (saved) savedTechniques.delete(id);
+        else savedTechniques.set(id, new Date().toISOString());
         renderFavorites();
         notify(saved ? '즐겨찾기를 해제했습니다.' : '즐겨찾기에 저장했습니다.');
         return true;
       } catch (error) {
         if (version === lookupVersion) {
-          pending.delete(id);
-          document.querySelectorAll(selector).forEach(paintButton);
+          pendingBookmarkIds.delete(id);
+          document.querySelectorAll(selector).forEach(updateBookmarkButton);
           notify('즐겨찾기를 변경하지 못했습니다.');
         }
         console.warn('CINELIQ favorite update:', error);
       }
     }
-
     function showAuthError(error) {
       console.warn('CINELIQ member authentication:', error.code ?? error.status);
       const messages = {
@@ -471,17 +480,18 @@
           '메일 발송 요청이 많습니다. 잠시 후 다시 시도해 주세요.',
         validation_failed: '입력한 이메일과 비밀번호를 확인해 주세요.',
       };
-      status.textContent =
+      authStatus.textContent =
         messages[error.code] ?? '요청을 완료하지 못했습니다. 잠시 후 다시 시도해 주세요.';
     }
-
-    header.addEventListener('click', () => (session ? navigate('my') : openAuth()));
-    root.querySelector('#retryMemberFavorites').addEventListener('click', () => {
-      if (session && !loadingFavorites)
-        void loadFavorites(session.user.id, lookupVersion);
+    memberHeaderButton.addEventListener('click', () =>
+      currentSession ? navigate('my') : openAuth(),
+    );
+    memberPage.querySelector('#retryMemberFavorites').addEventListener('click', () => {
+      if (currentSession && !areFavoritesLoading)
+        void loadFavorites(currentSession.user.id, lookupVersion);
     });
-    root.querySelector('#retryMemberIdentities').addEventListener('click', () => {
-      if (session && !identityBusy) void refreshIdentities(lookupVersion);
+    memberPage.querySelector('#retryMemberIdentities').addEventListener('click', () => {
+      if (currentSession && !identityBusy) void refreshIdentities(lookupVersion);
     });
     identityPanel.addEventListener('click', (event) => {
       const button = event.target.closest('button');
@@ -495,25 +505,25 @@
       identityBusy = false;
       identityStatus.textContent =
         '계정 연결이 완료되지 않았어요. 다시 시도할 수 있어요.';
-      paintIdentities();
+      renderLinkedAccounts();
     });
     document
       .querySelector('#memberGuestLogin')
       .addEventListener('click', () => openAuth());
     document
       .querySelector('#closeMemberAuth')
-      .addEventListener('click', () => dialog.close());
-    dialog.addEventListener('close', () => {
-      form.reset();
-      setMode('login');
+      .addEventListener('click', () => authDialog.close());
+    authDialog.addEventListener('close', () => {
+      authForm.reset();
+      setAuthMode('login');
     });
-    dialog
+    authDialog
       .querySelectorAll('[data-auth-mode]')
       .forEach((button) =>
-        button.addEventListener('click', () => setMode(button.dataset.authMode)),
+        button.addEventListener('click', () => setAuthMode(button.dataset.authMode)),
       );
-    search.addEventListener('input', renderFavorites);
-    sort.addEventListener('change', renderFavorites);
+    favoritesSearch.addEventListener('input', renderFavorites);
+    favoritesSort.addEventListener('change', renderFavorites);
     document.addEventListener(
       'click',
       (event) => {
@@ -521,22 +531,22 @@
         if (folderButton) {
           event.stopPropagation();
           const item = items.get(folderButton.dataset.saveFolders);
-          if (item) void folderSave.open(item);
+          if (item) void folderSaveDialog.open(item);
           return;
         }
         const button = event.target.closest('[data-favorite]');
         if (!button) return;
         event.stopPropagation();
         const item = items.get(button.dataset.favorite);
-        if (item && !loadingFavorites && !pending.has(item.id))
-          void folderSave.open(item);
+        if (item && !areFavoritesLoading && !pendingBookmarkIds.has(item.id))
+          void folderSaveDialog.open(item);
       },
       true,
     );
-    logout.addEventListener('click', async () => {
-      logout.disabled = true;
+    logoutButton.addEventListener('click', async () => {
+      logoutButton.disabled = true;
       try {
-        await cloud.logout();
+        await mediaCloud.logout();
         clearLinkAttempt();
         void sync(null);
         navigate('hero');
@@ -544,70 +554,68 @@
         console.warn('CINELIQ member logout:', error.code ?? error.status);
         notify('로그아웃하지 못했습니다. 다시 시도해 주세요.');
       } finally {
-        logout.disabled = false;
+        logoutButton.disabled = false;
       }
     });
     async function startSocialLogin(provider) {
-      google.disabled = kakao.disabled = true;
-      status.textContent = '';
-
+      googleLoginButton.disabled = kakaoLoginButton.disabled = true;
+      authStatus.textContent = '';
       clearLinkAttempt();
       try {
-        await cloud.members[provider]();
+        await mediaCloud.members[provider]();
       } catch (error) {
         if (error.code === 'google_unavailable') {
-          status.textContent =
+          authStatus.textContent =
             'Google 로그인 연결 설정이 필요합니다. 이메일로 로그인할 수 있습니다.';
         } else if (provider === 'kakao') {
-          status.textContent =
+          authStatus.textContent =
             '카카오 로그인을 시작하지 못했어요. 잠시 후 다시 시도하거나 다른 로그인 방법을 이용해 주세요.';
         } else showAuthError(error);
       } finally {
-        google.disabled = kakao.disabled = !ready;
+        googleLoginButton.disabled = kakaoLoginButton.disabled = !ready;
       }
     }
-    google.addEventListener('click', () => startSocialLogin('google'));
-    kakao.addEventListener('click', () => startSocialLogin('kakao'));
+    googleLoginButton.addEventListener('click', () => startSocialLogin('google'));
+    kakaoLoginButton.addEventListener('click', () => startSocialLogin('kakao'));
     let ready = false;
-    form.addEventListener('submit', async (event) => {
+    authForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       const submit = document.querySelector('#memberSubmit');
       if (!ready || submit.disabled) return;
       clearLinkAttempt();
       submit.disabled = true;
-      status.textContent = '';
-      const email = form.elements.email.value.trim();
-      const password = form.elements.password.value;
+      authStatus.textContent = '';
+      const email = authForm.elements.email.value.trim();
+      const password = authForm.elements.password.value;
       try {
-        if (mode === 'reset') {
-          await cloud.members.reset(email);
-          status.textContent =
+        if (authMode === 'reset') {
+          await mediaCloud.members.reset(email);
+          authStatus.textContent =
             '계정이 등록되어 있다면 비밀번호 재설정 메일이 발송됩니다.';
-        } else if (mode === 'recovery') {
-          await cloud.members.updatePassword(password);
-          dialog.close();
+        } else if (authMode === 'recovery') {
+          await mediaCloud.members.updatePassword(password);
+          authDialog.close();
           notify('비밀번호를 변경했습니다.');
         } else {
-          const data = await cloud.members[mode](email, password);
+          const data = await mediaCloud.members[authMode](email, password);
           if (data.session) {
             void sync(data.session);
-            dialog.close();
+            authDialog.close();
           } else {
-            status.textContent = '이메일에서 가입 확인 링크를 열어 주세요.';
+            authStatus.textContent = '이메일에서 가입 확인 링크를 열어 주세요.';
           }
         }
       } catch (error) {
         showAuthError(error);
       } finally {
-        form.elements.password.value = '';
+        authForm.elements.password.value = '';
         submit.disabled = !ready;
       }
     });
-
     async function start() {
       ready = true;
       document.querySelector('#memberSubmit').disabled = false;
-      google.disabled = kakao.disabled = false;
+      googleLoginButton.disabled = kakaoLoginButton.disabled = false;
       const fragment = new URLSearchParams(authCallback.hash.slice(1));
       const authError = authCallback.searchParams.get('error') || fragment.get('error');
       const errorCode =
@@ -619,7 +627,7 @@
       const attempt = readLinkAttempt();
       const linkReturn = attempt && (authError || authCallback.searchParams.has('code'));
       expectedLinkUserId = linkReturn ? attempt.userId : null;
-      cloud.onAuthChange((event, next) => {
+      mediaCloud.onAuthChange((event, next) => {
         if (expectedLinkUserId && next && next.user.id !== expectedLinkUserId) {
           notify(
             '연결 전후 로그인 UUID가 달라 회원 화면 갱신을 중단했어요. 원래 계정을 다시 확인해 주세요.',
@@ -629,7 +637,7 @@
         void sync(next);
         if (event === 'PASSWORD_RECOVERY' && next) openAuth('recovery');
       });
-      const current = await cloud.members.session();
+      const current = await mediaCloud.members.session();
       if (linkReturn && current && current.user.id !== attempt.userId) {
         openAuth(
           'login',
@@ -638,7 +646,7 @@
         return;
       }
       void sync(current);
-      if (deletion.restore(current, authCallback)) return;
+      if (accountDeletion.restore(current, authCallback)) return;
       if (authError) {
         const callback = new URL(location.href);
         callback.searchParams.delete('code');
@@ -652,9 +660,9 @@
           const message = identityError(errorCode || authError, errorDescription);
           if (current?.user.id === attempt.userId) {
             navigate('my');
-            library.openAccounts();
+            memberLibrary.openAccounts();
             const rows = await refreshIdentities(lookupVersion);
-            if (session?.user.id !== attempt.userId) return;
+            if (currentSession?.user.id !== attempt.userId) return;
             identityStatus.textContent = rows?.some(
               (row) => row.provider === attempt.provider,
             )
@@ -687,9 +695,9 @@
           return;
         }
         const rows = await refreshIdentities(lookupVersion);
-        if (session?.user.id !== attempt.userId) return;
+        if (currentSession?.user.id !== attempt.userId) return;
         navigate('my');
-        library.openAccounts();
+        memberLibrary.openAccounts();
         identityStatus.textContent = rows?.some(
           (identity) => identity.provider === attempt.provider,
         )
@@ -698,17 +706,15 @@
         expectedLinkUserId = null;
       }
     }
-
     return {
       start,
-      favoriteButton,
-      folderButton: folderSave.button,
+      favoriteButton: renderBookmarkButton,
+      folderButton: folderSaveDialog.button,
       refreshMedia: () => {
         renderFavorites();
-        library.refreshMedia();
+        memberLibrary.refreshMedia();
       },
     };
   }
-
   window.CINELIQ_MEMBER = setup;
 })();

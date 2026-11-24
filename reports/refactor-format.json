@@ -591,5 +591,117 @@
     "verification": "normalized syntax tree equality",
     "linesBefore": 148,
     "linesAfter": 217
+  },
+  {
+    "filename": "theme.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 90,
+    "linesAfter": 118
+  },
+  {
+    "filename": "accessibility.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 143,
+    "linesAfter": 167
+  },
+  {
+    "filename": "folder-save.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 165,
+    "linesAfter": 205
+  },
+  {
+    "filename": "member-library.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 425,
+    "linesAfter": 646
+  },
+  {
+    "filename": "sort-menu.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 104,
+    "linesAfter": 126
+  },
+  {
+    "filename": "member.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 559,
+    "linesAfter": 721
+  },
+  {
+    "filename": "theme.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 90,
+    "linesAfter": 121
+  },
+  {
+    "filename": "accessibility.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 143,
+    "linesAfter": 167
+  },
+  {
+    "filename": "folder-save.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 165,
+    "linesAfter": 205
+  },
+  {
+    "filename": "member-library.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 425,
+    "linesAfter": 646
+  },
+  {
+    "filename": "sort-menu.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 104,
+    "linesAfter": 126
+  },
+  {
+    "filename": "member.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 559,
+    "linesAfter": 721
+  },
+  {
+    "filename": "tests/refactor-member-contract.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 23,
+    "linesAfter": 58
+  },
+  {
+    "filename": "tests/refactor-settings.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 78,
+    "linesAfter": 191
   }
 ]

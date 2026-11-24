@@ -1,108 +1,125 @@
 (() => {
   'use strict';
-  const select = document.querySelector('#sortSelect');
-  if (!select) return;
-  const root = document.createElement('div');
-  root.className = 'sort-menu';
-  const trigger = document.createElement('button');
-  trigger.type = 'button';
-  trigger.className = 'sort-menu-trigger';
-  trigger.setAttribute('aria-haspopup', 'listbox');
-  trigger.setAttribute('aria-expanded', 'false');
-  trigger.setAttribute('aria-controls', 'sortOptions');
-  const list = document.createElement('div');
-  list.id = 'sortOptions';
-  list.className = 'sort-menu-options';
-  list.role = 'listbox';
-  list.setAttribute('aria-label', '정렬 방식');
-  list.hidden = true;
-  root.append(trigger, list);
-  select.after(root);
-  select.hidden = true;
-  select.tabIndex = -1;
-  function close(focus = false) {
-    list.hidden = true;
-    trigger.setAttribute('aria-expanded', 'false');
-    if (focus) trigger.focus();
+
+  const sortSelect = document.querySelector('#sortSelect');
+  if (!sortSelect) return;
+  const sortMenu = document.createElement('div');
+  sortMenu.className = 'sort-menu';
+  const menuButton = document.createElement('button');
+  menuButton.type = 'button';
+  menuButton.className = 'sort-menu-trigger';
+  menuButton.setAttribute('aria-haspopup', 'listbox');
+  menuButton.setAttribute('aria-expanded', 'false');
+  menuButton.setAttribute('aria-controls', 'sortOptions');
+  const optionsList = document.createElement('div');
+  optionsList.id = 'sortOptions';
+  optionsList.className = 'sort-menu-options';
+  optionsList.role = 'listbox';
+  optionsList.setAttribute('aria-label', '정렬 방식');
+  optionsList.hidden = true;
+  sortMenu.append(menuButton, optionsList);
+  sortSelect.after(sortMenu);
+  sortSelect.hidden = true;
+  sortSelect.tabIndex = -1;
+  function closeSortMenu(focus = false) {
+    optionsList.hidden = true;
+    menuButton.setAttribute('aria-expanded', 'false');
+    if (focus) menuButton.focus();
   }
-  function sync() {
-    const selected = select.selectedOptions[0];
-    trigger.replaceChildren(
-      document.createTextNode(selected?.textContent || '기본 순서'),
+  function renderSortMenu() {
+    const selectedOption = sortSelect.selectedOptions[0];
+    menuButton.replaceChildren(
+      document.createTextNode(selectedOption?.textContent || '기본 순서'),
     );
     const arrow = document.createElement('span');
     arrow.textContent = '⌄';
     arrow.setAttribute('aria-hidden', 'true');
-    trigger.append(arrow);
-    trigger.setAttribute('aria-label', '정렬 방식: ' + (selected?.textContent || ''));
-    list.replaceChildren();
-    for (const option of select.options) {
+    menuButton.append(arrow);
+    menuButton.setAttribute(
+      'aria-label',
+      '정렬 방식: ' + (selectedOption?.textContent || ''),
+    );
+    optionsList.replaceChildren();
+    for (const option of sortSelect.options) {
       if (option.hidden || option.disabled) continue;
-      const row = document.createElement('div');
-      row.role = 'option';
-      row.tabIndex = -1;
-      row.dataset.value = option.value;
-      row.textContent = option.textContent;
-      row.setAttribute('aria-selected', String(option.selected));
-      list.append(row);
+      const optionElement = document.createElement('div');
+      optionElement.role = 'option';
+      optionElement.tabIndex = -1;
+      optionElement.dataset.value = option.value;
+      optionElement.textContent = option.textContent;
+      optionElement.setAttribute('aria-selected', String(option.selected));
+      optionsList.append(optionElement);
     }
   }
-  function open() {
-    sync();
-    list.hidden = false;
-    trigger.setAttribute('aria-expanded', 'true');
-    (list.querySelector('[aria-selected=true]') || list.firstElementChild)?.focus();
+  function openSortMenu() {
+    renderSortMenu();
+    optionsList.hidden = false;
+    menuButton.setAttribute('aria-expanded', 'true');
+    (
+      optionsList.querySelector('[aria-selected=true]') || optionsList.firstElementChild
+    )?.focus();
   }
-  function choose(row) {
-    if (!row) return;
-    select.value = row.dataset.value;
-    select.dispatchEvent(new Event('change', { bubbles: true }));
-    close(true);
-    sync();
+  function selectSortOption(optionElement) {
+    if (!optionElement) return;
+    sortSelect.value = optionElement.dataset.value;
+    sortSelect.dispatchEvent(
+      new Event('change', {
+        bubbles: true,
+      }),
+    );
+    closeSortMenu(true);
+    renderSortMenu();
   }
-  trigger.addEventListener('click', () => (list.hidden ? open() : close()));
-  trigger.addEventListener('keydown', (e) => {
-    if (['ArrowDown', 'ArrowUp'].includes(e.key)) {
-      e.preventDefault();
-      open();
+  menuButton.addEventListener('click', () =>
+    optionsList.hidden ? openSortMenu() : closeSortMenu(),
+  );
+  menuButton.addEventListener('keydown', (event) => {
+    if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
+      event.preventDefault();
+      openSortMenu();
     }
   });
-  list.addEventListener('click', (e) => choose(e.target.closest('[role=option]')));
-  list.addEventListener('keydown', (e) => {
-    const rows = [...list.children],
-      index = rows.indexOf(document.activeElement);
-    if (e.key === 'Escape') {
-      e.preventDefault();
-      close(true);
-    } else if (e.key === 'Tab') close();
-    else if (['Enter', ' '].includes(e.key)) {
-      e.preventDefault();
-      choose(document.activeElement);
-    } else if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) {
-      e.preventDefault();
-      const next =
-        e.key === 'Home'
+  optionsList.addEventListener('click', (event) =>
+    selectSortOption(event.target.closest('[role=option]')),
+  );
+  optionsList.addEventListener('keydown', (event) => {
+    const optionElements = [...optionsList.children],
+      focusedOptionIndex = optionElements.indexOf(document.activeElement);
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeSortMenu(true);
+    } else if (event.key === 'Tab') closeSortMenu();
+    else if (['Enter', ' '].includes(event.key)) {
+      event.preventDefault();
+      selectSortOption(document.activeElement);
+    } else if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+      event.preventDefault();
+      const nextOptionIndex =
+        event.key === 'Home'
           ? 0
-          : e.key === 'End'
-            ? rows.length - 1
-            : (index + (e.key === 'ArrowDown' ? 1 : -1) + rows.length) % rows.length;
-      rows[next]?.focus();
+          : event.key === 'End'
+            ? optionElements.length - 1
+            : (focusedOptionIndex +
+                (event.key === 'ArrowDown' ? 1 : -1) +
+                optionElements.length) %
+              optionElements.length;
+      optionElements[nextOptionIndex]?.focus();
     }
   });
-  document.addEventListener('pointerdown', (e) => {
-    if (!root.contains(e.target)) close();
+  document.addEventListener('pointerdown', (event) => {
+    if (!sortMenu.contains(event.target)) closeSortMenu();
   });
-  select.addEventListener('change', sync);
-  document.querySelector('#clearFilters').addEventListener('click', sync);
+  sortSelect.addEventListener('change', renderSortMenu);
+  document.querySelector('#clearFilters').addEventListener('click', renderSortMenu);
   new MutationObserver(() => {
-    sync();
-  }).observe(select, {
+    renderSortMenu();
+  }).observe(sortSelect, {
     subtree: true,
     attributes: true,
     attributeFilter: ['hidden', 'disabled'],
   });
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('[data-major=all]')) sync();
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('[data-major=all]')) renderSortMenu();
   });
-  sync();
+  renderSortMenu();
 })();

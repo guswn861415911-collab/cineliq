@@ -85,3 +85,15 @@ CODE_GUIDE.md에 수정 목적별 파일 위치, app.js와 캐러셀을 읽는 �
 
 ## 되돌리기 기준
 9c2f9c7은 변경 전 체크포인트입니다. 077c361(HTML/CSS), f37d19f(실행 코드 포맷), 9f28d15(라이브러리 이벤트), 2019098(캐러셀), c978d94(남은 주석/데이터 검사), 706c786(검색/안내) 등 기능별 커밋으로 나누었습니다. 필요한 단계만 revert하며 데이터·서버 설정을 되돌리는 작업과 혼동하지 마세요.
+
+# 2차 리팩터링 (기준037716d)
+
+## 1단계: 회원·설정 이름 정리
+- theme.js: selectedTheme, currentUser, sessionVersion, isSaving, applyTheme/changeTheme 등으로 상태·함수 역할을 명확히 했습니다.
+- accessibility.js: normalizePreferences, shouldReduceMotion, applyVideoCaptions, observedVideos 등으로 설정과 미디어 처리를 구분했습니다.
+- folder-save.js: saveDialog, activeSaveRequest, verifySaveSession, selectedFolderIds 등으로 저장 절차를 읽기 쉽게 했습니다.
+- member-library.js: memberPage, savedTechniques, personalFolders, folderEntries, currentOperation 등으로 데이터와 화면 역할을 구분했습니다.
+- member.js: authDialog/currentSession/pendingBookmarkIds/renderLinkedAccounts 등 UI 내부 이름만 정리했습니다. 공개 API 키와 보안 처리 순서는 보존했습니다.
+- sort-menu.js: menuButton/optionsList/openSortMenu/selectSortOption 등으로 역할을 명시했습니다.
+
+기준 테스트26개 통과. 이름 변경 후 기존 단위/로컬SQL26개 및 사용자 UI·메뉴·정렬 브라우저 검사 통과. 새 검사에서 회원/폴더 저장의 실행 구문 구조가 지역 변수 이름 외에는 동일함을 확인했고, 설정은 게스트/계정 저장·중복 요청 차단·실패 복구·세션 변경·시스템 설정6가지 시나리오를 기준 코드와 비교해 통과했습니다.

@@ -303,43 +303,48 @@
       .forEach((button) => (button.hidden = !libraryState.admin));
     renderMobileFilters();
   }
+
+  function matchesTechniqueSearch(technique, searchQuery) {
+    if (!searchQuery) return true;
+    if (practiceGuide) return practiceGuide.matches(technique, searchQuery);
+    const searchableText = [
+      technique.ko,
+      technique.en,
+      technique.description,
+      technique.section,
+      ...technique.tags,
+    ]
+      .join(' ')
+      .toLocaleLowerCase();
+    return searchableText.includes(searchQuery);
+  }
+
+  function matchesLibraryFilters(technique, searchQuery) {
+    if (libraryState.major !== 'all' && technique.major !== libraryState.major)
+      return false;
+    if (libraryState.section && technique.sectionNo !== libraryState.section)
+      return false;
+    if (libraryState.tags.size > 0) {
+      const hasSelectedTag = Array.from(libraryState.tags).some((tagName) =>
+        technique.tags.includes(tagName),
+      );
+      if (!hasSelectedTag) return false;
+    }
+    if (libraryState.admin) {
+      const hasRegisteredMedia = libraryState.mediaMap.has(technique.id);
+      if (libraryState.media === 'ready' && !hasRegisteredMedia) return false;
+      if (libraryState.media === 'missing' && hasRegisteredMedia) return false;
+    }
+    if (!window.CINELIQ_CONTENT_TYPES.matches(technique, libraryState.types))
+      return false;
+    return matchesTechniqueSearch(technique, searchQuery);
+  }
+
   function getFilteredTechniques() {
     const searchQuery = libraryState.search.toLocaleLowerCase().trim();
-    let matchingTechniques = techniques.filter((technique) => {
-      if (libraryState.major !== 'all' && technique.major !== libraryState.major)
-        return false;
-      if (libraryState.section && technique.sectionNo !== libraryState.section)
-        return false;
-      if (
-        libraryState.tags.size &&
-        ![...libraryState.tags].some((tagName) => technique.tags.includes(tagName))
-      )
-        return false;
-      const has = libraryState.mediaMap.has(technique.id);
-      if (
-        libraryState.admin &&
-        ((libraryState.media === 'ready' && !has) ||
-          (libraryState.media === 'missing' && has))
-      )
-        return false;
-      if (!window.CINELIQ_CONTENT_TYPES.matches(technique, libraryState.types))
-        return false;
-      return (
-        !searchQuery ||
-        (practiceGuide
-          ? practiceGuide.matches(technique, searchQuery)
-          : [
-              technique.ko,
-              technique.en,
-              technique.description,
-              technique.section,
-              ...technique.tags,
-            ]
-              .join(' ')
-              .toLocaleLowerCase()
-              .includes(searchQuery))
-      );
-    });
+    const matchingTechniques = techniques.filter((technique) =>
+      matchesLibraryFilters(technique, searchQuery),
+    );
     const sort = libraryState.sort;
     if (sort === 'az')
       matchingTechniques.sort((firstTechnique, secondTechnique) =>

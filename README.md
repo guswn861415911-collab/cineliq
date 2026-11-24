@@ -1,13 +1,15 @@
 # CINELIQ · Camera Atlas
 
-CINELIQ는 카메라 구도, 컷, 무빙을 학습하는 반응형 웹사이트입니다. 촬영 기법 314개의 한글·영문 명칭, 설명, 태그와 AI 생성 프롬프트 예시를 제공합니다.
+CINELIQ는 카메라 구도, 컷, 무빙을 학습하는 반응형 웹사이트입니다. 촬영 기법 414개의 한글·영문 명칭, 설명, 태그와 AI 생성 프롬프트 예시를 제공합니다.
 
 - 카테고리, 세부 분야, 장면 유형과 미디어 상태로 검색·필터링
 - 기법 상세 화면에서 이미지·영상 예시와 AI 프롬프트 확인 및 복사
 - 인증된 관리자 계정으로 공개 미디어 등록, 교체, 정렬, 대표 지정 및 삭제
 
 - [GitHub 저장소](https://github.com/guswn861415911-collab/cineliq)
-- [GitHub Pages 사이트](https://guswn861415911-collab.github.io/cineliq/)
+- [GitHub Pages 사이트](https://cineliq.art/)
+
+처음 코드를 수정한다면 [코드 수정 안내](CODE_GUIDE.md)와 [리팩터링 진행 기록](REFACTOR_PROGRESS.md)을 먼저 확인하세요.
 
 ## 프로젝트 구조
 
@@ -18,7 +20,7 @@ CINELIQ는 카메라 구도, 컷, 무빙을 학습하는 반응형 웹사이트�
 | `app.js` | 검색, 필터, 상세 화면, 복사, 미디어 관리 |
 | `media-config.js`, `media-cloud.js`, `media-admin.js` | 온라인 연결 설정, Storage·Auth 연동, 관리자 UI |
 | `supabase/001_media.sql` | 테이블, Storage 버킷, RLS 정책과 관리자 RPC |
-| `data.js` | 기법 314개의 명칭, 설명, 분류와 태그 |
+| `data.js` | 기법 414개의 명칭, 설명, 분류와 태그 |
 | `.nojekyll` | 정적 파일을 그대로 GitHub Pages에 게시 |
 | `.gitignore` | 로컬 환경 파일, 임시 파일과 테스트 산출물 제외 |
 

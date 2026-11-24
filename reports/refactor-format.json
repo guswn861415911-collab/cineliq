@@ -575,5 +575,21 @@
     "verification": "normalized syntax tree equality",
     "linesBefore": 30,
     "linesAfter": 52
+  },
+  {
+    "filename": "app.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 1348,
+    "linesAfter": 1357
+  },
+  {
+    "filename": "tests/browser/refactor-structure.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 148,
+    "linesAfter": 217
   }
 ]

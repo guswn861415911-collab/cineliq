@@ -306,5 +306,274 @@
     "executableSyntaxUnchanged": true,
     "linesBefore": 27,
     "linesAfter": 74
+  },
+  {
+    "filename": "app.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 1161,
+    "linesAfter": 1172
+  },
+  {
+    "filename": "app.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 1172,
+    "linesAfter": 1172
+  },
+  {
+    "filename": "app.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "linesBefore": 945,
+    "linesAfter": 1330
+  },
+  {
+    "filename": "data.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "parser comment ranges only",
+    "linesBefore": 6729,
+    "linesAfter": 6729
+  },
+  {
+    "filename": "learning-data.js",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "verification": "parser comment ranges only",
+    "linesBefore": 12424,
+    "linesAfter": 12424
+  },
+  {
+    "filename": "full-learning-data.js",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "verification": "parser comment ranges only",
+    "linesBefore": 34562,
+    "linesAfter": 34562
+  },
+  {
+    "filename": "app.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 945,
+    "linesAfter": 1352
+  },
+  {
+    "filename": "image-carousel.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 118,
+    "linesAfter": 132
+  },
+  {
+    "filename": "scripts/audit-ui-upgrade.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 19,
+    "linesAfter": 88
+  },
+  {
+    "filename": "scripts/build-full-learning.cjs",
+    "commentsRemoved": 2,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 138,
+    "linesAfter": 653
+  },
+  {
+    "filename": "scripts/format-source.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 94,
+    "linesAfter": 165
+  },
+  {
+    "filename": "scripts/record-learning-validation.cjs",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 21,
+    "linesAfter": 48
+  },
+  {
+    "filename": "supabase/tests/account-deletion.test.mjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 37,
+    "linesAfter": 170
+  },
+  {
+    "filename": "supabase/tests/account-merge-sql.test.mjs",
+    "commentsRemoved": 2,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 52,
+    "linesAfter": 110
+  },
+  {
+    "filename": "supabase/tests/account-merge.test.mjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 47,
+    "linesAfter": 147
+  },
+  {
+    "filename": "supabase/tests/independent-folders.test.mjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 24,
+    "linesAfter": 55
+  },
+  {
+    "filename": "tests/browser/accessibility.cjs",
+    "commentsRemoved": 1,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 67,
+    "linesAfter": 378
+  },
+  {
+    "filename": "tests/browser/image-carousel.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 38,
+    "linesAfter": 289
+  },
+  {
+    "filename": "tests/browser/menu.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 41,
+    "linesAfter": 277
+  },
+  {
+    "filename": "tests/browser/sort-menu.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 26,
+    "linesAfter": 204
+  },
+  {
+    "filename": "tests/browser/usability.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 64,
+    "linesAfter": 321
+  },
+  {
+    "filename": "tests/fixtures/member-cloud.js",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 14,
+    "linesAfter": 131
+  },
+  {
+    "filename": "tests/full-learning.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 47,
+    "linesAfter": 134
+  },
+  {
+    "filename": "tests/identity-auth.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 53,
+    "linesAfter": 142
+  },
+  {
+    "filename": "tests/learning.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 47,
+    "linesAfter": 65
+  },
+  {
+    "filename": "tests/merge-notice.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 31,
+    "linesAfter": 92
+  },
+  {
+    "filename": "tests/production.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 70,
+    "linesAfter": 99
+  },
+  {
+    "filename": "tests/usability-data.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 26,
+    "linesAfter": 74
+  },
+  {
+    "filename": "tests/refactor-comments.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 10,
+    "linesAfter": 17
+  },
+  {
+    "filename": "tests/refactor-preservation.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 30,
+    "linesAfter": 51
+  },
+  {
+    "filename": "scripts/strip-config-comments.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 77,
+    "linesAfter": 99
+  },
+  {
+    "filename": "scripts/audit-ui-upgrade.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 98,
+    "linesAfter": 101
+  },
+  {
+    "filename": "scripts/build-full-learning.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 653,
+    "linesAfter": 649
+  },
+  {
+    "filename": "tests/refactor-source.test.cjs",
+    "commentsRemoved": 0,
+    "executableSyntaxUnchanged": true,
+    "verification": "normalized syntax tree equality",
+    "linesBefore": 30,
+    "linesAfter": 52
   }
 ]

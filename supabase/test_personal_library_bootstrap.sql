@@ -1,5 +1,5 @@
--- TEST ONLY: personal-library bootstrap; shared media schema is intentionally excluded.
--- Confirm project bxnhnhqymjimytzxylxa before running. Applied 2026-11-22 via SQL Editor.
+ 
+ 
 begin;
 create table public.cineliq_admins(user_id uuid primary key references auth.users(id) on delete cascade);
 alter table public.cineliq_admins enable row level security;
@@ -79,7 +79,7 @@ commit;
 
 begin;
 
--- Read-only preflight for the Edge Function. It never deletes or updates user data.
+ 
 create function public.cineliq_account_deletion_preflight(target_user uuid, target_session uuid)
 returns jsonb language sql stable security definer set search_path = ''
 as $$

@@ -14,12 +14,13 @@
   },
   "preservedFiles": {
     "data.js": "f5325bd4625c56e84699deaac599444d37996b6dc2fd5d99a84d44000937c85b",
-    "learning-data.js": "1db189c74261c3a94d029bef5a193eb4a9de7a50e4e6ec81a02f6469ce7733df",
-    "terminology-data.js": "dd1fda39bc36f99aaac30e47331ac5e50fb065fbaed60234b512ced6a259778d",
-    "production-data.js": "e5054462a4f04ec3836ea1bf16ad1dfc9eb18b6f550a84090d3e8053d75241fd",
-    "full-learning-data.js": "74ddb306a2480a8b16f2c814592912b42b2c598e54830756da6418c143e8e944",
+    "learning-data.js": "11db61987d908a4708f978400f891e352e765a2a26b541e20461102f758e1d1a",
+    "terminology-data.js": "76f1120d5ca4f7ba81fc4134cb298f3251d9fd41c4653d9d1b9b77741b99bd40",
+    "production-data.js": "2b2d56cab47f375e4fc1fa20d5959a7f5c9d614f36a9ecab6705b8e8048460b7",
+    "full-learning-data.js": "24b60fab76fe4f34668db9e769252b850f67d7b6a971144fa463e4fef79bdae8",
     "google896cae5064a99afa.html": "f7000aaf1f8d4fac0664bbb3bab5c04a903bb12f45cd533d5990352f021893c8",
-    "media-config.js": "c1a3fad980534c6cf173d5eecdcb04af955937acf5dae7c18b27d56a4a4cc7d9"
+    "media-config.js": "d8a6ddad0ad056fe1e657091c67946cd8b9ac7f9463bc61408bad28b01a05a84"
   },
-  "hashNormalization": "CRLF normalized to LF; no other normalization"
+  "hashNormalization": "Current source hash: CRLF normalized to LF",
+  "preservationCheck": "Data values compared with baseline; verification HTML compared exactly"
 }

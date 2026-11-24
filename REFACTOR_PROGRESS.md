@@ -34,3 +34,10 @@ app.js의 이벤트 등록과 실제 처리 함수를 분리했습니다. select
 
 ## 4단계 완료: 이미지 캐러셀
 image-carousel.js의 이어 붙인 HTML 문자열을 들여쓰기된 템플릿으로 바꾸고 createCarouselMarkup/setupCarousel/showAdjacentImage/setupImageCarousels로 역할을 구분했습니다. currentImageIndex/pageCounter/previewCard/touchStartPosition 등 이름으로 이미지 전환과 스와이프 계산을 읽을 수 있습니다. 공개 markup/bind API는 그대로입니다. PC1440·태블릿768·모바일390px에서1·2·3장, 영상 혼합·순환·키보드·모의 스와이프·모션 감소·높이/스크롤 유지 검사 통과.
+
+## 5단계 완료: 데이터·서버·테스트 소스의 주석 제거
+모든 추적 소스 확장자(JS/CJS/MJS/TS/HTML/CSS/SQL/TOML/SVG)를 검사하여 문법상 주석0개를 확인했습니다. 문자열·정규식·URL·SQL 문자열은 보존하며, SQL 달러 인용 함수 본문도 주석만 제거했습니다. SQL 파일은 로컬에서만 변경했으며 운영 마이그레이션을 실행하지 않았습니다. 데이터 생성기도 주석을 다시 출력하지 않도록 수정했습니다.
+
+큰 데이터 파일은 기존 들여쓰기를 유지하고 파서가 식별한 주석만 제거했습니다. 기본 기법414개와 모든 학습 데이터·공개 Supabase 설정의 값이 c850913과 완전히 같은지 VM 비교로 검증했습니다. 이미지·영상 assets와 Google 소유권 파일은 보존했습니다. 콘텐츠 감사 도구는 포맷 차이 대신 데이터 값을 비교하도록 보완했습니다.
+
+단위·모의 Auth·로컬 탈퇴/통합 서버·로컬 SQL/RLS·데이터 보존·주석 검사26개 통과. 계정 통합은 데이터 복사 테스트 수준이며 실제 운영 OAuth/계정 통합이 검증됐다는 의미가 아닙니다.

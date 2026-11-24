@@ -1,4 +1,4 @@
-// ID-linked educational supplements. Existing technique and media data remain in data.js.
+                                                                                          
 window.CINELIQ_LEARNING = {
   "CAM-001": {
     "beginnerExplanation": "사람을 아주 작게 담고 넓은 풍경을 보여 주는 샷입니다. 인물이 놓인 환경과 고독감을 강조합니다. 사막을 걷는 여행자가 화면 속 작은 점처럼 보이는 장면을 떠올려 보세요. 여행의 규모나 인물의 외로움을 전할 때 좋습니다.",

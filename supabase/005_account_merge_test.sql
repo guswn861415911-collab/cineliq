@@ -1,5 +1,5 @@
--- TEST PROJECT ONLY. Staged data-copy primitive, not an identity merge.
--- Apply 001-004 first. Never apply this to production without separate review.
+ 
+ 
 begin;
 create table public.cineliq_merge_backups (
   id uuid primary key,
@@ -32,7 +32,7 @@ declare saved public.cineliq_merge_backups; snapshot jsonb; mapping jsonb='{}'; 
  new_id uuid; new_name text; suffix text; counter integer;
 begin
  if source_id=target_id or source_id is null or target_id is null then raise exception 'invalid_pair'; end if;
- -- Short test-only serial transaction: blocks concurrent app writes while checking/copying.
+  
  lock table public.cineliq_favorites,public.cineliq_folders,public.cineliq_folder_items,
    public.cineliq_merge_backups in share row exclusive mode;
  select * into saved from public.cineliq_merge_backups where id=request_id;

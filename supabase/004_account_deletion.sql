@@ -1,6 +1,6 @@
 begin;
 
--- Read-only preflight for the Edge Function. It never deletes or updates user data.
+ 
 create function public.cineliq_account_deletion_preflight(target_user uuid, target_session uuid)
 returns jsonb language sql stable security definer set search_path = ''
 as $$

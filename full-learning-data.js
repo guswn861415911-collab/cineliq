@@ -1,4 +1,4 @@
-// Additive generated learning edition; rebuild with scripts/build-full-learning.cjs.
+                                                                                     
 window.CINELIQ_FULL_LEARNING = {
   "version": 1,
   "model": {

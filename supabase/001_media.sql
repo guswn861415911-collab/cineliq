@@ -73,8 +73,8 @@ create policy cineliq_remove_unused_objects on storage.objects for delete to aut
   and not exists (select 1 from public.cineliq_media where object_path = name or thumbnail_path = name)
 );
 
--- All mutations for a technique take the same lock. Unpublished objects stay
--- private until their catalog row commits, and referenced objects cannot be removed.
+ 
+ 
 create function public.cineliq_change_media(
   technique text, action text, media_id uuid default null,
   path text default null, thumb text default null, filename text default null,

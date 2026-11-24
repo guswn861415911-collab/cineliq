@@ -1,4 +1,4 @@
--- Requires approval before production application. No rows are deleted or updated.
+ 
 begin;
 do $$
 declare constraint_name text;

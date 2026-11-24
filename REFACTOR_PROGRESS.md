@@ -31,3 +31,6 @@ HTML4개와 CSS14개를 읽기 좋은 들여쓰기·줄바꿈으로 정리하고
 
 ## 3단계 완료: 라이브러리 이벤트 정리
 app.js의 이벤트 등록과 실제 처리 함수를 분리했습니다. selectMainCategory/selectSubcategory/toggleSceneTag/selectContentType/selectRegistrationStatus/openTechniqueFromCard로 역할을 표시하고 refreshFilteredCards로 반복한 화면 갱신만 공유합니다. findElement/escapeHtml/techniques/libraryState 등 이름을 명확히 하고 기존 API의 state/items/escape 키는 보존했습니다. 사용자 UI·메뉴·캐러셀 검사 통과. 메뉴 테스트는 회원 세션 준비를 기다린 후 검사하도록 타이밍 의존성을 보완했습니다. 인증/관리자 권한 분기 및 미디어 데이터 구조는 변경하지 않았습니다.
+
+## 4단계 완료: 이미지 캐러셀
+image-carousel.js의 이어 붙인 HTML 문자열을 들여쓰기된 템플릿으로 바꾸고 createCarouselMarkup/setupCarousel/showAdjacentImage/setupImageCarousels로 역할을 구분했습니다. currentImageIndex/pageCounter/previewCard/touchStartPosition 등 이름으로 이미지 전환과 스와이프 계산을 읽을 수 있습니다. 공개 markup/bind API는 그대로입니다. PC1440·태블릿768·모바일390px에서1·2·3장, 영상 혼합·순환·키보드·모의 스와이프·모션 감소·높이/스크롤 유지 검사 통과.

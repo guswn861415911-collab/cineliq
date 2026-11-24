@@ -48,3 +48,40 @@ image-carousel.js의 이어 붙인 HTML 문자열을 들여쓰기된 템플릿�
 브라우저의 CSSOM과 HTML DOM을 c850913과 비교한 구조 검사도 통과했습니다. 줄바꿈·쉼표 공백·동일한 소수 표기·색상 대소문자 및 HTML 공백/주석만 정규화합니다. 디자인 규칙의 순서와 문서 요소·속성·내용을 비교했으며 픽셀 단위 스크린샷 동일성 검사는 아닙니다.
 
 CODE_GUIDE.md에 수정 목적별 파일 위치, app.js와 캐러셀을 읽는 순서, 보안 주의사항, 로컬 실행·검사·되돌리기 방법을 정리했습니다. README의 오래된 기법 수/배포 주소도 현재 상태로 정정했습니다.
+
+## 최종 검증 결과
+- 자동 단위/콘텐츠/모의 인증·서버/로컬 SQL·RLS 테스트:26개 통과.
+- 실제 Edge 브라우저 자동화: 검색·필터·북마크/폴더 UI·메뉴·설정·정렬·캐러셀·구조 보존·키보드 회귀 검사 통과.
+- 접근성28개 화면/테마 조합: 확정 위반0건. 그라데이션·겹침·스크롤 가림에 따른 판정 보류는 reports/refactor-accessibility.json에 남겼습니다. 완전한 WCAG 준수나 수동 검사 완료를 의미하지 않습니다.
+- 기존 접근성 검사에 남아 있던 분리 폴더 버튼의 포커스 기대값은 현재 북마크 통합 버튼에 맞게 정정했습니다. 실제 포커스는 올바르게 돌아오고 있었습니다.
+- Google 소유권 HTML·미디어 assets·전체 데이터 값 보존 검사 통과.
+- 실제 브라우저 검사는 자동화이며, 사람이 키보드로 전 과정을 수행한 수동 검사와 구분합니다. 실제 iOS/Android·스크린 리더·외부 OAuth 동의·운영 회원 쓰기 검사는 하지 않았습니다.
+
+## 완료 파일의 수준
+| 파일/영역 | 완료 내용 |
+| --- | --- |
+| index.html·contact.html·terms.html·privacy.html | 요소별 줄바꿈·들여쓰기, 주석 제거. HTML 구조·내용 보존 |
+| CSS14개 | 선언·선택자별 줄바꿈, 주석 제거, 브라우저 해석 규칙 보존 |
+| app.js | 주요 변수명 개선, 클릭/키보드/카테고리/필터 이벤트 분리, 검색·필터·정렬 판정 분리 |
+| image-carousel.js | 읽을 수 있는 HTML 템플릿, 명확한 상태·함수 이름, 스와이프 조건 정리 |
+| member.js·member-library.js·media-cloud.js·media-admin.js·member-deletion.js·member-merge.js | 포맷·주석 제거만. 인증·권한·세션 검증의 실행 로직 보존 |
+| theme.js·accessibility.js·sort-menu.js·folder-save.js·bulk-selection.js·나머지 학습 UI/분류 모듈 | 포맷·주석 제거. 논리와 공개 API 보존 |
+| data.js·learning-data.js·full-learning-data.js | 큰 데이터의 기존 들여쓰기 유지, 필요한 주석만 제거, 값 완전 일치 검증 |
+| production-data.js·terminology-data.js | 포맷·주석 제거, 값 완전 일치 검증 |
+| supabase/functions의 TS2개·SQL·TOML | 주석 제거, TS는 구문 보존 포맷. 서버 테스트·로컬 SQL 검사 통과. 운영 적용 안 함 |
+| scripts/·tests/ | 포맷·주석 제거, 데이터 감사 도구 및 소스/구조 보존 검사 추가 |
+| CODE_GUIDE.md·README.md | 파일 찾기·수정·검사·보안·복구 안내 |
+
+## 아직 하지 않은 리팩터링과 다음 순서
+1. sort-menu.js, theme.js, accessibility.js, folder-save.js의 짧은 변수명을 기능별로 검토하고 각각 테스트 후 커밋.
+2. learning-ui.js/full-learning-ui.js/production-ui.js의 긴 HTML 템플릿을 읽기 쉽게 정리. 모든 학습 문구 값은 그대로 비교할 것.
+3. member-library.js의 폴더/회원 화면 처리를 단계별로 정리. 회원 UUID·요청 버전 검사와 실패 처리를 보존할 것.
+4. member.js/media-cloud.js/media-admin.js의 논리 변경은 보안 테스트를 보강한 뒤 별도 검토. 포맷이 끝났다는 이유로 초보자 수준의 논리 단순화까지 끝났다고 보지 말 것.
+5. styles.css의 과거 덮어쓰기·중복 규칙을 화면별 렌더링 비교와 함께 정리. !important와 반응형 규칙을 일괄 삭제하지 말 것.
+6. 실제 테스트용 OAuth 계정 및 실제 모바일·스크린 리더 검증. 운영 사용자 삭제·통합 테스트는 하지 말 것.
+
+## 저장·배포 상태
+이번 차수는 별도 작업 브랜치 codex/beginner-refactor에 보존합니다. main 병합 및 운영 사이트 배포는 하지 않았습니다. 대규모 소스 변경의 검토와 남은 논리 정리를 이어갈 수 있도록 운영 버전 c850913을 유지합니다. 운영 Supabase·OAuth 콘솔·별도 merge-test 저장소/프로젝트는 변경하지 않았습니다.
+
+## 되돌리기 기준
+9c2f9c7은 변경 전 체크포인트입니다. 077c361(HTML/CSS), f37d19f(실행 코드 포맷), 9f28d15(라이브러리 이벤트), 2019098(캐러셀), c978d94(남은 주석/데이터 검사), 706c786(검색/안내) 등 기능별 커밋으로 나누었습니다. 필요한 단계만 revert하며 데이터·서버 설정을 되돌리는 작업과 혼동하지 마세요.

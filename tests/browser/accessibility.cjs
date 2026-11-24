@@ -237,7 +237,7 @@ const fs = require('node:fs/promises'),
     );
     await key('Escape');
     await check(
-      "!document.querySelector('.folder-save-dialog').open&&document.activeElement.matches('[data-save-folders]')",
+      "!document.querySelector('.folder-save-dialog').open&&document.activeElement.matches('[data-favorite]')",
       'folder Escape restores focus',
     );
     await evaluate("document.querySelector('#navToggle').focus()");
